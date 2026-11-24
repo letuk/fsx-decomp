@@ -1,0 +1,27 @@
+# Local Windows binaries, libraries, debug symbols, and installation media.
+*.exe
+*.dll
+*.ocx
+*.lib
+*.obj
+*.pdb
+*.cab
+*.msi
+*.iso
+*.gzf
+*.gar
+
+# Module names also identify directories in the analysis notes.
+!*.exe/
+!*.dll/
+
+# Original installation, VM workspace, and Ghidra database.
+/original/
+/vm-share/
+/ghidra/
+
+# Local evidence includes SDK copies, binary data, and raw Ghidra exports.
+/artifacts/
+
+# Generated dashboard embeds local evidence and original listings.
+/tools/re-dashboard/dist/

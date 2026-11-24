@@ -1,0 +1,687 @@
+[
+  {
+    "OriginalIatVA": "01001000",
+    "Identity": "kernel32.dll!InterlockedExchange",
+    "Symbol": "__imp__InterlockedExchange@8"
+  },
+  {
+    "OriginalIatVA": "01001004",
+    "Identity": "kernel32.dll!GetLastError",
+    "Symbol": "__imp__GetLastError@0"
+  },
+  {
+    "OriginalIatVA": "01001008",
+    "Identity": "kernel32.dll!CreateEventA",
+    "Symbol": "__imp__CreateEventA@16"
+  },
+  {
+    "OriginalIatVA": "0100100C",
+    "Identity": "kernel32.dll!CloseHandle",
+    "Symbol": "__imp__CloseHandle@4"
+  },
+  {
+    "OriginalIatVA": "01001010",
+    "Identity": "kernel32.dll!VerSetConditionMask",
+    "Symbol": "__imp__VerSetConditionMask@16"
+  },
+  {
+    "OriginalIatVA": "01001014",
+    "Identity": "kernel32.dll!VerifyVersionInfoA",
+    "Symbol": "__imp__VerifyVersionInfoA@16"
+  },
+  {
+    "OriginalIatVA": "01001018",
+    "Identity": "kernel32.dll!LoadLibraryA",
+    "Symbol": "__imp__LoadLibraryA@4"
+  },
+  {
+    "OriginalIatVA": "0100101C",
+    "Identity": "kernel32.dll!GetProcAddress",
+    "Symbol": "__imp__GetProcAddress@8"
+  },
+  {
+    "OriginalIatVA": "01001020",
+    "Identity": "kernel32.dll!FreeLibrary",
+    "Symbol": "__imp__FreeLibrary@4"
+  },
+  {
+    "OriginalIatVA": "01001024",
+    "Identity": "kernel32.dll!GetModuleFileNameA",
+    "Symbol": "__imp__GetModuleFileNameA@12"
+  },
+  {
+    "OriginalIatVA": "01001028",
+    "Identity": "kernel32.dll!GetModuleHandleA",
+    "Symbol": "__imp__GetModuleHandleA@4"
+  },
+  {
+    "OriginalIatVA": "0100102C",
+    "Identity": "kernel32.dll!CreateActCtxA",
+    "Symbol": "__imp__CreateActCtxA@4"
+  },
+  {
+    "OriginalIatVA": "01001030",
+    "Identity": "kernel32.dll!ReleaseActCtx",
+    "Symbol": "__imp__ReleaseActCtx@4"
+  },
+  {
+    "OriginalIatVA": "01001034",
+    "Identity": "kernel32.dll!CreateThread",
+    "Symbol": "__imp__CreateThread@24"
+  },
+  {
+    "OriginalIatVA": "01001038",
+    "Identity": "kernel32.dll!WaitForSingleObject",
+    "Symbol": "__imp__WaitForSingleObject@8"
+  },
+  {
+    "OriginalIatVA": "0100103C",
+    "Identity": "kernel32.dll!GetExitCodeThread",
+    "Symbol": "__imp__GetExitCodeThread@8"
+  },
+  {
+    "OriginalIatVA": "01001040",
+    "Identity": "kernel32.dll!GetACP",
+    "Symbol": "__imp__GetACP@0"
+  },
+  {
+    "OriginalIatVA": "01001044",
+    "Identity": "kernel32.dll!GetLocaleInfoA",
+    "Symbol": "__imp__GetLocaleInfoA@16"
+  },
+  {
+    "OriginalIatVA": "01001048",
+    "Identity": "kernel32.dll!GetThreadLocale",
+    "Symbol": "__imp__GetThreadLocale@0"
+  },
+  {
+    "OriginalIatVA": "0100104C",
+    "Identity": "kernel32.dll!GetVersionExA",
+    "Symbol": "__imp__GetVersionExA@4"
+  },
+  {
+    "OriginalIatVA": "01001050",
+    "Identity": "kernel32.dll!Sleep",
+    "Symbol": "__imp__Sleep@4"
+  },
+  {
+    "OriginalIatVA": "01001054",
+    "Identity": "kernel32.dll!InterlockedCompareExchange",
+    "Symbol": "__imp__InterlockedCompareExchange@12"
+  },
+  {
+    "OriginalIatVA": "01001058",
+    "Identity": "kernel32.dll!GetStartupInfoA",
+    "Symbol": "__imp__GetStartupInfoA@4"
+  },
+  {
+    "OriginalIatVA": "0100105C",
+    "Identity": "kernel32.dll!QueryPerformanceCounter",
+    "Symbol": "__imp__QueryPerformanceCounter@4"
+  },
+  {
+    "OriginalIatVA": "01001060",
+    "Identity": "kernel32.dll!GetTickCount",
+    "Symbol": "__imp__GetTickCount@0"
+  },
+  {
+    "OriginalIatVA": "01001064",
+    "Identity": "kernel32.dll!GetCurrentThreadId",
+    "Symbol": "__imp__GetCurrentThreadId@0"
+  },
+  {
+    "OriginalIatVA": "01001068",
+    "Identity": "kernel32.dll!GetCurrentProcessId",
+    "Symbol": "__imp__GetCurrentProcessId@0"
+  },
+  {
+    "OriginalIatVA": "0100106C",
+    "Identity": "kernel32.dll!GetSystemTimeAsFileTime",
+    "Symbol": "__imp__GetSystemTimeAsFileTime@4"
+  },
+  {
+    "OriginalIatVA": "01001070",
+    "Identity": "kernel32.dll!TerminateProcess",
+    "Symbol": "__imp__TerminateProcess@8"
+  },
+  {
+    "OriginalIatVA": "01001074",
+    "Identity": "kernel32.dll!GetCurrentProcess",
+    "Symbol": "__imp__GetCurrentProcess@0"
+  },
+  {
+    "OriginalIatVA": "01001078",
+    "Identity": "kernel32.dll!UnhandledExceptionFilter",
+    "Symbol": "__imp__UnhandledExceptionFilter@4"
+  },
+  {
+    "OriginalIatVA": "0100107C",
+    "Identity": "kernel32.dll!SetUnhandledExceptionFilter",
+    "Symbol": "__imp__SetUnhandledExceptionFilter@4"
+  },
+  {
+    "OriginalIatVA": "01001080",
+    "Identity": "kernel32.dll!IsDebuggerPresent",
+    "Symbol": "__imp__IsDebuggerPresent@0"
+  },
+  {
+    "OriginalIatVA": "01001088",
+    "Identity": "mfc80.dll!#5382",
+    "Symbol": "__imp_?Register@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalIatVA": "0100108C",
+    "Identity": "mfc80.dll!#6219",
+    "Symbol": "__imp_?Unregister@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalIatVA": "01001090",
+    "Identity": "mfc80.dll!#5102",
+    "Symbol": "__imp_?OpenDocumentFile@CWinApp@@UAEPAVCDocument@@PBD@Z"
+  },
+  {
+    "OriginalIatVA": "01001094",
+    "Identity": "mfc80.dll!#1010",
+    "Symbol": "__imp_?AddToRecentFileList@CWinApp@@UAEXPBD@Z"
+  },
+  {
+    "OriginalIatVA": "01001098",
+    "Identity": "mfc80.dll!#3806",
+    "Symbol": "__imp_?InitApplication@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalIatVA": "0100109C",
+    "Identity": "mfc80.dll!#5583",
+    "Symbol": "__imp_?SaveAllModified@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalIatVA": "010010A0",
+    "Identity": "mfc80.dll!#2018",
+    "Symbol": "__imp_?DoMessageBox@CWinApp@@UAEHPBDII@Z"
+  },
+  {
+    "OriginalIatVA": "010010A4",
+    "Identity": "mfc80.dll!#2063",
+    "Symbol": "__imp_?DoWaitCursor@CWinApp@@UAEXH@Z"
+  },
+  {
+    "OriginalIatVA": "010010A8",
+    "Identity": "mfc80.dll!#4326",
+    "Symbol": "__imp_?OnDDECommand@CWinApp@@UAEHPAD@Z"
+  },
+  {
+    "OriginalIatVA": "010010AC",
+    "Identity": "mfc80.dll!#6276",
+    "Symbol": "__imp_?WinHelpA@CWinApp@@UAEXKI@Z"
+  },
+  {
+    "OriginalIatVA": "010010B0",
+    "Identity": "mfc80.dll!#3801",
+    "Symbol": "__imp_?HtmlHelpA@CWinApp@@UAEXKI@Z"
+  },
+  {
+    "OriginalIatVA": "010010B4",
+    "Identity": "mfc80.dll!#3832",
+    "Symbol": "__imp_?InitLibId@CWinApp@@UAEXXZ"
+  },
+  {
+    "OriginalIatVA": "010010B8",
+    "Identity": "mfc80.dll!#4014",
+    "Symbol": "__imp_?LoadAppLangResourceDLL@CWinApp@@UAEPAUHINSTANCE__@@XZ"
+  },
+  {
+    "OriginalIatVA": "010010BC",
+    "Identity": "mfc80.dll!#4038",
+    "Symbol": "__imp_?LoadSysPolicies@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalIatVA": "010010C0",
+    "Identity": "mfc80.dll!#3169",
+    "Symbol": "__imp_?GetRuntimeClass@CCmdTarget@@UBEPAUCRuntimeClass@@XZ"
+  },
+  {
+    "OriginalIatVA": "010010C4",
+    "Identity": "mfc80.dll!#2942",
+    "Symbol": "__imp_?GetMessageMap@CCmdTarget@@MBEPBUAFX_MSGMAP@@XZ"
+  },
+  {
+    "OriginalIatVA": "010010C8",
+    "Identity": "mfc80.dll!#2856",
+    "Symbol": "__imp_?GetInterfaceMap@COleMessageFilter@@MBEPBUAFX_INTERFACEMAP@@XZ"
+  },
+  {
+    "OriginalIatVA": "010010CC",
+    "Identity": "mfc80.dll!#1303",
+    "Symbol": "__imp_?BeginBusyState@COleMessageFilter@@UAEXXZ"
+  },
+  {
+    "OriginalIatVA": "010010D0",
+    "Identity": "mfc80.dll!#2165",
+    "Symbol": "__imp_?EndBusyState@COleMessageFilter@@UAEXXZ"
+  },
+  {
+    "OriginalIatVA": "010010D4",
+    "Identity": "mfc80.dll!#3977",
+    "Symbol": "__imp_?IsSignificantMessage@COleMessageFilter@@UAEHPAUtagMSG@@@Z"
+  },
+  {
+    "OriginalIatVA": "010010D8",
+    "Identity": "mfc80.dll!#4207",
+    "Symbol": "__imp_?OnBusyDialog@COleMessageFilter@@UAEHPAUHTASK__@@@Z"
+  },
+  {
+    "OriginalIatVA": "010010DC",
+    "Identity": "mfc80.dll!#4723",
+    "Symbol": "__imp_?OnNotRespondingDialog@COleMessageFilter@@UAEHPAUHTASK__@@@Z"
+  },
+  {
+    "OriginalIatVA": "010010E0",
+    "Identity": "mfc80.dll!#1920",
+    "Symbol": "__imp_?Delete@CWinThread@@UAEXXZ"
+  },
+  {
+    "OriginalIatVA": "010010E4",
+    "Identity": "mfc80.dll!#2931",
+    "Symbol": "__imp_?GetMainWnd@CWinThread@@UAEPAVCWnd@@XZ"
+  },
+  {
+    "OriginalIatVA": "010010E8",
+    "Identity": "mfc80.dll!#5224",
+    "Symbol": "__imp_?ProcessMessageFilter@CWinThread@@UAEHHPAUtagMSG@@@Z"
+  },
+  {
+    "OriginalIatVA": "010010EC",
+    "Identity": "mfc80.dll!#5226",
+    "Symbol": "__imp_?ProcessWndProcException@CWinApp@@UAEJPAVCException@@PBUtagMSG@@@Z"
+  },
+  {
+    "OriginalIatVA": "010010F0",
+    "Identity": "mfc80.dll!#3948",
+    "Symbol": "__imp_?IsIdleMessage@CWinThread@@UAEHPAUtagMSG@@@Z"
+  },
+  {
+    "OriginalIatVA": "010010F4",
+    "Identity": "mfc80.dll!#4568",
+    "Symbol": "__imp_?OnIdle@CWinApp@@UAEHJ@Z"
+  },
+  {
+    "OriginalIatVA": "010010F8",
+    "Identity": "mfc80.dll!#5230",
+    "Symbol": "__imp_?PumpMessage@CWinThread@@UAEHXZ"
+  },
+  {
+    "OriginalIatVA": "010010FC",
+    "Identity": "mfc80.dll!#5213",
+    "Symbol": "__imp_?PreTranslateMessage@CWinThread@@UAEHPAUtagMSG@@@Z"
+  },
+  {
+    "OriginalIatVA": "01001100",
+    "Identity": "mfc80.dll!#2537",
+    "Symbol": "__imp_?GetConnectionHook@CCmdTarget@@MAEPAUIConnectionPoint@@ABU_GUID@@@Z"
+  },
+  {
+    "OriginalIatVA": "01001104",
+    "Identity": "mfc80.dll!#1207",
+    "Symbol": "__imp_?AfxWinMain@@YGHPAUHINSTANCE__@@0PADH@Z"
+  },
+  {
+    "OriginalIatVA": "01001108",
+    "Identity": "mfc80.dll!#2731",
+    "Symbol": "__imp_?GetExtraConnectionPoints@CCmdTarget@@MAEHPAVCPtrArray@@@Z"
+  },
+  {
+    "OriginalIatVA": "0100110C",
+    "Identity": "mfc80.dll!#2835",
+    "Symbol": "__imp_?GetInterfaceHook@CCmdTarget@@UAEPAUIUnknown@@PBX@Z"
+  },
+  {
+    "OriginalIatVA": "01001110",
+    "Identity": "mfc80.dll!#4307",
+    "Symbol": "__imp_?OnCreateAggregates@CCmdTarget@@UAEHXZ"
+  },
+  {
+    "OriginalIatVA": "01001114",
+    "Identity": "mfc80.dll!#2714",
+    "Symbol": "__imp_?GetEventSinkMap@CCmdTarget@@MBEPBUAFX_EVENTSINKMAP@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001118",
+    "Identity": "mfc80.dll!#2838",
+    "Symbol": "__imp_?GetInterfaceMap@CCmdTarget@@MBEPBUAFX_INTERFACEMAP@@XZ"
+  },
+  {
+    "OriginalIatVA": "0100111C",
+    "Identity": "mfc80.dll!#2540",
+    "Symbol": "__imp_?GetConnectionMap@CCmdTarget@@MBEPBUAFX_CONNECTIONMAP@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001120",
+    "Identity": "mfc80.dll!#2646",
+    "Symbol": "__imp_?GetDispatchMap@CCmdTarget@@MBEPBUAFX_DISPMAP@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001124",
+    "Identity": "mfc80.dll!#2533",
+    "Symbol": "__imp_?GetCommandMap@CCmdTarget@@MBEPBUAFX_OLECMDMAP@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001128",
+    "Identity": "mfc80.dll!#3718",
+    "Symbol": "__imp_?GetTypeLib@CCmdTarget@@UAEJKPAPAUITypeLib@@@Z"
+  },
+  {
+    "OriginalIatVA": "0100112C",
+    "Identity": "mfc80.dll!#3719",
+    "Symbol": "__imp_?GetTypeLibCache@CCmdTarget@@UAEPAVCTypeLibCache@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001130",
+    "Identity": "mfc80.dll!#3709",
+    "Symbol": "__imp_?GetTypeInfoCount@CCmdTarget@@UAEIXZ"
+  },
+  {
+    "OriginalIatVA": "01001134",
+    "Identity": "mfc80.dll!#2644",
+    "Symbol": "__imp_?GetDispatchIID@CCmdTarget@@UAEHPAU_GUID@@@Z"
+  },
+  {
+    "OriginalIatVA": "01001138",
+    "Identity": "mfc80.dll!#3949",
+    "Symbol": "__imp_?IsInvokeAllowed@CCmdTarget@@UAEHJ@Z"
+  },
+  {
+    "OriginalIatVA": "0100113C",
+    "Identity": "mfc80.dll!#4481",
+    "Symbol": "__imp_?OnFinalRelease@CCmdTarget@@UAEXXZ"
+  },
+  {
+    "OriginalIatVA": "01001140",
+    "Identity": "mfc80.dll!#4261",
+    "Symbol": "__imp_?OnCmdMsg@CCmdTarget@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z"
+  },
+  {
+    "OriginalIatVA": "01001144",
+    "Identity": "mfc80.dll!#3333",
+    "Symbol": "__imp_?GetRuntimeClass@CWinApp@@UBEPAUCRuntimeClass@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001148",
+    "Identity": "mfc80.dll!#1074",
+    "Symbol": "__imp_?AfxGetCurrentMessage@@YGPAUtagMSG@@XZ"
+  },
+  {
+    "OriginalIatVA": "0100114C",
+    "Identity": "mfc80.dll!#1290",
+    "Symbol": "__imp_?Attach@CWnd@@QAEHPAUHWND__@@@Z"
+  },
+  {
+    "OriginalIatVA": "01001150",
+    "Identity": "mfc80.dll!#1084",
+    "Symbol": "__imp_?AfxGetModuleState@@YGPAVAFX_MODULE_STATE@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001154",
+    "Identity": "mfc80.dll!#1054",
+    "Symbol": "__imp_?AfxEnableControlContainer@@YAXPAVCOccManager@@@Z"
+  },
+  {
+    "OriginalIatVA": "01001158",
+    "Identity": "mfc80.dll!#5379",
+    "Symbol": "__imp_?Register@COleMessageFilter@@QAEHXZ"
+  },
+  {
+    "OriginalIatVA": "0100115C",
+    "Identity": "mfc80.dll!#762",
+    "Symbol": "__imp_??2@YAPAXI@Z"
+  },
+  {
+    "OriginalIatVA": "01001160",
+    "Identity": "mfc80.dll!#1091",
+    "Symbol": "__imp_?AfxGetThread@@YGPAVCWinThread@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001164",
+    "Identity": "mfc80.dll!#1126",
+    "Symbol": "__imp_?AfxOleInit@@YGHXZ"
+  },
+  {
+    "OriginalIatVA": "01001168",
+    "Identity": "mfc80.dll!#700",
+    "Symbol": "__imp_??1COleMessageFilter@@UAE@XZ"
+  },
+  {
+    "OriginalIatVA": "0100116C",
+    "Identity": "mfc80.dll!#474",
+    "Symbol": "__imp_??0COleMessageFilter@@QAE@XZ"
+  },
+  {
+    "OriginalIatVA": "01001170",
+    "Identity": "mfc80.dll!#2248",
+    "Symbol": "__imp_?ExitInstance@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalIatVA": "01001174",
+    "Identity": "mfc80.dll!#1979",
+    "Symbol": "__imp_?Detach@CWnd@@QAEPAUHWND__@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001178",
+    "Identity": "mfc80.dll!#757",
+    "Symbol": "__imp_??1CWinApp@@UAE@XZ"
+  },
+  {
+    "OriginalIatVA": "0100117C",
+    "Identity": "mfc80.dll!#566",
+    "Symbol": "__imp_??0CWinApp@@QAE@PBD@Z"
+  },
+  {
+    "OriginalIatVA": "01001180",
+    "Identity": "mfc80.dll!#3683",
+    "Symbol": "__imp_?GetThisMessageMap@CWinApp@@KGPBUAFX_MSGMAP@@XZ"
+  },
+  {
+    "OriginalIatVA": "01001184",
+    "Identity": "mfc80.dll!#760",
+    "Symbol": "__imp_??1CWnd@@UAE@XZ"
+  },
+  {
+    "OriginalIatVA": "01001188",
+    "Identity": "mfc80.dll!#572",
+    "Symbol": "__imp_??0CWnd@@QAE@XZ"
+  },
+  {
+    "OriginalIatVA": "0100118C",
+    "Identity": "mfc80.dll!#6278",
+    "Symbol": "__imp_?WinHelpInternal@CWinApp@@UAEXKI@Z"
+  },
+  {
+    "OriginalIatVA": "01001190",
+    "Identity": "mfc80.dll!#764",
+    "Symbol": "__imp_??3@YAXPAX@Z"
+  },
+  {
+    "OriginalIatVA": "01001198",
+    "Identity": "msvcr80.dll!_crt_debugger_hook",
+    "Symbol": "__imp___crt_debugger_hook"
+  },
+  {
+    "OriginalIatVA": "0100119C",
+    "Identity": "msvcr80.dll!_controlfp_s",
+    "Symbol": "__imp___controlfp_s"
+  },
+  {
+    "OriginalIatVA": "010011A0",
+    "Identity": "msvcr80.dll!_invoke_watson",
+    "Symbol": "__imp___invoke_watson"
+  },
+  {
+    "OriginalIatVA": "010011A4",
+    "Identity": "msvcr80.dll!_except_handler4_common",
+    "Symbol": "__imp___except_handler4_common"
+  },
+  {
+    "OriginalIatVA": "010011A8",
+    "Identity": "msvcr80.dll!_decode_pointer",
+    "Symbol": "__imp___decode_pointer"
+  },
+  {
+    "OriginalIatVA": "010011AC",
+    "Identity": "msvcr80.dll!_onexit",
+    "Symbol": "__imp___onexit"
+  },
+  {
+    "OriginalIatVA": "010011B0",
+    "Identity": "msvcr80.dll!_lock",
+    "Symbol": "__imp___lock"
+  },
+  {
+    "OriginalIatVA": "010011B4",
+    "Identity": "msvcr80.dll!__dllonexit",
+    "Symbol": "__imp____dllonexit"
+  },
+  {
+    "OriginalIatVA": "010011B8",
+    "Identity": "msvcr80.dll!_unlock",
+    "Symbol": "__imp___unlock"
+  },
+  {
+    "OriginalIatVA": "010011BC",
+    "Identity": "msvcr80.dll!__set_app_type",
+    "Symbol": "__imp____set_app_type"
+  },
+  {
+    "OriginalIatVA": "010011C0",
+    "Identity": "msvcr80.dll!_encode_pointer",
+    "Symbol": "__imp___encode_pointer"
+  },
+  {
+    "OriginalIatVA": "010011C4",
+    "Identity": "msvcr80.dll!__p__fmode",
+    "Symbol": "__imp____p__fmode"
+  },
+  {
+    "OriginalIatVA": "010011C8",
+    "Identity": "msvcr80.dll!__p__commode",
+    "Symbol": "__imp____p__commode"
+  },
+  {
+    "OriginalIatVA": "010011CC",
+    "Identity": "msvcr80.dll!_adjust_fdiv",
+    "Symbol": "__imp___adjust_fdiv"
+  },
+  {
+    "OriginalIatVA": "010011D0",
+    "Identity": "msvcr80.dll!__setusermatherr",
+    "Symbol": "__imp____setusermatherr"
+  },
+  {
+    "OriginalIatVA": "010011D4",
+    "Identity": "msvcr80.dll!_configthreadlocale",
+    "Symbol": "__imp___configthreadlocale"
+  },
+  {
+    "OriginalIatVA": "010011D8",
+    "Identity": "msvcr80.dll!_initterm_e",
+    "Symbol": "__imp___initterm_e"
+  },
+  {
+    "OriginalIatVA": "010011DC",
+    "Identity": "msvcr80.dll!_initterm",
+    "Symbol": "__imp___initterm"
+  },
+  {
+    "OriginalIatVA": "010011E0",
+    "Identity": "msvcr80.dll!_acmdln",
+    "Symbol": "__imp___acmdln"
+  },
+  {
+    "OriginalIatVA": "010011E4",
+    "Identity": "msvcr80.dll!exit",
+    "Symbol": "__imp__exit"
+  },
+  {
+    "OriginalIatVA": "010011E8",
+    "Identity": "msvcr80.dll!_ismbblead",
+    "Symbol": "__imp___ismbblead"
+  },
+  {
+    "OriginalIatVA": "010011EC",
+    "Identity": "msvcr80.dll!_XcptFilter",
+    "Symbol": "__imp___XcptFilter"
+  },
+  {
+    "OriginalIatVA": "010011F0",
+    "Identity": "msvcr80.dll!_exit",
+    "Symbol": "__imp___exit"
+  },
+  {
+    "OriginalIatVA": "010011F4",
+    "Identity": "msvcr80.dll!_cexit",
+    "Symbol": "__imp___cexit"
+  },
+  {
+    "OriginalIatVA": "010011F8",
+    "Identity": "msvcr80.dll!__getmainargs",
+    "Symbol": "__imp____getmainargs"
+  },
+  {
+    "OriginalIatVA": "010011FC",
+    "Identity": "msvcr80.dll!_amsg_exit",
+    "Symbol": "__imp___amsg_exit"
+  },
+  {
+    "OriginalIatVA": "01001200",
+    "Identity": "msvcr80.dll!_makepath_s",
+    "Symbol": "__imp___makepath_s"
+  },
+  {
+    "OriginalIatVA": "01001204",
+    "Identity": "msvcr80.dll!_splitpath_s",
+    "Symbol": "__imp___splitpath_s"
+  },
+  {
+    "OriginalIatVA": "01001208",
+    "Identity": "msvcr80.dll!_vsnprintf",
+    "Symbol": "__imp___vsnprintf"
+  },
+  {
+    "OriginalIatVA": "0100120C",
+    "Identity": "msvcr80.dll!_setmbcp",
+    "Symbol": "__imp___setmbcp"
+  },
+  {
+    "OriginalIatVA": "01001210",
+    "Identity": "msvcr80.dll!__CxxFrameHandler3",
+    "Symbol": "__imp____CxxFrameHandler3"
+  },
+  {
+    "OriginalIatVA": "01001214",
+    "Identity": "msvcr80.dll!memset",
+    "Symbol": "__imp__memset"
+  },
+  {
+    "OriginalIatVA": "0100121C",
+    "Identity": "user32.dll!GetLastActivePopup",
+    "Symbol": "__imp__GetLastActivePopup@4"
+  },
+  {
+    "OriginalIatVA": "01001220",
+    "Identity": "user32.dll!MessageBoxIndirectA",
+    "Symbol": "__imp__MessageBoxIndirectA@4"
+  },
+  {
+    "OriginalIatVA": "01001224",
+    "Identity": "user32.dll!LoadStringA",
+    "Symbol": "__imp__LoadStringA@16"
+  },
+  {
+    "OriginalIatVA": "0100122C",
+    "Identity": "ole32.dll!CoInitializeSecurity",
+    "Symbol": "__imp__CoInitializeSecurity@36"
+  },
+  {
+    "OriginalIatVA": "01001230",
+    "Identity": "ole32.dll!CoInitialize",
+    "Symbol": "__imp__CoInitialize@4"
+  }
+]

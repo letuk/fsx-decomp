@@ -1,0 +1,448 @@
+{
+  "originalSHA256": "9cd195aeada1505f8ca73c6419ab0f03a8e7e7fc08550b754a4cc4030c370003",
+  "evidenceRun": "api-source-message-loop-20261107-001",
+  "objectSHA256": "141e6dc83fc6df94f394f333ce96e889607a7ceed903dd331383597822c72623",
+  "scope": "Complete contiguous Ghidra-model bodies; raw equality and individually target-validated DIR32 references separate. No linked DLL, data implementation, runtime or unassigned-flow claim",
+  "functions": [
+    {
+      "entry": "200f40da",
+      "bytes": 22,
+      "rawEqual": false
+    },
+    {
+      "entry": "200f6125",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "200f6a6b",
+      "bytes": 20,
+      "rawEqual": false
+    },
+    {
+      "entry": "200f6a7f",
+      "bytes": 20,
+      "rawEqual": false
+    },
+    {
+      "entry": "201059ee",
+      "bytes": 7,
+      "rawEqual": false
+    },
+    {
+      "entry": "20107a90",
+      "bytes": 3,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010d1a6",
+      "bytes": 83,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010d211",
+      "bytes": 87,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010d7e1",
+      "bytes": 87,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010da2a",
+      "bytes": 83,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010da95",
+      "bytes": 87,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010dcde",
+      "bytes": 83,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010dd49",
+      "bytes": 87,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010e988",
+      "bytes": 83,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010f3d9",
+      "bytes": 83,
+      "rawEqual": true
+    },
+    {
+      "entry": "2010f42c",
+      "bytes": 87,
+      "rawEqual": true
+    },
+    {
+      "entry": "20110867",
+      "bytes": 83,
+      "rawEqual": true
+    },
+    {
+      "entry": "201108ba",
+      "bytes": 87,
+      "rawEqual": true
+    },
+    {
+      "entry": "201118ef",
+      "bytes": 7,
+      "rawEqual": false
+    },
+    {
+      "entry": "20119210",
+      "bytes": 22,
+      "rawEqual": true
+    },
+    {
+      "entry": "2011b258",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "2011d0b4",
+      "bytes": 56,
+      "rawEqual": false
+    },
+    {
+      "entry": "2011d2b1",
+      "bytes": 51,
+      "rawEqual": false
+    },
+    {
+      "entry": "2011d2e4",
+      "bytes": 49,
+      "rawEqual": false
+    },
+    {
+      "entry": "2011e8fc",
+      "bytes": 34,
+      "rawEqual": true
+    },
+    {
+      "entry": "2011e9a5",
+      "bytes": 21,
+      "rawEqual": true
+    },
+    {
+      "entry": "2011f16e",
+      "bytes": 122,
+      "rawEqual": false
+    },
+    {
+      "entry": "2011f1e8",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "20124de9",
+      "bytes": 35,
+      "rawEqual": true
+    },
+    {
+      "entry": "20124e0c",
+      "bytes": 35,
+      "rawEqual": true
+    },
+    {
+      "entry": "20124e2f",
+      "bytes": 33,
+      "rawEqual": true
+    },
+    {
+      "entry": "20125334",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "20125340",
+      "bytes": 16,
+      "rawEqual": false
+    },
+    {
+      "entry": "20125a8f",
+      "bytes": 97,
+      "rawEqual": false
+    },
+    {
+      "entry": "20126622",
+      "bytes": 33,
+      "rawEqual": true
+    },
+    {
+      "entry": "20126bcf",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "20128536",
+      "bytes": 69,
+      "rawEqual": true
+    },
+    {
+      "entry": "20128743",
+      "bytes": 56,
+      "rawEqual": true
+    },
+    {
+      "entry": "20129cab",
+      "bytes": 22,
+      "rawEqual": false
+    },
+    {
+      "entry": "20129eb0",
+      "bytes": 30,
+      "rawEqual": false
+    },
+    {
+      "entry": "2012a5d8",
+      "bytes": 23,
+      "rawEqual": true
+    },
+    {
+      "entry": "2012a624",
+      "bytes": 23,
+      "rawEqual": true
+    },
+    {
+      "entry": "2012b5c4",
+      "bytes": 35,
+      "rawEqual": false
+    },
+    {
+      "entry": "2012b7fc",
+      "bytes": 62,
+      "rawEqual": true
+    },
+    {
+      "entry": "2012d2cd",
+      "bytes": 36,
+      "rawEqual": false
+    },
+    {
+      "entry": "2012d87b",
+      "bytes": 18,
+      "rawEqual": true
+    },
+    {
+      "entry": "2012df27",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "2012df61",
+      "bytes": 6,
+      "rawEqual": true
+    },
+    {
+      "entry": "2012dff3",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "2012e3cf",
+      "bytes": 39,
+      "rawEqual": false
+    },
+    {
+      "entry": "2012e3f6",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "2012e3fc",
+      "bytes": 17,
+      "rawEqual": false
+    },
+    {
+      "entry": "20132d90",
+      "bytes": 37,
+      "rawEqual": false
+    },
+    {
+      "entry": "20133cc0",
+      "bytes": 38,
+      "rawEqual": true
+    },
+    {
+      "entry": "20133ce6",
+      "bytes": 49,
+      "rawEqual": true
+    },
+    {
+      "entry": "2013507a",
+      "bytes": 68,
+      "rawEqual": false
+    },
+    {
+      "entry": "201352b1",
+      "bytes": 39,
+      "rawEqual": false
+    },
+    {
+      "entry": "20135e92",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "201363f6",
+      "bytes": 19,
+      "rawEqual": false
+    },
+    {
+      "entry": "20137982",
+      "bytes": 6,
+      "rawEqual": false
+    },
+    {
+      "entry": "20137e07",
+      "bytes": 16,
+      "rawEqual": false
+    },
+    {
+      "entry": "201380fd",
+      "bytes": 28,
+      "rawEqual": false
+    },
+    {
+      "entry": "201386ea",
+      "bytes": 52,
+      "rawEqual": false
+    },
+    {
+      "entry": "20138aeb",
+      "bytes": 23,
+      "rawEqual": true
+    },
+    {
+      "entry": "20138c06",
+      "bytes": 15,
+      "rawEqual": true
+    },
+    {
+      "entry": "2013a8e4",
+      "bytes": 52,
+      "rawEqual": false
+    },
+    {
+      "entry": "2013ba45",
+      "bytes": 33,
+      "rawEqual": true
+    },
+    {
+      "entry": "2013bd7f",
+      "bytes": 18,
+      "rawEqual": true
+    },
+    {
+      "entry": "2013c164",
+      "bytes": 8,
+      "rawEqual": true
+    },
+    {
+      "entry": "2014bd45",
+      "bytes": 1,
+      "rawEqual": true
+    },
+    {
+      "entry": "2016b53e",
+      "bytes": 3,
+      "rawEqual": true
+    },
+    {
+      "entry": "2016caab",
+      "bytes": 21,
+      "rawEqual": true
+    },
+    {
+      "entry": "20173f1e",
+      "bytes": 27,
+      "rawEqual": false
+    },
+    {
+      "entry": "20173f39",
+      "bytes": 27,
+      "rawEqual": false
+    },
+    {
+      "entry": "20179b90",
+      "bytes": 17,
+      "rawEqual": true
+    },
+    {
+      "entry": "2018c677",
+      "bytes": 22,
+      "rawEqual": false
+    },
+    {
+      "entry": "2019aef6",
+      "bytes": 75,
+      "rawEqual": true
+    },
+    {
+      "entry": "2019e30b",
+      "bytes": 4,
+      "rawEqual": true
+    },
+    {
+      "entry": "201a0cb9",
+      "bytes": 22,
+      "rawEqual": false
+    },
+    {
+      "entry": "201ab1f9",
+      "bytes": 31,
+      "rawEqual": true
+    },
+    {
+      "entry": "201b0d63",
+      "bytes": 17,
+      "rawEqual": true
+    },
+    {
+      "entry": "201b12c8",
+      "bytes": 8,
+      "rawEqual": true
+    },
+    {
+      "entry": "201b827e",
+      "bytes": 17,
+      "rawEqual": true
+    },
+    {
+      "entry": "201b9a37",
+      "bytes": 22,
+      "rawEqual": false
+    },
+    {
+      "entry": "201ba8ce",
+      "bytes": 22,
+      "rawEqual": false
+    },
+    {
+      "entry": "201bb8d0",
+      "bytes": 22,
+      "rawEqual": false
+    },
+    {
+      "entry": "201be234",
+      "bytes": 47,
+      "rawEqual": true
+    },
+    {
+      "entry": "201d11d3",
+      "bytes": 17,
+      "rawEqual": true
+    }
+  ]
+}

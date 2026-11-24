@@ -1,0 +1,38 @@
+[
+  {
+    "entry": "20449a1c",
+    "name": "magneticLatitudeCount",
+    "kind": "Global",
+    "bytes": 4,
+    "status": "live verified",
+    "functions": [
+      "203ec9a0"
+    ],
+    "description": "Reconstructed name. Grid latitude dimension read by the sampler and written by the loader.",
+    "evidence": "artifacts/fe.dll/magnetic-variation-ghidra.json"
+  },
+  {
+    "entry": "20449a20",
+    "name": "magneticLongitudeCount",
+    "kind": "Global",
+    "bytes": 4,
+    "status": "live verified",
+    "functions": [
+      "203ec9a0"
+    ],
+    "description": "Reconstructed name. Grid longitude dimension read by the sampler and written by the loader.",
+    "evidence": "artifacts/fe.dll/magnetic-variation-ghidra.json"
+  },
+  {
+    "entry": "20449a28",
+    "name": "magneticVariationGrid",
+    "kind": "Global",
+    "bytes": 4,
+    "status": "live verified",
+    "functions": [
+      "203ec9a0"
+    ],
+    "description": "Reconstructed name for the pointer to row-adjacent float samples grouped by longitude.",
+    "evidence": "artifacts/fe.dll/magnetic-variation-ghidra.json"
+  }
+]

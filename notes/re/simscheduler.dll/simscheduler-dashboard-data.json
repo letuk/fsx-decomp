@@ -1,0 +1,877 @@
+[
+  {
+    "entry": "20cc8368",
+    "name": "DAT_20cc8368",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "Written by FUN_20cc14e0 and compared with an input in FUN_20cc2ce0. The reconstructed name schedulerDispatchKey is provisional.",
+    "evidence": "artifacts/simscheduler.dll/first-pass.json"
+  },
+  {
+    "entry": "20cc8370",
+    "name": "DAT_20cc8370",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 64,
+    "description": "Verified minimum extent through the name index array pointer at +0x3c. The initializer at 0x20cc1600 installs VTable 0x20cc11cc, initializes speeds and zeros the time state.",
+    "evidence": "artifacts/simscheduler.dll/scheduler-object-lifecycle-ghidra.json"
+  },
+  {
+    "entry": "20cc11cc",
+    "name": "Scheduler VTable (reconstructed)",
+    "kind": "VTable",
+    "status": "live verified",
+    "bytes": 48,
+    "description": "Minimum table extent through +0x2c. All eight object-accessor targets have exact VC8 COFF member bodies.",
+    "evidence": "artifacts/simscheduler.dll/field-min-ghidra.json",
+    "slots": [
+      {
+        "offset": "0x0c",
+        "name": "FUN_20cc19a0",
+        "signature": "void __stdcall(SchedulerObject*, int)",
+        "target": "20cc19a0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x10",
+        "name": "FUN_20cc19c0",
+        "signature": "int __stdcall(SchedulerObject*)",
+        "target": "20cc19c0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x14",
+        "name": "FUN_20cc19e0",
+        "signature": "void __stdcall(SchedulerObject*, int)",
+        "target": "20cc19e0",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x18",
+        "name": "FUN_20cc1a00",
+        "signature": "int __stdcall(SchedulerObject*)",
+        "target": "20cc1a00",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x1c",
+        "name": "FUN_20cc1a20",
+        "signature": "int __stdcall(SchedulerObject*)",
+        "target": "20cc1a20",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x20",
+        "name": "FUN_20cc1ad0",
+        "signature": "double* __stdcall(SchedulerObject*, double*)",
+        "target": "20cc1ad0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x24",
+        "name": "FUN_20cc1af0",
+        "signature": "double* __stdcall(SchedulerObject*, double*) (reconstructed return type)",
+        "target": "20cc1af0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x28",
+        "name": "FUN_20cc1b10",
+        "signature": "double __stdcall(SchedulerObject*)",
+        "target": "20cc1b10",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x2c",
+        "name": "FUN_20cc1b90",
+        "signature": "void __stdcall(SchedulerObject*, double) (reconstructed)",
+        "target": "20cc1b90",
+        "status": "live verified machine ABI"
+      }
+    ],
+    "notes": [
+      {
+        "description": "Slot +0x2c evidence and ABI",
+        "file": "artifacts/simscheduler.dll/group20-callback-ghidra.json"
+      },
+      {
+        "description": "Scheduler object accessor slot targets and original bodies",
+        "file": "artifacts/simscheduler.dll/scheduler-object-member-accessors-ghidra.json"
+      },
+      {
+        "description": "Eight exact C++ member bodies",
+        "file": "artifacts/simscheduler.dll/scheduler-object-member-accessors-comparison.json"
+      }
+    ]
+  },
+  {
+    "entry": "20cc8360",
+    "name": "DAT_20cc8360",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "Read by FUN_20cc1500 as the first argument to FUN_20cc1cc0. The reconstructed context pointer name and layout are provisional.",
+    "evidence": "artifacts/simscheduler.dll/simconnect-fallback-ghidra.json"
+  },
+  {
+    "entry": "20cc8364",
+    "name": "DAT_20cc8364",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "Observer object pointer. FUN_20cc1500 stores it and FUN_20cc1b90 conditionally calls its first VTable slot. The concrete type remains open.",
+    "evidence": "artifacts/simscheduler.dll/advance-time-ghidra.json"
+  },
+  {
+    "entry": "20cc10fc",
+    "name": "Callback registration IAT slot",
+    "kind": "Import pointer",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "FUN_20cc1460 loads the import pointer once and calls it twice. The original api.dll export resolves to 0x200f63df.",
+    "evidence": "artifacts/simscheduler.dll/callback-registration-ghidra.json"
+  },
+  {
+    "entry": "20cc10d0",
+    "name": "Callback unregistration IAT slot",
+    "kind": "Import pointer",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "FUN_20cc1490 calls the original api.dll export at 0x200f658f through this slot.",
+    "evidence": "artifacts/simscheduler.dll/callback-unregistration-ghidra.json"
+  },
+  {
+    "entry": "20cc83b8",
+    "name": "DAT_20cc83b8",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "Head of the list traversed by FUN_20cc1490. The next link is at node offset +0x04.",
+    "evidence": "artifacts/simscheduler.dll/callback-unregistration-ghidra.json"
+  },
+  {
+    "entry": "20cc1280",
+    "name": "Scheduler list node VTable (reconstructed)",
+    "kind": "VTable",
+    "status": "live verified",
+    "bytes": 44,
+    "description": "Context pool VTable with eleven verified targets through +0x28.",
+    "evidence": "artifacts/simscheduler.dll/callback-unregistration-ghidra.json",
+    "slots": [
+      {
+        "offset": "0x00",
+        "name": "0x20cc3dd0",
+        "target": "20cc3dd0",
+        "signature": "Pool* __thiscall(Pool*, unsigned int)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x04",
+        "name": "FUN_20cc38c0",
+        "signature": "void __thiscall(SchedulerListNode*) (reconstructed)",
+        "target": "20cc38c0",
+        "status": "live verified machine ABI"
+      },
+      {
+        "offset": "0x08",
+        "name": "0x20cc3960",
+        "target": "20cc3960",
+        "signature": "void __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x0c",
+        "name": "CountUsedSchedulerPoolSlots (reconstructed)",
+        "target": "20cc3a30",
+        "signature": "unsigned int __fastcall(SchedulerPoolRegistration*) (reconstructed)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x10",
+        "name": "0x20cc3a60",
+        "target": "20cc3a60",
+        "signature": "unsigned int __fastcall(SchedulerPoolRegistration*) (reconstructed)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x14",
+        "name": "0x20cc3ac0",
+        "target": "20cc3ac0",
+        "signature": "unsigned int __fastcall(SchedulerPoolRegistration*) (reconstructed)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x18",
+        "name": "0x20cc3ad0",
+        "target": "20cc3ad0",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x1c",
+        "name": "0x20cc4610",
+        "target": "20cc4610",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x20",
+        "name": "0x20cc4640",
+        "target": "20cc4640",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x24",
+        "name": "0x20cc3ae0",
+        "target": "20cc3ae0",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x28",
+        "name": "0x20cc3af0",
+        "target": "20cc3af0",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      }
+    ],
+    "notes": [
+      {
+        "description": "Pool drain and metric slots",
+        "file": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json"
+      },
+      {
+        "description": "Complete typed pool VTable target and metric evidence",
+        "file": "artifacts/simscheduler.dll/pool-metrics-ghidra.json"
+      }
+    ]
+  },
+  {
+    "entry": "20cc12ac",
+    "name": "Scheduler list node VTable (reconstructed)",
+    "kind": "VTable",
+    "status": "live verified",
+    "bytes": 44,
+    "description": "Timed-entry pool VTable with eleven verified targets through +0x28.",
+    "evidence": "artifacts/simscheduler.dll/callback-unregistration-ghidra.json",
+    "slots": [
+      {
+        "offset": "0x00",
+        "name": "0x20cc46c0",
+        "target": "20cc46c0",
+        "signature": "Pool* __thiscall(Pool*, unsigned int)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x04",
+        "name": "FUN_20cc4430",
+        "signature": "void __thiscall(SchedulerListNode*) (reconstructed)",
+        "target": "20cc4430",
+        "status": "live verified machine ABI"
+      },
+      {
+        "offset": "0x08",
+        "name": "0x20cc44d0",
+        "target": "20cc44d0",
+        "signature": "void __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x0c",
+        "name": "CountUsedSchedulerPoolSlots (reconstructed)",
+        "target": "20cc3a30",
+        "signature": "unsigned int __fastcall(SchedulerPoolRegistration*) (reconstructed)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x10",
+        "name": "0x20cc45a0",
+        "target": "20cc45a0",
+        "signature": "unsigned int __fastcall(SchedulerPoolRegistration*) (reconstructed)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x14",
+        "name": "0x20cc4600",
+        "target": "20cc4600",
+        "signature": "unsigned int __fastcall(SchedulerPoolRegistration*) (reconstructed)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x18",
+        "name": "0x20cc3ad0",
+        "target": "20cc3ad0",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x1c",
+        "name": "0x20cc4610",
+        "target": "20cc4610",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x20",
+        "name": "0x20cc4620",
+        "target": "20cc4620",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x24",
+        "name": "0x20cc4630",
+        "target": "20cc4630",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x28",
+        "name": "0x20cc4640",
+        "target": "20cc4640",
+        "signature": "unsigned int __fastcall(Pool*)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      }
+    ],
+    "notes": [
+      {
+        "description": "Pool drain and metric slots",
+        "file": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json"
+      },
+      {
+        "description": "Complete typed pool VTable target and metric evidence",
+        "file": "artifacts/simscheduler.dll/pool-metrics-ghidra.json"
+      }
+    ]
+  },
+  {
+    "entry": "20cc1110",
+    "name": "Scheduler update predicate import",
+    "kind": "Import pointer",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "Original PE import used by 0x20cc13c0. Resolves to main.dll:0x20955a1b.",
+    "evidence": "artifacts/simscheduler.dll/group20-callback-ghidra.json"
+  },
+  {
+    "entry": "20cc10cc",
+    "name": "Scheduler time input import",
+    "kind": "Import pointer",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "Original PE import used by 0x20cc13c0. Resolves to api.dll:0x2012df27.",
+    "evidence": "artifacts/simscheduler.dll/group20-callback-ghidra.json"
+  },
+  {
+    "entry": "20cc12d8",
+    "name": "Scheduler time scale",
+    "kind": "Constant",
+    "status": "live verified",
+    "bytes": 8,
+    "originalHex": "000000000000703f",
+    "description": "Double 1/256 used by FUN_20cc1b90.",
+    "evidence": "artifacts/simscheduler.dll/advance-time-ghidra.json"
+  },
+  {
+    "entry": "20cc836c",
+    "name": "DAT_20cc836c",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 4,
+    "description": "Allocator input passed by FUN_20cc41d0 to api.dll:0x20135dd9. The exact allocator type remains open.",
+    "evidence": "artifacts/simscheduler.dll/pending-registration-ghidra.json"
+  },
+  {
+    "entry": "20cc1200",
+    "name": "Scheduler context VTable (reconstructed)",
+    "kind": "VTable",
+    "status": "live verified",
+    "bytes": 84,
+    "description": "Verified 21-slot context table through the deleting wrapper. Includes the context reset at +0x40.",
+    "evidence": "artifacts/simscheduler.dll/immediate-registration-ghidra.json",
+    "comparison": {
+      "status": "Normalized",
+      "scope": "All 21 compiler-generated x86 COFF VTable slots map to the original slot targets. This checks table relocations, not all method bodies or linked image addresses.",
+      "evidence": "vm-share/modules/simscheduler/runs/simscheduler-native-time-getter-20261117-001/native-context-comparison.json"
+    },
+    "slots": [
+      {
+        "offset": "0x00",
+        "name": "FUN_20cc2720",
+        "signature": "long __stdcall(SchedulerContext*)",
+        "target": "20cc2720",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x04",
+        "name": "FUN_20cc2740",
+        "signature": "long __stdcall(SchedulerContext*)",
+        "target": "20cc2740",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x08",
+        "name": "FUN_20cc2a80",
+        "signature": "const char* __stdcall(SchedulerContext*)",
+        "target": "20cc2a80",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x0c",
+        "name": "FUN_20cc2aa0",
+        "signature": "int __stdcall(SchedulerContext*, double, double)",
+        "target": "20cc2aa0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x10",
+        "name": "FUN_20cc2ae0",
+        "signature": "int __stdcall(SchedulerContext*, double)",
+        "target": "20cc2ae0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x14",
+        "name": "FUN_20cc2b20",
+        "signature": "int __stdcall(SchedulerContext*, double)",
+        "target": "20cc2b20",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x18",
+        "name": "FUN_20cc2b60",
+        "signature": "double __stdcall(SchedulerContext*)",
+        "target": "20cc2b60",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x1c",
+        "name": "FUN_20cc2b80",
+        "signature": "double __stdcall(SchedulerContext*)",
+        "target": "20cc2b80",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x20",
+        "name": "FUN_20cc2ba0",
+        "signature": "int __stdcall(SchedulerContext*)",
+        "target": "20cc2ba0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x24",
+        "name": "FUN_20cc2bc0",
+        "signature": "void __stdcall(SchedulerContext*, unsigned int)",
+        "target": "20cc2bc0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x28",
+        "name": "FUN_20cc2c20",
+        "signature": "int __stdcall(SchedulerContext*)",
+        "target": "20cc2c20",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x2c",
+        "name": "FUN_20cc2c40",
+        "signature": "void __stdcall(SchedulerContext*, unsigned int)",
+        "target": "20cc2c40",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x30",
+        "name": "FUN_20cc2c80",
+        "signature": "void __stdcall(SchedulerContext*, int)",
+        "target": "20cc2c80",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x34",
+        "name": "FUN_20cc2cb0",
+        "signature": "void __stdcall(SchedulerContext*, int)",
+        "target": "20cc2cb0",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x38",
+        "name": "FUN_20cc2ce0",
+        "signature": "int __stdcall(SchedulerContext*, void*, int)",
+        "target": "20cc2ce0",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x3c",
+        "name": "FUN_20cc2e80",
+        "signature": "int __stdcall(SchedulerContext*, void*)",
+        "target": "20cc2e80",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x40",
+        "name": "FUN_20cc2e20",
+        "signature": "int __stdcall(SchedulerContext*)",
+        "target": "20cc2e20",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x44",
+        "name": "ReadSchedulerContextTime (FUN_20cc2ff0)",
+        "signature": "double* __stdcall(SchedulerContext*, double*)",
+        "target": "20cc2ff0",
+        "status": "live verified slot target and machine ABI, reconstructed return type"
+      },
+      {
+        "offset": "0x48",
+        "name": "FUN_20cc3010",
+        "signature": "int __stdcall(SchedulerContext*, double*, int*)",
+        "target": "20cc3010",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x4c",
+        "name": "FUN_20cc2780",
+        "signature": "SchedulerContext* __stdcall(SchedulerContext*)",
+        "target": "20cc2780",
+        "status": "live verified machine ABI, reconstructed source signature"
+      },
+      {
+        "offset": "0x50",
+        "name": "FUN_20cc28c0",
+        "signature": "SchedulerContext* __thiscall(SchedulerContext*, unsigned int) (reconstructed)",
+        "target": "20cc28c0",
+        "status": "live verified machine ABI"
+      }
+    ],
+    "notes": [
+      {
+        "description": "Live Ghidra listings for all 21 slot targets and the constructor",
+        "file": "artifacts/simscheduler.dll/context-native-class-ghidra.json"
+      },
+      {
+        "description": "Deleting wrapper slot evidence",
+        "file": "artifacts/simscheduler.dll/context-lifecycle-ghidra.json"
+      },
+      {
+        "description": "Reference-count slot evidence",
+        "file": "artifacts/simscheduler.dll/context-factory-storage-ghidra.json"
+      },
+      {
+        "description": "Fallback configuration slot targets and ABI",
+        "file": "artifacts/simscheduler.dll/fallback-context-ghidra.json"
+      },
+      {
+        "description": "Accessor and mode setter slots and original bodies",
+        "file": "artifacts/simscheduler.dll/context-accessors-ghidra.json"
+      },
+      {
+        "description": "Verified context reset target and stack ABI",
+        "file": "artifacts/simscheduler.dll/context-reset-ghidra.json"
+      }
+    ]
+  },
+  {
+    "entry": "20cc83b4",
+    "name": "DAT_20cc83b4",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 4,
+    "originalHex": "00000000",
+    "description": "Pool pointer loaded by FUN_20cc35d0 and FUN_20cc3770. File-image initial value is zero.",
+    "evidence": "artifacts/simscheduler.dll/entry-pool-ghidra.json",
+    "notes": [
+      {
+        "description": "Publication by the CRT startup wrapper",
+        "file": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json"
+      }
+    ]
+  },
+  {
+    "entry": "20cc83b0",
+    "name": "DAT_20cc83b0",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 4,
+    "originalHex": "00000000",
+    "description": "Context pool pointer read by FUN_20cc1f10 and FUN_20cc20b0. File-image initial value is zero.",
+    "evidence": "artifacts/simscheduler.dll/context-factory-storage-ghidra.json",
+    "notes": [
+      {
+        "description": "Publication by the CRT startup wrapper",
+        "file": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json"
+      }
+    ]
+  },
+  {
+    "entry": "20cc11b8",
+    "name": "SimConnectFallback",
+    "kind": "String",
+    "status": "live verified",
+    "bytes": 19,
+    "originalHex": "53696d436f6e6e65637446616c6c6261636b00",
+    "description": "Name passed to the scheduler registry lookup and factory by FUN_20cc1cc0.",
+    "evidence": "vm-share/modules/simscheduler/runs/simscheduler-fallback-context-20261116-002/comparison-20cc1cc0.json",
+    "functions": [
+      "20cc1cc0"
+    ]
+  },
+  {
+    "entry": "20cc111c",
+    "name": "Scheduler object CRT initializer pointer",
+    "kind": "CRT initializer pointer",
+    "status": "live verified",
+    "bytes": 4,
+    "originalHex": "b072cc20",
+    "description": "HIGHLOW-relocated pointer to the scheduler startup entry at 0x20cc72b0.",
+    "evidence": "artifacts/simscheduler.dll/scheduler-object-lifecycle-ghidra.json",
+    "functions": [
+      "20cc72b0"
+    ]
+  },
+  {
+    "entry": "20cc1120",
+    "name": "Context pool CRT initializer pointer",
+    "kind": "CRT initializer pointer",
+    "bytes": 4,
+    "description": "HIGHLOW-relocated pointer to 0x20cc72d0.",
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json",
+    "functions": [
+      "20cc72d0"
+    ]
+  },
+  {
+    "entry": "20cc83d4",
+    "name": "Context pool storage (reconstructed)",
+    "kind": "Global",
+    "bytes": 24,
+    "description": "Minimum extent through the peak block counter. Shared list link at +0x04, blocks at +0x08, lock at +0x0c.",
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json",
+    "functions": [
+      "20cc72d0"
+    ]
+  },
+  {
+    "entry": "20cc83f0",
+    "name": "Context pool initialization guard (reconstructed)",
+    "kind": "Global",
+    "bytes": 4,
+    "description": "Bit 0 controls one-time construction and exit registration.",
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json"
+  },
+  {
+    "entry": "20cc1124",
+    "name": "Timed-entry pool CRT initializer pointer",
+    "kind": "CRT initializer pointer",
+    "bytes": 4,
+    "description": "HIGHLOW-relocated pointer to 0x20cc72e0.",
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json",
+    "functions": [
+      "20cc72e0"
+    ]
+  },
+  {
+    "entry": "20cc83bc",
+    "name": "Timed-entry pool storage (reconstructed)",
+    "kind": "Global",
+    "bytes": 24,
+    "description": "Minimum extent through the peak block counter. Shared list link at +0x04, blocks at +0x08, lock at +0x0c.",
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json",
+    "functions": [
+      "20cc72e0"
+    ]
+  },
+  {
+    "entry": "20cc83ec",
+    "name": "Timed-entry pool initialization guard (reconstructed)",
+    "kind": "Global",
+    "bytes": 4,
+    "description": "Bit 0 controls one-time construction and exit registration.",
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/pool-lifecycle-ghidra.json"
+  },
+  {
+    "entry": "20cc1254",
+    "name": "Base pool registration VTable (reconstructed)",
+    "kind": "VTable",
+    "bytes": 4,
+    "description": "Minimum extent for the verified deleting wrapper slot.",
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/pool-metrics-ghidra.json",
+    "slots": [
+      {
+        "offset": "0x00",
+        "name": "FUN_20cc3d60",
+        "target": "20cc3d60",
+        "signature": "SchedulerPoolRegistration* __thiscall(SchedulerPoolRegistration*, unsigned int)",
+        "status": "live verified machine ABI, reconstructed source signature"
+      }
+    ]
+  },
+  {
+    "entry": "20cc8010",
+    "name": "DAT_20cc8010",
+    "kind": "Global",
+    "status": "live verified",
+    "bytes": 1,
+    "originalHex": "02",
+    "description": "CPU mode byte. Initial value 2 requests detection. Values -1 and 1 select the original single-processor and multiprocessor paths.",
+    "evidence": "artifacts/simscheduler.dll/free-list-ghidra.json",
+    "functions": [
+      "20cc4a40",
+      "20cc4d90",
+      "20cc5110",
+      "20cc52e0",
+      "20cc54b0",
+      "20cc61c0",
+      "20cc63e0",
+      "20cc6580"
+    ],
+    "notes": [
+      {
+        "description": "Pool lock atomic mode references",
+        "file": "artifacts/simscheduler.dll/pool-lock-ghidra.json"
+      }
+    ]
+  },
+  {
+    "entry": "20cc1178",
+    "name": "_pRawDllMain callback pointer",
+    "kind": "Function pointer",
+    "originalHex": "8049cc20",
+    "description": "HIGHLOW-relocated raw loader hook pointer to FUN_20cc4980.",
+    "functions": [
+      "20cc4980",
+      "20cc686d"
+    ],
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/dll-startup-ghidra.json"
+  },
+  {
+    "entry": "20cc7340",
+    "name": "CRT DLL EH4 scope table",
+    "kind": "EH4 table",
+    "originalHex": "feffffff00000000d0ffffff00000000feffffff000000007869cc20000000004469cc205869cc20",
+    "description": "40-byte table with three validated callback fields for the dispatcher.",
+    "functions": [
+      "20cc686d",
+      "20cc6978"
+    ],
+    "bytes": 40,
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/dll-startup-ghidra.json"
+  },
+  {
+    "entry": "20cc1118",
+    "name": "CRT C++ initializer table",
+    "kind": "CRT initializer table",
+    "originalHex": "00000000b072cc20d072cc20e072cc2000000000",
+    "description": "Original range from the start sentinel through the end sentinel. Startup probe checks the boundary roles.",
+    "functions": [
+      "20cc66c9"
+    ],
+    "bytes": 20,
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/dll-startup-ghidra.json"
+  },
+  {
+    "entry": "20cc112c",
+    "name": "CRT C initializer table",
+    "kind": "CRT initializer table",
+    "originalHex": "000000007766cc202170cc2000000000",
+    "description": "Contains CRT pre-C initialization and the SSE2 availability initializer between the sentinels.",
+    "functions": [
+      "20cc6677",
+      "20cc66c9",
+      "20cc7021"
+    ],
+    "bytes": 16,
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/dll-startup-ghidra.json"
+  },
+  {
+    "entry": "20cc835c",
+    "name": "DAT_20cc835c",
+    "kind": "Global",
+    "bytes": 4,
+    "description": "Module handle saved by FUN_20cc49c0 on process attach.",
+    "functions": [
+      "20cc49c0"
+    ],
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/dll-startup-ghidra.json"
+  },
+  {
+    "entry": "20cc75a8",
+    "name": "SSE2 OS probe EH4 scope table",
+    "kind": "EH4 table",
+    "bytes": 28,
+    "status": "live verified",
+    "description": "Two HIGHLOW fields point to the exception filter and handler within FUN_20cc6f67.",
+    "originalHex": "feffffff00000000d4ffffff00000000feffffff846fcc20a06fcc20",
+    "evidence": "artifacts/simscheduler.dll/sse2-detection-ghidra.json",
+    "functions": [
+      "20cc6f67"
+    ]
+  },
+  {
+    "entry": "20cc7368",
+    "name": "CRT exit registration EH4 scope table",
+    "kind": "EH4 table",
+    "bytes": 28,
+    "status": "live verified",
+    "description": "HIGHLOW unwind pointer at +0x18 selects the lock-release helper.",
+    "evidence": "artifacts/simscheduler.dll/crt-onexit-ghidra.json",
+    "originalHex": "feffffff00000000ccffffff00000000feffffff00000000586acc20",
+    "functions": [
+      "20cc69c2",
+      "20cc6a58"
+    ]
+  },
+  {
+    "entry": "20cc8024",
+    "name": "CRT TypeInfo root node",
+    "kind": "Global",
+    "bytes": 4,
+    "description": "Minimum verified extent through the first word of the root node passed to the CRT cleanup thunk.",
+    "status": "live verified",
+    "evidence": "artifacts/simscheduler.dll/crt-type-info-cleanup-ghidra.json",
+    "functions": [
+      "20cc6a89"
+    ]
+  },
+  {
+    "entry": "20cc139c",
+    "name": "CRT RTC callback sentinels",
+    "kind": "CRT initializer table",
+    "bytes": 16,
+    "status": "live verified",
+    "originalHex": "00000000000000000000000000000000",
+    "description": "Leading and trailing zero sentinels for the empty initialization and termination ranges.",
+    "evidence": "artifacts/simscheduler.dll/crt-rtc-ghidra.json",
+    "functions": [
+      "20cc6a9a",
+      "20cc6ac3"
+    ]
+  },
+  {
+    "entry": "20cc7388",
+    "name": "CRT PE section check EH4 scope table",
+    "kind": "EH4 table",
+    "bytes": 28,
+    "status": "live verified",
+    "originalHex": "feffffff00000000d8ffffff00000000feffffffad6bcc20c16bcc20",
+    "description": "Two HIGHLOW fields identify the access violation filter and handler within the section check.",
+    "evidence": "artifacts/simscheduler.dll/crt-pe-sections-ghidra.json",
+    "functions": [
+      "20cc6b67"
+    ]
+  }
+]

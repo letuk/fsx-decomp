@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FSX Decompilation</title>
+<style>
+  :root { color-scheme: dark; --bg:#121619; --panel:#1a2024; --line:#343f45; --text:#eef2f1; --muted:#acbbbf; --accent:#9de5ce; --different:#ffaca0; --mapped:#f6d394; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 "Instrument Sans","Segoe UI",sans-serif; }
+  header, main { max-width:1500px; margin:auto; padding:20px clamp(14px,4vw,52px); }
+  header { display:flex; gap:24px; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); }
+  h1 { margin:0; font-size:clamp(23px,4vw,34px); letter-spacing:-.03em; }
+  h2,h3,p { margin:0 0 10px; }
+  h2 { overflow-wrap:anywhere; font-size:23px; }
+  h3 { font-size:15px; }
+  label { display:grid; gap:5px; color:var(--muted); font-size:13px; }
+  select,input,button { font:inherit; color:var(--text); background:#20282d; border:1px solid var(--line); border-radius:6px; padding:7px 10px; min-width:0; }
+  button { cursor:pointer; }
+  button:disabled { cursor:default; opacity:.45; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  main { display:grid; grid-template-columns:minmax(260px, .7fr) minmax(0, 1.8fr); gap:18px; }
+  .pane { background:var(--panel); border:1px solid var(--line); border-radius:10px; min-width:0; }
+  .filters,.detail { padding:16px; }
+  .filters { display:grid; gap:10px; }
+  .filter-grid,.columns { display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .items { margin:0; padding:0; list-style:none; }
+  .items button { width:100%; border:0; border-top:1px solid var(--line); border-radius:0; text-align:left; background:transparent; }
+  .items button:hover,.items button[aria-current="true"] { background:#253631; }
+  .items strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .meta { display:flex; justify-content:space-between; gap:7px; margin-top:2px; }
+  small,.muted,.meta { color:var(--muted); }
+  .status { color:var(--accent); }
+  .different { color:var(--different); }
+  .mapped { color:var(--mapped); }
+  .rawEqual { color:var(--accent); }
+  .pager { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px; border-top:1px solid var(--line); }
+  .detail { align-self:start; }
+  .detail > section,.detail > details { border-top:1px solid var(--line); padding-top:12px; margin-top:14px; }
+  .mono, code, pre { font-family:"IBM Plex Mono",Consolas,monospace; }
+  pre { margin:0; padding:10px; background:var(--bg); border-radius:6px; overflow:auto; font-size:12px; max-height:360px; }
+  .bytes { word-spacing:4px; white-space:pre-wrap; overflow-wrap:anywhere; }
+  a { color:var(--accent); overflow-wrap:anywhere; }
+  summary { cursor:pointer; margin-bottom:10px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; overflow-wrap:anywhere; }
+  th,td { text-align:left; padding:6px; border-bottom:1px solid var(--line); }
+  .references { display:flex; flex-wrap:wrap; gap:6px; max-height:160px; overflow:auto; }
+  .progress { display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line); }
+  .donut { width:66px; height:66px; flex:none; border-radius:50%; display:grid; place-items:center; }
+  .donut span { width:46px; height:46px; display:grid; place-items:center; border-radius:50%; background:var(--panel); font-size:11px; }
+  .legend { display:flex; flex-wrap:wrap; gap:4px; }
+  .legend button { font-size:11px; padding:2px 5px; text-align:left; }
+  .legend button::before { content:''; display:inline-block; background:var(--swatch); width:8px; height:8px; border-radius:50%; margin-right:5px; }
+  .diff-scroll { max-height:500px; overflow:auto; }
+  .diff { min-width:600px; }
+  .diff th { position:sticky; top:0; background:var(--panel); }
+  .diff td { vertical-align:top; }
+  .diff td:first-child { width:116px; white-space:nowrap; }
+  .diff code { white-space:pre-wrap; }
+  .diff .equal { background:#20352f; color:var(--accent); }
+  .diff .changed { background:#392b29; color:var(--different); }
+  .diff .relocation { background:#383125; color:var(--mapped); }
+  @media (max-width:800px) { main { grid-template-columns:1fr; } .items { max-height:300px; overflow:auto; } }
+  @media (max-width:520px) { header { align-items:flex-start; flex-direction:column; gap:8px; } .columns { grid-template-columns:1fr; } }
+</style>
+<header>
+  <h1>FSX Decompilation</h1>
+  <label>Module <select id="module"></select></label>
+</header>
+<main>
+  <aside class="pane">
+    <section id="progress" class="progress" aria-label="Module function status"></section>
+    <div class="filters">
+      <label>View <select id="view"><option value="rows">Functions</option><option value="globals">Global data</option><option value="types">Types</option></select></label>
+      <label>Search <input id="search" type="search" placeholder="Name, address, type or description"></label>
+      <div class="filter-grid">
+        <label>Group <select id="group"></select></label>
+        <label>Status <select id="status"></select></label>
+      </div>
+      <small id="count" aria-live="polite"></small>
+    </div>
+    <ul id="items" class="items"></ul>
+    <div class="pager"><button id="prev">Previous</button><small id="page"></small><button id="next">Next</button></div>
+  </aside>
+  <article class="pane detail" id="detail" aria-label="Entry detail"></article>
+</main>
+<script type="application/json" id="data"><!-- DATA --></script>
+<script>
+  const data = JSON.parse(document.getElementById('data').textContent);
+  const byId = id => document.getElementById(id);
+  const moduleBox = byId('module');
+  const view = byId('view');
+  const search = byId('search');
+  const group = byId('group');
+  const status = byId('status');
+  const items = byId('items');
+  const detail = byId('detail');
+  const pageSize = 18;
+  let page = 0;
+  let selected;
+  let listingMode = 'aligned';
+
+  function saveView() {
+    const params = new URLSearchParams({
+      module: data[Number(moduleBox.value)]?.name || '',
+      view: view.value, search: search.value, group: group.value, status: status.value,
+      page: String(page), entry: selected?.entry || '', listing: listingMode,
+    });
+    const hash = '#' + params.toString();
+    if (location.hash === hash) return;
+    try {
+      history.replaceState(null, '', hash);
+    } catch {
+      location.replace(hash);
+    }
+  }
+
+  function element(tag, text, className) {
+    const node = document.createElement(tag);
+    if (text !== undefined) node.textContent = text;
+    if (className) node.className = className;
+    return node;
+  }
+
+  function options(box, values) {
+    box.replaceChildren(...values.map(([value, label]) => new Option(label, value)));
+    box.value = values[0]?.[0] || '';
+  }
+
+  function state(row) {
+    if (row.status) return row.status;
+    if (row.comparison) return row.comparison.status;
+    return row.notes.length || row.description ? 'Documented' : 'Inventoried';
+  }
+
+  function renderProgress() {
+    const rows = data[Number(moduleBox.value)]?.rows || [];
+    const target = byId('progress');
+    target.replaceChildren();
+    if (!rows.length) {
+      target.append(element('small', 'No function entries for this module.'));
+      return;
+    }
+    const colors = { Exact:'#79cf9d', Normalized:'#62b9b2', Different:'#f28b83',
+      Diagnostic:'#c1a3e8', Compiled:'#f6d394', Documented:'#7da9d5', Inventoried:'#77838e' };
+    const counts = new Map();
+    for (const row of rows) {
+      const status = state(row);
+      counts.set(status, (counts.get(status) || 0) + 1);
+    }
+    const chart = element('div', undefined, 'donut');
+    chart.setAttribute('aria-hidden', 'true');
+    chart.append(element('span', String(rows.length)));
+    const info = element('div');
+    info.append(element('small', 'Function view entries'));
+    const legend = element('div', undefined, 'legend');
+    let total = 0;
+    const stops = [];
+    for (const [label, count] of [...counts].sort(([a], [b]) => a.localeCompare(b))) {
+      const color = colors[label] || '#a2a7b0';
+      stops.push(color + ' ' + (100 * total / rows.length) + '% ' + (100 * (total + count) / rows.length) + '%');
+      total += count;
+      const button = element('button', label + ' ' + count);
+      button.style.setProperty('--swatch', color);
+      button.addEventListener('click', () => {
+        if (view.value !== 'rows') {
+          view.value = 'rows';
+          resetFilters();
+        }
+        status.value = status.value === label ? '' : label;
+        page = 0;
+        render();
+      });
+      legend.append(button);
+    }
+    chart.style.background = 'conic-gradient(' + stops.join(', ') + ')';
+    info.append(legend);
+    target.append(chart, info);
+  }
+
+  function sourceLink(parent, file, label = file) {
+    if (!file) return;
+    const link = element('a', label);
+    link.href = '../../../' + file.split('/').map(encodeURIComponent).join('/');
+    parent.append(element('br'), link);
+  }
+
+  function assembly(title, rows) {
+    const box = element('div');
+    const lines = (rows || []).map(parts => parts.filter(Boolean).join('  '));
+    box.append(element('h3', title), element('pre', lines.join('\n') || 'No listing in the imported evidence.'));
+    return box;
+  }
+
+  function alignInstructions(left, right) {
+    const normalize = parts => parts[2]?.trim().toLowerCase().replace(/^\s*[\da-f]{8}\s+/i, '').replace(/\s+/g, ' ') || '';
+    const describe = rows => rows.map(parts => {
+      const text = normalize(parts);
+      return { parts, text, mnemonic: text.split(' ')[0], hex: parts[1]?.replace(/\s+/g, '').toLowerCase() };
+    });
+    const a = describe(left);
+    const b = describe(right);
+    const width = b.length + 1;
+    const scores = new Int32Array((a.length + 1) * width);
+    function weight(x, y) {
+      if (x.hex && x.hex === y.hex) return 8;
+      if (!x.mnemonic || x.mnemonic !== y.mnemonic) return 0;
+      if (x.text === y.text) return 5;
+      return 2;
+    }
+    for (let i = a.length - 1; i >= 0; i--) {
+      for (let j = b.length - 1; j >= 0; j--) {
+        const at = i * width + j;
+        const match = weight(a[i], b[j]);
+        scores[at] = Math.max(scores[at + width], scores[at + 1], match ? match + scores[at + width + 1] : 0);
+      }
+    }
+    const output = [];
+    let i = 0;
+    let j = 0;
+    while (i < a.length || j < b.length) {
+      const at = i * width + j;
+      const match = i < a.length && j < b.length && weight(a[i], b[j]);
+      if (match && scores[at] === match + scores[at + width + 1]) output.push([a[i++], b[j++]]);
+      else if (i < a.length && (j === b.length || scores[at + width] >= scores[at + 1])) output.push([a[i++], null]);
+      else output.push([null, b[j++]]);
+    }
+    return output;
+  }
+
+  function alignedListing(left, right, comparison) {
+    const section = element('div');
+    const start = parseInt(left[0][0], 16);
+    const rebuiltStart = parseInt(right[0][0], 16);
+    function classify(a, b) {
+      if (!a) return ['Rebuilt only', 'changed'];
+      if (!b) return ['Original only', 'changed'];
+      if (!a.hex || !b.hex) return a.text === b.text ? ['Same text', ''] : ['Text differs', 'changed'];
+      if (a.hex === b.hex) return ['Same bytes', 'equal'];
+      const offset = parseInt(a.parts[0], 16) - start;
+      const rebuiltOffset = parseInt(b.parts[0], 16) - rebuiltStart;
+      if (a.hex.length === b.hex.length && offset === rebuiltOffset && comparison.leftHex && comparison.rightHex &&
+          comparison.mappedOffsets?.length && offset >= 0) {
+        const differences = a.hex.match(/../g).flatMap((byte, index) =>
+          byte === b.hex.slice(index * 2, index * 2 + 2) ? [] : [offset + index]);
+        if (differences.every(index => comparison.mappedOffsets.some(field => index >= field && index < field + 4))) {
+          return ['Relocation field', 'relocation'];
+        }
+      }
+      return ['Bytes differ', 'changed'];
+    }
+    const pairs = alignInstructions(left, right);
+    const counts = new Map();
+    const styles = [];
+    const rows = pairs.map(([a, b]) => {
+      const [label, style] = classify(a, b);
+      counts.set(label, (counts.get(label) || 0) + 1);
+      styles.push(style);
+      return [label, ...[a, b].map(item => element('code', item?.parts.filter(Boolean).join('  ') || '—'))];
+    });
+    const grid = layoutTable('Instruction alignment', ['Status', 'Original', 'Rebuilt'], rows);
+    grid.className = 'diff-scroll';
+    grid.querySelector('table').className = 'diff';
+    grid.querySelectorAll('tbody tr').forEach((row, index) => { row.className = styles[index]; });
+    section.append(
+      element('p', [...counts].map(([label, count]) => label + ' ' + count).join(' · '), 'muted'),
+      element('p', 'Aligned by instruction similarity. The verified comparison status is shown above.', 'muted'),
+      grid
+    );
+    return section;
+  }
+
+  function byteView(comparison) {
+    const box = element('details');
+    box.append(element('summary', 'Raw bytes by offset'));
+    box.append(element('p', 'Green: equal raw bytes · Red: different raw bytes · Amber: mapped relocation field', 'muted'));
+    if (comparison.status === 'Different') {
+      box.append(element('p', 'Offsets can diverge after an inserted or removed instruction.', 'muted'));
+    }
+    const pair = element('div', undefined, 'columns');
+    const left = comparison.leftHex.match(/../g);
+    const right = comparison.rightHex.match(/../g);
+    for (const [title, bytes] of [['Original', left], ['Rebuilt', right]]) {
+      const col = element('div');
+      const output = element('pre', undefined, 'bytes');
+      for (let i = 0; i < Math.max(left.length, right.length); i++) {
+        const mapped = comparison.mappedOffsets?.some(offset => i >= offset && i < offset + 4);
+        const color = left[i] === right[i] ? 'rawEqual' : mapped ? 'mapped' : 'different';
+        const byte = element('span', (bytes[i] || '··') + ' ', color);
+        byte.title = '+0x' + i.toString(16);
+        output.append(byte);
+      }
+      col.append(element('h3', title), output);
+      pair.append(col);
+    }
+    box.append(pair);
+    return box;
+  }
+
+  function entryLink(targetView, entry, label = entry) {
+    const target = (data[Number(moduleBox.value)]?.[targetView] || []).find(row => row.entry === entry);
+    if (!target) return element('span', label, 'mono');
+    const button = element('button', label, 'mono');
+    button.title = target.name;
+    button.addEventListener('click', () => {
+      view.value = targetView;
+      resetFilters();
+      search.value = target.path || '0x' + target.entry;
+      const matches = current().filter(row => matchesFilters(row, search.value.toLowerCase()));
+      page = Math.floor(matches.indexOf(target) / pageSize);
+      selected = target;
+      render();
+      detail.querySelector('h2').focus();
+    });
+    return button;
+  }
+
+  function references(title, entries, targetView) {
+    const box = element('details');
+    box.append(element('summary', title + ' (' + entries.length + ')'));
+    const links = element('div', undefined, 'references');
+    for (const entry of entries) links.append(entryLink(targetView, entry));
+    box.append(links);
+    return box;
+  }
+
+  function showDisassembly(row, scopes) {
+    if (!row.asm.length && !row.comparison?.rebuilt?.length && !scopes.length) return;
+
+    const listings = element('details');
+    listings.open = true;
+    listings.append(element('summary', 'Disassembly'));
+    const contents = element('div');
+    const defaultEntry = row.comparison?.rebuilt?.length ? row : scopes[0] ?? row;
+
+    function showListing(entry) {
+      const comparison = entry.comparison;
+      const rebuilt = comparison?.rebuilt || [];
+      const canAlign = entry.asm.length && rebuilt.length && (entry.asm.length + 1) * (rebuilt.length + 1) <= 1000000;
+      contents.replaceChildren();
+      if (entry !== row) {
+        const info = element('p', 'Scope at 0x' + entry.entry + ' · ' + comparison.status, 'muted');
+        sourceLink(info, comparison.evidence, 'Comparison report');
+        info.append(' ', entryLink('rows', entry.entry, 'Open scope'));
+        contents.append(info);
+      }
+
+      const content = element('div');
+      function renderListing() {
+        if (canAlign && listingMode === 'aligned') {
+          content.replaceChildren(alignedListing(entry.asm, rebuilt, comparison));
+          return;
+        }
+        const columns = element('div', undefined, 'columns');
+        if (entry.asm.length) columns.append(assembly('Original', entry.asm));
+        if (rebuilt.length) columns.append(assembly('Rebuilt', rebuilt));
+        content.replaceChildren(columns);
+      }
+      if (canAlign) {
+        const control = element('label', 'Listing view');
+        const mode = element('select');
+        options(mode, [['aligned', 'Aligned instructions'], ['raw', 'Raw listings']]);
+        mode.value = listingMode;
+        mode.addEventListener('change', () => { listingMode = mode.value; renderListing(); saveView(); });
+        control.append(mode);
+        contents.append(control);
+      } else if (entry.asm.length && rebuilt.length) {
+        contents.append(element('p', 'Listings exceed the alignment limit. Showing raw listings.', 'muted'));
+      }
+      renderListing();
+      contents.append(content);
+      sourceLink(contents, entry.listing, 'Original listing file');
+      sourceLink(contents, comparison?.listing, 'Build disassembly file');
+      if (entry !== row && comparison.leftHex && comparison.rightHex) contents.append(byteView(comparison));
+    }
+
+    if (scopes.length) {
+      const choices = row.asm.length || row.comparison?.rebuilt?.length ? [row, ...scopes] : scopes;
+      const control = element('label', 'Listing scope');
+      const scopeBox = element('select');
+      options(scopeBox, choices.map(entry => [
+        entry.entry,
+        entry === row && !row.comparison?.rebuilt?.length ? 'Full original function'
+          : '0x' + entry.entry + ' · ' + entry.name,
+      ]));
+      scopeBox.value = defaultEntry.entry;
+      scopeBox.addEventListener('change', () => showListing(choices.find(entry => entry.entry === scopeBox.value)));
+      control.append(scopeBox);
+      listings.append(control);
+    }
+    showListing(defaultEntry);
+    listings.append(contents);
+    detail.append(listings);
+  }
+
+  function layoutTable(title, columns, rows) {
+    const box = element('section');
+    const table = element('table');
+    const head = element('thead');
+    const headings = element('tr');
+    headings.append(...columns.map(column => element('th', column)));
+    head.append(headings);
+    const body = element('tbody');
+    for (const values of rows) {
+      const row = element('tr');
+      for (const value of values) {
+        const cell = element('td');
+        if (value instanceof Node) cell.append(value);
+        else cell.textContent = value ?? '';
+        row.append(cell);
+      }
+      body.append(row);
+    }
+    table.append(head, body);
+    box.append(element('h3', title), table);
+    return box;
+  }
+
+  const hexOffset = value => Number.isInteger(value) ? '+0x' + value.toString(16) : value;
+
+  function showObject(row) {
+    if (row.typePath) {
+      const type = element('p', 'Type ');
+      type.append(entryLink('types', row.typePath));
+      detail.append(type);
+    }
+    if (row.typeViews?.length) detail.append(element('p', 'Observed types: ' + row.typeViews.join(' / '), 'mono'));
+    if (row.initialValue !== undefined) detail.append(element('p', 'Initial value: ' + row.initialValue, 'mono'));
+    if (row.originalHex) detail.append(element('pre', row.originalHex, 'bytes'));
+    if (row.fields?.length) {
+      detail.append(layoutTable('Observed fields', ['Offset', 'Name', 'Type', 'Bytes'], row.fields.map(field =>
+        [hexOffset(field.offset), field.name, field.typePath ? entryLink('types', field.typePath, field.type) : field.type, field.size])));
+    }
+    if (row.values?.length) {
+      detail.append(layoutTable('Enum members', ['Value', 'Name'], row.values.map(member => [member.value, member.name])));
+    }
+    if (row.slots?.length) {
+      detail.append(layoutTable('Observed slots', ['Offset', 'Role', 'Slot signature', 'Target', 'Evidence'], row.slots.map(slot =>
+        [hexOffset(slot.offset), slot.name, slot.signature, slot.target ? entryLink('rows', slot.target) : '', slot.status])));
+    }
+    if (row.functions?.length) detail.append(references('Related functions', row.functions, 'rows'));
+    if (row.globals?.length) detail.append(references('Related data', row.globals, 'globals'));
+    if (row.evidence) {
+      const evidence = element('section');
+      evidence.append(element('h3', 'Evidence'));
+      sourceLink(evidence, row.evidence);
+      detail.append(evidence);
+    }
+    if (row.comparison) {
+      const comparison = element('section');
+      comparison.append(element('h3', row.comparison.status), element('p', row.comparison.scope || ''));
+      sourceLink(comparison, row.comparison.evidence);
+      detail.append(comparison);
+    }
+    if (row.comparison?.leftHex && row.comparison.rightHex) detail.append(byteView(row.comparison));
+  }
+
+  function show(row) {
+    detail.replaceChildren();
+    if (!row) {
+      detail.append(element('p', 'No entries match these filters.', 'muted'));
+      return;
+    }
+    const heading = element('h2', row.name);
+    heading.tabIndex = -1;
+    detail.append(heading);
+    detail.append(element('p', [row.path || '0x' + row.entry, row.kind, row.bytes ? row.bytes + ' bytes' : '', row.group].filter(Boolean).join(' · '), 'muted'));
+    detail.append(element('p', state(row), row.comparison?.status === 'Different' ? 'different' : 'status'));
+    const comparison = row.comparison;
+    const buildSymbol = comparison?.buildSymbol || comparison?.symbol;
+    if (view.value === 'rows' && (row.ghidraName || row.source || buildSymbol)) {
+      const module = data[Number(moduleBox.value)].name;
+      const names = [['Original entry', module + ' 0x' + row.entry]];
+      if (row.ghidraName) names.push(['Ghidra name', row.ghidraName]);
+      if (row.export) names.push(['PE export', row.export]);
+      if (row.source?.symbol) names.push(['Reconstructed symbol', row.source.symbol]);
+      if (buildSymbol && buildSymbol !== row.source?.symbol) {
+        names.push(['Build symbol', buildSymbol]);
+      }
+      detail.append(layoutTable('Function identity', ['Reference', 'Value'], names));
+    }
+    if (row.signature) detail.append(element('p', row.signature, 'mono'));
+    if (row.tags?.length) detail.append(element('p', 'Ghidra tags · ' + row.tags.join(' · '), 'muted'));
+    if (row.description) detail.append(element('p', row.description));
+    if (row.parentEntry) {
+      const parent = element('p', 'Parent function ');
+      parent.append(entryLink('rows', row.parentEntry, '0x' + row.parentEntry));
+      detail.append(parent);
+    }
+    const docs = row.notes;
+    if (docs.length) {
+      const notes = element('details');
+      notes.open = true;
+      notes.append(element('summary', 'Topic notes (' + docs.length + ')'));
+      for (const doc of docs) {
+        const note = element('p', doc.description);
+        sourceLink(note, doc.file);
+        notes.append(note);
+      }
+      detail.append(notes);
+    }
+    if (view.value !== 'rows') {
+      showObject(row);
+      return;
+    }
+    if (row.dataReferences?.length) detail.append(references('Observed data references', row.dataReferences, 'globals'));
+    if (row.source) {
+      const source = element('section');
+      source.append(element('h3', 'Reconstructed source'));
+      for (const reference of [row.source, ...(row.source.related || [])]) {
+        const location = reference.file + (reference.line ? ':' + reference.line : '');
+        const label = reference.symbol ? reference.symbol + ' · ' + location : location;
+        sourceLink(source, reference.file, label);
+        if (reference.scope) source.append(element('p', reference.scope, 'muted'));
+      }
+      detail.append(source);
+    } else if (row.sourceAudit) {
+      const source = element('section');
+      source.append(element('h3', 'Source lookup'), element('p', row.sourceAudit, 'muted'));
+      detail.append(source);
+    }
+    const scopes = current().filter(candidate => candidate.parentEntry === row.entry && candidate.comparison?.rebuilt?.length);
+    const scope = element('section');
+    scope.append(element('h3', 'Comparison evidence'));
+    const info = element('p', comparison?.scope || (scopes.length
+      ? 'Scoped comparisons are available under Disassembly.'
+      : 'No comparison record imported for this address.'), 'muted');
+    sourceLink(info, comparison?.evidence);
+    sourceLink(info, comparison?.parentEvidence);
+    scope.append(info);
+    detail.append(scope);
+    showDisassembly(row, scopes);
+    if (comparison?.leftHex && comparison.rightHex) detail.append(byteView(comparison));
+  }
+
+  function current() {
+    return data[Number(moduleBox.value)]?.[view.value] || [];
+  }
+
+  function matchesFilters(row, query) {
+    const haystack = [row.entry, '0x' + row.entry, row.name, row.ghidraName, row.source?.symbol,
+      row.comparison?.buildSymbol, row.comparison?.symbol, row.export, row.description,
+      row.group, row.typePath, ...(row.typeViews || []), ...(row.tags || []),
+      ...row.notes.flatMap(note => [note.title, note.description])].join(' ').toLowerCase();
+    return (!group.value || row.group === group.value) &&
+      (!status.value || state(row) === status.value) && (!query || haystack.includes(query));
+  }
+
+  function render() {
+    const query = search.value.trim().toLowerCase();
+    const rows = current().filter(row => matchesFilters(row, query));
+    const total = Math.max(1, Math.ceil(rows.length / pageSize));
+    page = Math.min(page, total - 1);
+    const visible = rows.slice(page * pageSize, (page + 1) * pageSize);
+    if (!visible.includes(selected)) selected = visible[0];
+    items.replaceChildren(...visible.map(row => {
+      const li = element('li');
+      const button = element('button');
+      button.setAttribute('aria-current', String(row === selected));
+      const meta = element('span', undefined, 'meta');
+      meta.append(element('span', row.entry, 'mono'), element('span', state(row)));
+      button.append(element('strong', row.name), meta);
+      button.addEventListener('click', () => {
+        selected = row;
+        for (const other of items.querySelectorAll('button')) other.setAttribute('aria-current', String(other === button));
+        show(row);
+        saveView();
+      });
+      li.append(button);
+      return li;
+    }));
+    byId('count').textContent = rows.length + ' of ' + current().length + ' entries';
+    byId('page').textContent = (page + 1) + ' / ' + total;
+    byId('prev').disabled = page === 0;
+    byId('next').disabled = page + 1 === total;
+    show(selected);
+    saveView();
+  }
+
+  function resetFilters(saved) {
+    const rows = current();
+    const all = values => [['', 'All'], ...[...new Set(values)].sort().map(value => [value, value])];
+    options(group, all(rows.map(row => row.group)));
+    options(status, all(rows.map(state)));
+    search.value = saved?.get('search') || '';
+    const savedGroup = saved?.get('group');
+    const savedStatus = saved?.get('status');
+    if (rows.some(row => row.group === savedGroup)) group.value = savedGroup;
+    if (rows.some(row => state(row) === savedStatus)) status.value = savedStatus;
+    page = Math.max(0, parseInt(saved?.get('page'), 10) || 0);
+    selected = rows.find(row => row.entry === saved?.get('entry'));
+    renderProgress();
+    render();
+  }
+
+  options(moduleBox, data.map((module, index) => [String(index), module.name]));
+  moduleBox.addEventListener('change', () => resetFilters());
+  view.addEventListener('change', () => resetFilters());
+  for (const filter of [search, group, status]) filter.addEventListener('input', () => { page = 0; render(); });
+  byId('prev').addEventListener('click', () => { page--; render(); });
+  byId('next').addEventListener('click', () => { page++; render(); });
+  const saved = new URLSearchParams(location.hash.slice(1));
+  const savedModule = data.findIndex(module => module.name === saved.get('module'));
+  if (savedModule >= 0) moduleBox.value = String(savedModule);
+  if (['rows', 'globals', 'types'].includes(saved.get('view'))) view.value = saved.get('view');
+  if (saved.get('listing') === 'raw') listingMode = 'raw';
+  resetFilters(saved);
+</script>
+</html>

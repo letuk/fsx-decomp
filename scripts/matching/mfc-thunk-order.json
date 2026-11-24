@@ -1,0 +1,332 @@
+[
+  {
+    "OriginalVA": "01001FFC",
+    "Identity": "mfc80.dll!#764",
+    "Symbol": "??3@YAXPAX@Z"
+  },
+  {
+    "OriginalVA": "01002008",
+    "Identity": "mfc80.dll!#572",
+    "Symbol": "??0CWnd@@QAE@XZ"
+  },
+  {
+    "OriginalVA": "01002014",
+    "Identity": "mfc80.dll!#760",
+    "Symbol": "??1CWnd@@UAE@XZ"
+  },
+  {
+    "OriginalVA": "01002020",
+    "Identity": "mfc80.dll!#3683",
+    "Symbol": "?GetThisMessageMap@CWinApp@@KGPBUAFX_MSGMAP@@XZ"
+  },
+  {
+    "OriginalVA": "0100202C",
+    "Identity": "mfc80.dll!#566",
+    "Symbol": "??0CWinApp@@QAE@PBD@Z"
+  },
+  {
+    "OriginalVA": "01002038",
+    "Identity": "mfc80.dll!#757",
+    "Symbol": "??1CWinApp@@UAE@XZ"
+  },
+  {
+    "OriginalVA": "01002044",
+    "Identity": "mfc80.dll!#1979",
+    "Symbol": "?Detach@CWnd@@QAEPAUHWND__@@XZ"
+  },
+  {
+    "OriginalVA": "01002050",
+    "Identity": "mfc80.dll!#2248",
+    "Symbol": "?ExitInstance@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalVA": "0100205C",
+    "Identity": "mfc80.dll!#474",
+    "Symbol": "??0COleMessageFilter@@QAE@XZ"
+  },
+  {
+    "OriginalVA": "01002068",
+    "Identity": "mfc80.dll!#700",
+    "Symbol": "??1COleMessageFilter@@UAE@XZ"
+  },
+  {
+    "OriginalVA": "01002074",
+    "Identity": "mfc80.dll!#1126",
+    "Symbol": "?AfxOleInit@@YGHXZ"
+  },
+  {
+    "OriginalVA": "01002080",
+    "Identity": "mfc80.dll!#1091",
+    "Symbol": "?AfxGetThread@@YGPAVCWinThread@@XZ"
+  },
+  {
+    "OriginalVA": "0100208C",
+    "Identity": "mfc80.dll!#762",
+    "Symbol": "??2@YAPAXI@Z"
+  },
+  {
+    "OriginalVA": "01002098",
+    "Identity": "mfc80.dll!#5379",
+    "Symbol": "?Register@COleMessageFilter@@QAEHXZ"
+  },
+  {
+    "OriginalVA": "010020A4",
+    "Identity": "mfc80.dll!#1054",
+    "Symbol": "?AfxEnableControlContainer@@YAXPAVCOccManager@@@Z"
+  },
+  {
+    "OriginalVA": "010020B0",
+    "Identity": "mfc80.dll!#1084",
+    "Symbol": "?AfxGetModuleState@@YGPAVAFX_MODULE_STATE@@XZ"
+  },
+  {
+    "OriginalVA": "010020BC",
+    "Identity": "mfc80.dll!#1290",
+    "Symbol": "?Attach@CWnd@@QAEHPAUHWND__@@@Z"
+  },
+  {
+    "OriginalVA": "010020C8",
+    "Identity": "mfc80.dll!#1074",
+    "Symbol": "?AfxGetCurrentMessage@@YGPAUtagMSG@@XZ"
+  },
+  {
+    "OriginalVA": "010020D4",
+    "Identity": "mfc80.dll!#3333",
+    "Symbol": "?GetRuntimeClass@CWinApp@@UBEPAUCRuntimeClass@@XZ"
+  },
+  {
+    "OriginalVA": "010020E0",
+    "Identity": "mfc80.dll!#4261",
+    "Symbol": "?OnCmdMsg@CCmdTarget@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z"
+  },
+  {
+    "OriginalVA": "010020EC",
+    "Identity": "mfc80.dll!#4481",
+    "Symbol": "?OnFinalRelease@CCmdTarget@@UAEXXZ"
+  },
+  {
+    "OriginalVA": "010020F8",
+    "Identity": "mfc80.dll!#3949",
+    "Symbol": "?IsInvokeAllowed@CCmdTarget@@UAEHJ@Z"
+  },
+  {
+    "OriginalVA": "01002104",
+    "Identity": "mfc80.dll!#2644",
+    "Symbol": "?GetDispatchIID@CCmdTarget@@UAEHPAU_GUID@@@Z"
+  },
+  {
+    "OriginalVA": "01002110",
+    "Identity": "mfc80.dll!#3709",
+    "Symbol": "?GetTypeInfoCount@CCmdTarget@@UAEIXZ"
+  },
+  {
+    "OriginalVA": "0100211C",
+    "Identity": "mfc80.dll!#3719",
+    "Symbol": "?GetTypeLibCache@CCmdTarget@@UAEPAVCTypeLibCache@@XZ"
+  },
+  {
+    "OriginalVA": "01002128",
+    "Identity": "mfc80.dll!#3718",
+    "Symbol": "?GetTypeLib@CCmdTarget@@UAEJKPAPAUITypeLib@@@Z"
+  },
+  {
+    "OriginalVA": "01002134",
+    "Identity": "mfc80.dll!#2533",
+    "Symbol": "?GetCommandMap@CCmdTarget@@MBEPBUAFX_OLECMDMAP@@XZ"
+  },
+  {
+    "OriginalVA": "01002140",
+    "Identity": "mfc80.dll!#2646",
+    "Symbol": "?GetDispatchMap@CCmdTarget@@MBEPBUAFX_DISPMAP@@XZ"
+  },
+  {
+    "OriginalVA": "0100214C",
+    "Identity": "mfc80.dll!#2540",
+    "Symbol": "?GetConnectionMap@CCmdTarget@@MBEPBUAFX_CONNECTIONMAP@@XZ"
+  },
+  {
+    "OriginalVA": "01002158",
+    "Identity": "mfc80.dll!#2838",
+    "Symbol": "?GetInterfaceMap@CCmdTarget@@MBEPBUAFX_INTERFACEMAP@@XZ"
+  },
+  {
+    "OriginalVA": "01002164",
+    "Identity": "mfc80.dll!#2714",
+    "Symbol": "?GetEventSinkMap@CCmdTarget@@MBEPBUAFX_EVENTSINKMAP@@XZ"
+  },
+  {
+    "OriginalVA": "01002170",
+    "Identity": "mfc80.dll!#4307",
+    "Symbol": "?OnCreateAggregates@CCmdTarget@@UAEHXZ"
+  },
+  {
+    "OriginalVA": "0100217C",
+    "Identity": "mfc80.dll!#2835",
+    "Symbol": "?GetInterfaceHook@CCmdTarget@@UAEPAUIUnknown@@PBX@Z"
+  },
+  {
+    "OriginalVA": "01002188",
+    "Identity": "mfc80.dll!#2731",
+    "Symbol": "?GetExtraConnectionPoints@CCmdTarget@@MAEHPAVCPtrArray@@@Z"
+  },
+  {
+    "OriginalVA": "01002194",
+    "Identity": "mfc80.dll!#2537",
+    "Symbol": "?GetConnectionHook@CCmdTarget@@MAEPAUIConnectionPoint@@ABU_GUID@@@Z"
+  },
+  {
+    "OriginalVA": "010021A0",
+    "Identity": "mfc80.dll!#5213",
+    "Symbol": "?PreTranslateMessage@CWinThread@@UAEHPAUtagMSG@@@Z"
+  },
+  {
+    "OriginalVA": "010021AC",
+    "Identity": "mfc80.dll!#5230",
+    "Symbol": "?PumpMessage@CWinThread@@UAEHXZ"
+  },
+  {
+    "OriginalVA": "010021B8",
+    "Identity": "mfc80.dll!#4568",
+    "Symbol": "?OnIdle@CWinApp@@UAEHJ@Z"
+  },
+  {
+    "OriginalVA": "010021C4",
+    "Identity": "mfc80.dll!#3948",
+    "Symbol": "?IsIdleMessage@CWinThread@@UAEHPAUtagMSG@@@Z"
+  },
+  {
+    "OriginalVA": "010021D0",
+    "Identity": "mfc80.dll!#5226",
+    "Symbol": "?ProcessWndProcException@CWinApp@@UAEJPAVCException@@PBUtagMSG@@@Z"
+  },
+  {
+    "OriginalVA": "010021DC",
+    "Identity": "mfc80.dll!#5224",
+    "Symbol": "?ProcessMessageFilter@CWinThread@@UAEHHPAUtagMSG@@@Z"
+  },
+  {
+    "OriginalVA": "010021E8",
+    "Identity": "mfc80.dll!#2931",
+    "Symbol": "?GetMainWnd@CWinThread@@UAEPAVCWnd@@XZ"
+  },
+  {
+    "OriginalVA": "010021F4",
+    "Identity": "mfc80.dll!#1920",
+    "Symbol": "?Delete@CWinThread@@UAEXXZ"
+  },
+  {
+    "OriginalVA": "01002200",
+    "Identity": "mfc80.dll!#3832",
+    "Symbol": "?InitLibId@CWinApp@@UAEXXZ"
+  },
+  {
+    "OriginalVA": "0100220C",
+    "Identity": "mfc80.dll!#5382",
+    "Symbol": "?Register@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalVA": "01002218",
+    "Identity": "mfc80.dll!#6219",
+    "Symbol": "?Unregister@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalVA": "01002224",
+    "Identity": "mfc80.dll!#5102",
+    "Symbol": "?OpenDocumentFile@CWinApp@@UAEPAVCDocument@@PBD@Z"
+  },
+  {
+    "OriginalVA": "01002230",
+    "Identity": "mfc80.dll!#1010",
+    "Symbol": "?AddToRecentFileList@CWinApp@@UAEXPBD@Z"
+  },
+  {
+    "OriginalVA": "0100223C",
+    "Identity": "mfc80.dll!#3806",
+    "Symbol": "?InitApplication@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalVA": "01002248",
+    "Identity": "mfc80.dll!#5583",
+    "Symbol": "?SaveAllModified@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalVA": "01002254",
+    "Identity": "mfc80.dll!#2018",
+    "Symbol": "?DoMessageBox@CWinApp@@UAEHPBDII@Z"
+  },
+  {
+    "OriginalVA": "01002260",
+    "Identity": "mfc80.dll!#2063",
+    "Symbol": "?DoWaitCursor@CWinApp@@UAEXH@Z"
+  },
+  {
+    "OriginalVA": "0100226C",
+    "Identity": "mfc80.dll!#4326",
+    "Symbol": "?OnDDECommand@CWinApp@@UAEHPAD@Z"
+  },
+  {
+    "OriginalVA": "01002278",
+    "Identity": "mfc80.dll!#6276",
+    "Symbol": "?WinHelpA@CWinApp@@UAEXKI@Z"
+  },
+  {
+    "OriginalVA": "01002284",
+    "Identity": "mfc80.dll!#3801",
+    "Symbol": "?HtmlHelpA@CWinApp@@UAEXKI@Z"
+  },
+  {
+    "OriginalVA": "01002290",
+    "Identity": "mfc80.dll!#6278",
+    "Symbol": "?WinHelpInternal@CWinApp@@UAEXKI@Z"
+  },
+  {
+    "OriginalVA": "0100229C",
+    "Identity": "mfc80.dll!#4014",
+    "Symbol": "?LoadAppLangResourceDLL@CWinApp@@UAEPAUHINSTANCE__@@XZ"
+  },
+  {
+    "OriginalVA": "010022A8",
+    "Identity": "mfc80.dll!#4038",
+    "Symbol": "?LoadSysPolicies@CWinApp@@UAEHXZ"
+  },
+  {
+    "OriginalVA": "010022B4",
+    "Identity": "mfc80.dll!#3169",
+    "Symbol": "?GetRuntimeClass@CCmdTarget@@UBEPAUCRuntimeClass@@XZ"
+  },
+  {
+    "OriginalVA": "010022C0",
+    "Identity": "mfc80.dll!#2942",
+    "Symbol": "?GetMessageMap@CCmdTarget@@MBEPBUAFX_MSGMAP@@XZ"
+  },
+  {
+    "OriginalVA": "010022CC",
+    "Identity": "mfc80.dll!#2856",
+    "Symbol": "?GetInterfaceMap@COleMessageFilter@@MBEPBUAFX_INTERFACEMAP@@XZ"
+  },
+  {
+    "OriginalVA": "010022D8",
+    "Identity": "mfc80.dll!#1303",
+    "Symbol": "?BeginBusyState@COleMessageFilter@@UAEXXZ"
+  },
+  {
+    "OriginalVA": "010022E4",
+    "Identity": "mfc80.dll!#2165",
+    "Symbol": "?EndBusyState@COleMessageFilter@@UAEXXZ"
+  },
+  {
+    "OriginalVA": "010022F0",
+    "Identity": "mfc80.dll!#3977",
+    "Symbol": "?IsSignificantMessage@COleMessageFilter@@UAEHPAUtagMSG@@@Z"
+  },
+  {
+    "OriginalVA": "010022FC",
+    "Identity": "mfc80.dll!#4207",
+    "Symbol": "?OnBusyDialog@COleMessageFilter@@UAEHPAUHTASK__@@@Z"
+  },
+  {
+    "OriginalVA": "01002308",
+    "Identity": "mfc80.dll!#4723",
+    "Symbol": "?OnNotRespondingDialog@COleMessageFilter@@UAEHPAUHTASK__@@@Z"
+  }
+]

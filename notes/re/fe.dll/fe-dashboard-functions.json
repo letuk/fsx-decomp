@@ -1,0 +1,1463 @@
+[
+  {
+    "entry": "203efc30",
+    "name": "Fixed-coordinate magnetic variation (ordinal 3)",
+    "group": "Magnetic variation",
+    "source": {
+      "file": "src/fe/magnetic_variation.cpp",
+      "symbol": "GetFixedMagneticVariation",
+      "line": 112
+    },
+    "comparison": {
+      "status": "Normalized",
+      "full": true,
+      "scope": "Complete 17-byte linked adapter with a separately verified REL32 target.",
+      "evidence": "vm-share/modules/fe/runs/fe-magnetic-variation-20261124-002/magnetic-variation-comparison.json",
+      "symbol": "_GetFixedMagneticVariation@4",
+      "rebuilt": [
+        [
+          "100012c0",
+          "8b ff",
+          "mov edi,edi"
+        ],
+        [
+          "100012c2",
+          "55",
+          "push ebp"
+        ],
+        [
+          "100012c3",
+          "8b ec",
+          "mov ebp,esp"
+        ],
+        [
+          "100012c5",
+          "8b 45 08",
+          "mov eax,dword ptr [ebp+8]"
+        ],
+        [
+          "100012c8",
+          "e8 93 ff ff ff",
+          "call ?SampleFixedMagneticVariation@@YAHPBUFixedGeographicPosition@@@Z"
+        ],
+        [
+          "100012cd",
+          "5d",
+          "pop ebp"
+        ],
+        [
+          "100012ce",
+          "c2 04 00",
+          "ret 4"
+        ]
+      ],
+      "leftHex": "8bff558bec8b4508e893c9ffff5dc20400",
+      "rightHex": "8bff558bec8b4508e893ffffff5dc20400",
+      "mappedOffsets": [
+        9
+      ]
+    },
+    "tags": [
+      "Magnetic variation",
+      "Normalized linked match",
+      "Reconstructed"
+    ]
+  },
+  {
+    "entry": "203efc50",
+    "name": "Degree-coordinate magnetic variation (ordinal 4)",
+    "group": "Magnetic variation",
+    "source": {
+      "file": "src/fe/magnetic_variation.cpp",
+      "symbol": "GetMagneticVariation",
+      "line": 119
+    },
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "Complete linked adapter. The grid sampler receives the coordinate pointer in a different register.",
+      "evidence": "vm-share/modules/fe/runs/fe-magnetic-variation-20261124-002/magnetic-variation-comparison.json",
+      "symbol": "_GetMagneticVariation@4",
+      "rebuilt": [
+        [
+          "100012e0",
+          "8b ff",
+          "mov edi,edi"
+        ],
+        [
+          "100012e2",
+          "55",
+          "push ebp"
+        ],
+        [
+          "100012e3",
+          "8b ec",
+          "mov ebp,esp"
+        ],
+        [
+          "100012e5",
+          "8b 4d 08",
+          "mov ecx,dword ptr [ebp+8]"
+        ],
+        [
+          "100012e8",
+          "e8 b3 fd ff ff",
+          "call ?SampleMagneticVariation@@YAMPBUGeographicDegrees@@@Z"
+        ],
+        [
+          "100012ed",
+          "5d",
+          "pop ebp"
+        ],
+        [
+          "100012ee",
+          "c2 04 00",
+          "ret 4"
+        ]
+      ],
+      "leftHex": "8bff558bec8b5508e843cdffff5dc20400",
+      "rightHex": "8bff558bec8b4d08e8b3fdffff5dc20400",
+      "mappedOffsets": [
+        9
+      ]
+    },
+    "tags": [
+      "Linked differences",
+      "Magnetic variation",
+      "Reconstructed"
+    ]
+  },
+  {
+    "entry": "203ec5d0",
+    "name": "Convert fixed coordinates and sample variation",
+    "group": "Magnetic variation",
+    "source": {
+      "file": "src/fe/magnetic_variation.cpp",
+      "symbol": "SampleFixedMagneticVariation",
+      "line": 102
+    },
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "Complete linked conversion body. x87 and register layout differ.",
+      "evidence": "vm-share/modules/fe/runs/fe-magnetic-variation-20261124-002/magnetic-variation-comparison.json",
+      "symbol": "?SampleFixedMagneticVariation@@YAHPBUFixedGeographicPosition@@@Z",
+      "rebuilt": [
+        [
+          "10001260",
+          "8b ff",
+          "mov edi,edi"
+        ],
+        [
+          "10001262",
+          "55",
+          "push ebp"
+        ],
+        [
+          "10001263",
+          "8b ec",
+          "mov ebp,esp"
+        ],
+        [
+          "10001265",
+          "83 e4 f8",
+          "and esp,0FFFFFFF8h"
+        ],
+        [
+          "10001268",
+          "83 ec 18",
+          "sub esp,18h"
+        ],
+        [
+          "1000126b",
+          "db 40 04",
+          "fild dword ptr [eax+4]"
+        ],
+        [
+          "1000126e",
+          "8b 40 0c",
+          "mov eax,dword ptr [eax+0Ch]"
+        ],
+        [
+          "10001271",
+          "85 c0",
+          "test eax,eax"
+        ],
+        [
+          "10001273",
+          "89 04 24",
+          "mov dword ptr [esp],eax"
+        ],
+        [
+          "10001276",
+          "dc 0d 70 20 00 10",
+          "fmul qword ptr [__real@3ee2defe271c0483]"
+        ],
+        [
+          "1000127c",
+          "dd 5c 24 08",
+          "fstp qword ptr [esp+8]"
+        ],
+        [
+          "10001280",
+          "db 04 24",
+          "fild dword ptr [esp]"
+        ],
+        [
+          "10001283",
+          "7d 06",
+          "jge 1000128B"
+        ],
+        [
+          "10001285",
+          "dc 05 48 20 00 10",
+          "fadd qword ptr [__real@41f0000000000000]"
+        ],
+        [
+          "1000128b",
+          "dc 0d 68 20 00 10",
+          "fmul qword ptr [__real@3e76800000000000]"
+        ],
+        [
+          "10001291",
+          "8d 4c 24 08",
+          "lea ecx,[esp+8]"
+        ],
+        [
+          "10001295",
+          "dd 5c 24 10",
+          "fstp qword ptr [esp+10h]"
+        ],
+        [
+          "10001299",
+          "e8 02 fe ff ff",
+          "call ?SampleMagneticVariation@@YAMPBUGeographicDegrees@@@Z"
+        ],
+        [
+          "1000129e",
+          "dc 0d 60 20 00 10",
+          "fmul qword ptr [__real@4166c16c16c16c17]"
+        ],
+        [
+          "100012a4",
+          "df 3c 24",
+          "fistp qword ptr [esp]"
+        ],
+        [
+          "100012a7",
+          "8b 4c 24 04",
+          "mov ecx,dword ptr [esp+4]"
+        ],
+        [
+          "100012ab",
+          "8b 04 24",
+          "mov eax,dword ptr [esp]"
+        ],
+        [
+          "100012ae",
+          "8b e5",
+          "mov esp,ebp"
+        ],
+        [
+          "100012b0",
+          "5d",
+          "pop ebp"
+        ],
+        [
+          "100012b1",
+          "c3",
+          "ret"
+        ]
+      ],
+      "leftHex": "8bff558bec83e4f883ec28db40048b400c85c089442408dc0d08dd3d20dd5c2410db4424087d06dc0530dd3d20dc0d00dd3d208d542410dd5c2418e890030000dc0d20dd3d20d97c24060fb74424060d000c000089442408d96c2408df7c24088b442408d96c24068be55dc3",
+      "rightHex": "8bff558bec83e4f883ec18db40048b400c85c0890424dc0d70200010dd5c2408db04247d06dc0548200010dc0d682000108d4c2408dd5c2410e802feffffdc0d60200010df3c248b4c24048b04248be55dc3",
+      "mappedOffsets": []
+    },
+    "tags": [
+      "Linked differences",
+      "Magnetic variation",
+      "Reconstructed"
+    ]
+  },
+  {
+    "entry": "203ec9a0",
+    "name": "Sample the magnetic-variation grid",
+    "group": "Magnetic variation",
+    "source": {
+      "file": "src/fe/magnetic_variation.cpp",
+      "symbol": "SampleMagneticVariation",
+      "line": 52
+    },
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "Complete linked sampler. Register allocation, division and x87 scheduling differ.",
+      "evidence": "vm-share/modules/fe/runs/fe-magnetic-variation-20261124-002/magnetic-variation-comparison.json",
+      "symbol": "?SampleMagneticVariation@@YAMPBUGeographicDegrees@@@Z",
+      "rebuilt": [
+        [
+          "100010a0",
+          "8b ff",
+          "mov edi,edi"
+        ],
+        [
+          "100010a2",
+          "55",
+          "push ebp"
+        ],
+        [
+          "100010a3",
+          "8b ec",
+          "mov ebp,esp"
+        ],
+        [
+          "100010a5",
+          "83 e4 f8",
+          "and esp,0FFFFFFF8h"
+        ],
+        [
+          "100010a8",
+          "83 ec 2c",
+          "sub esp,2Ch"
+        ],
+        [
+          "100010ab",
+          "53",
+          "push ebx"
+        ],
+        [
+          "100010ac",
+          "56",
+          "push esi"
+        ],
+        [
+          "100010ad",
+          "57",
+          "push edi"
+        ],
+        [
+          "100010ae",
+          "8b 3d 04 30 00 10",
+          "mov edi,dword ptr [?magneticVariationGrid@@3PBMB]"
+        ],
+        [
+          "100010b4",
+          "85 ff",
+          "test edi,edi"
+        ],
+        [
+          "100010b6",
+          "75 09",
+          "jne 100010C1"
+        ],
+        [
+          "100010b8",
+          "d9 ee",
+          "fldz"
+        ],
+        [
+          "100010ba",
+          "5f",
+          "pop edi"
+        ],
+        [
+          "100010bb",
+          "5e",
+          "pop esi"
+        ],
+        [
+          "100010bc",
+          "5b",
+          "pop ebx"
+        ],
+        [
+          "100010bd",
+          "8b e5",
+          "mov esp,ebp"
+        ],
+        [
+          "100010bf",
+          "5d",
+          "pop ebp"
+        ],
+        [
+          "100010c0",
+          "c3",
+          "ret"
+        ],
+        [
+          "100010c1",
+          "dd 01",
+          "fld qword ptr [ecx]"
+        ],
+        [
+          "100010c3",
+          "dc 05 58 20 00 10",
+          "fadd qword ptr [__real@4056800000000000]"
+        ],
+        [
+          "100010c9",
+          "dd 05 30 20 00 10",
+          "fld qword ptr [__real@4066800000000000]"
+        ],
+        [
+          "100010cf",
+          "d8 d1",
+          "fcom st(1)"
+        ],
+        [
+          "100010d1",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "100010d3",
+          "d9 ee",
+          "fldz"
+        ],
+        [
+          "100010d5",
+          "f6 c4 05",
+          "test ah,5"
+        ],
+        [
+          "100010d8",
+          "7a 04",
+          "jp 100010DE"
+        ],
+        [
+          "100010da",
+          "dd da",
+          "fstp st(2)"
+        ],
+        [
+          "100010dc",
+          "eb 13",
+          "jmp 100010F1"
+        ],
+        [
+          "100010de",
+          "dd d9",
+          "fstp st(1)"
+        ],
+        [
+          "100010e0",
+          "d8 d1",
+          "fcom st(1)"
+        ],
+        [
+          "100010e2",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "100010e4",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "100010e7",
+          "75 06",
+          "jne 100010EF"
+        ],
+        [
+          "100010e9",
+          "dd d9",
+          "fstp st(1)"
+        ],
+        [
+          "100010eb",
+          "d9 c0",
+          "fld st(0)"
+        ],
+        [
+          "100010ed",
+          "eb 02",
+          "jmp 100010F1"
+        ],
+        [
+          "100010ef",
+          "d9 c9",
+          "fxch st(1)"
+        ],
+        [
+          "100010f1",
+          "8b 1d 00 30 00 10",
+          "mov ebx,dword ptr [?magneticLatitudeCount@@3IA]"
+        ],
+        [
+          "100010f7",
+          "dc 0d 50 20 00 10",
+          "fmul qword ptr [__real@3f76c16c16c16c17]"
+        ],
+        [
+          "100010fd",
+          "8d 43 ff",
+          "lea eax,[ebx-1]"
+        ],
+        [
+          "10001100",
+          "85 c0",
+          "test eax,eax"
+        ],
+        [
+          "10001102",
+          "89 44 24 10",
+          "mov dword ptr [esp+10h],eax"
+        ],
+        [
+          "10001106",
+          "db 44 24 10",
+          "fild dword ptr [esp+10h]"
+        ],
+        [
+          "1000110a",
+          "7d 06",
+          "jge 10001112"
+        ],
+        [
+          "1000110c",
+          "dc 05 48 20 00 10",
+          "fadd qword ptr [__real@41f0000000000000]"
+        ],
+        [
+          "10001112",
+          "de c9",
+          "fmulp st(1),st"
+        ],
+        [
+          "10001114",
+          "dd 41 08",
+          "fld qword ptr [ecx+8]"
+        ],
+        [
+          "10001117",
+          "dd 05 28 20 00 10",
+          "fld qword ptr [__real@4076800000000000]"
+        ],
+        [
+          "1000111d",
+          "d8 d1",
+          "fcom st(1)"
+        ],
+        [
+          "1000111f",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "10001121",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001124",
+          "7a 06",
+          "jp 1000112C"
+        ],
+        [
+          "10001126",
+          "dd db",
+          "fstp st(3)"
+        ],
+        [
+          "10001128",
+          "de e2",
+          "fsubrp st(2),st"
+        ],
+        [
+          "1000112a",
+          "eb 11",
+          "jmp 1000113D"
+        ],
+        [
+          "1000112c",
+          "d9 cb",
+          "fxch st(3)"
+        ],
+        [
+          "1000112e",
+          "d8 d9",
+          "fcomp st(1)"
+        ],
+        [
+          "10001130",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "10001132",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001135",
+          "75 04",
+          "jne 1000113B"
+        ],
+        [
+          "10001137",
+          "de c2",
+          "faddp st(2),st"
+        ],
+        [
+          "10001139",
+          "eb 02",
+          "jmp 1000113D"
+        ],
+        [
+          "1000113b",
+          "dd da",
+          "fstp st(2)"
+        ],
+        [
+          "1000113d",
+          "8b 15 08 30 00 10",
+          "mov edx,dword ptr [?magneticLongitudeCount@@3IA]"
+        ],
+        [
+          "10001143",
+          "d9 c9",
+          "fxch st(1)"
+        ],
+        [
+          "10001145",
+          "dc 0d 40 20 00 10",
+          "fmul qword ptr [__real@3f66c16c16c16c17]"
+        ],
+        [
+          "1000114b",
+          "8b ca",
+          "mov ecx,edx"
+        ],
+        [
+          "1000114d",
+          "85 c9",
+          "test ecx,ecx"
+        ],
+        [
+          "1000114f",
+          "89 4c 24 10",
+          "mov dword ptr [esp+10h],ecx"
+        ],
+        [
+          "10001153",
+          "db 44 24 10",
+          "fild dword ptr [esp+10h]"
+        ],
+        [
+          "10001157",
+          "7d 06",
+          "jge 1000115F"
+        ],
+        [
+          "10001159",
+          "dc 05 48 20 00 10",
+          "fadd qword ptr [__real@41f0000000000000]"
+        ],
+        [
+          "1000115f",
+          "de c9",
+          "fmulp st(1),st"
+        ],
+        [
+          "10001161",
+          "d9 c0",
+          "fld st(0)"
+        ],
+        [
+          "10001163",
+          "df 7c 24 10",
+          "fistp qword ptr [esp+10h]"
+        ],
+        [
+          "10001167",
+          "8b 44 24 14",
+          "mov eax,dword ptr [esp+14h]"
+        ],
+        [
+          "1000116b",
+          "8b 44 24 10",
+          "mov eax,dword ptr [esp+10h]"
+        ],
+        [
+          "1000116f",
+          "d9 c1",
+          "fld st(1)"
+        ],
+        [
+          "10001171",
+          "df 7c 24 10",
+          "fistp qword ptr [esp+10h]"
+        ],
+        [
+          "10001175",
+          "8b 4c 24 14",
+          "mov ecx,dword ptr [esp+14h]"
+        ],
+        [
+          "10001179",
+          "8b 4c 24 10",
+          "mov ecx,dword ptr [esp+10h]"
+        ],
+        [
+          "1000117d",
+          "8b f1",
+          "mov esi,ecx"
+        ],
+        [
+          "1000117f",
+          "85 f6",
+          "test esi,esi"
+        ],
+        [
+          "10001181",
+          "89 74 24 10",
+          "mov dword ptr [esp+10h],esi"
+        ],
+        [
+          "10001185",
+          "db 44 24 10",
+          "fild dword ptr [esp+10h]"
+        ],
+        [
+          "10001189",
+          "7d 06",
+          "jge 10001191"
+        ],
+        [
+          "1000118b",
+          "dc 05 48 20 00 10",
+          "fadd qword ptr [__real@41f0000000000000]"
+        ],
+        [
+          "10001191",
+          "de ea",
+          "fsubp st(2),st"
+        ],
+        [
+          "10001193",
+          "8b f0",
+          "mov esi,eax"
+        ],
+        [
+          "10001195",
+          "85 f6",
+          "test esi,esi"
+        ],
+        [
+          "10001197",
+          "d9 c9",
+          "fxch st(1)"
+        ],
+        [
+          "10001199",
+          "89 74 24 10",
+          "mov dword ptr [esp+10h],esi"
+        ],
+        [
+          "1000119d",
+          "dd 5c 24 18",
+          "fstp qword ptr [esp+18h]"
+        ],
+        [
+          "100011a1",
+          "db 44 24 10",
+          "fild dword ptr [esp+10h]"
+        ],
+        [
+          "100011a5",
+          "7d 06",
+          "jge 100011AD"
+        ],
+        [
+          "100011a7",
+          "dc 05 48 20 00 10",
+          "fadd qword ptr [__real@41f0000000000000]"
+        ],
+        [
+          "100011ad",
+          "0f af f3",
+          "imul esi,ebx"
+        ],
+        [
+          "100011b0",
+          "de e9",
+          "fsubp st(1),st"
+        ],
+        [
+          "100011b2",
+          "dd 5c 24 28",
+          "fstp qword ptr [esp+28h]"
+        ],
+        [
+          "100011b6",
+          "03 f1",
+          "add esi,ecx"
+        ],
+        [
+          "100011b8",
+          "83 c0 01",
+          "add eax,1"
+        ],
+        [
+          "100011bb",
+          "3b c2",
+          "cmp eax,edx"
+        ],
+        [
+          "100011bd",
+          "8d 34 b7",
+          "lea esi,[edi+esi*4]"
+        ],
+        [
+          "100011c0",
+          "72 02",
+          "jb 100011C4"
+        ],
+        [
+          "100011c2",
+          "33 c0",
+          "xor eax,eax"
+        ],
+        [
+          "100011c4",
+          "d9 46 04",
+          "fld dword ptr [esi+4]"
+        ],
+        [
+          "100011c7",
+          "0f af c3",
+          "imul eax,ebx"
+        ],
+        [
+          "100011ca",
+          "dd 5c 24 10",
+          "fstp qword ptr [esp+10h]"
+        ],
+        [
+          "100011ce",
+          "d9 06",
+          "fld dword ptr [esi]"
+        ],
+        [
+          "100011d0",
+          "dd 5c 24 20",
+          "fstp qword ptr [esp+20h]"
+        ],
+        [
+          "100011d4",
+          "03 c1",
+          "add eax,ecx"
+        ],
+        [
+          "100011d6",
+          "8d 74 24 18",
+          "lea esi,[esp+18h]"
+        ],
+        [
+          "100011da",
+          "8d 54 24 10",
+          "lea edx,[esp+10h]"
+        ],
+        [
+          "100011de",
+          "8d 4c 24 20",
+          "lea ecx,[esp+20h]"
+        ],
+        [
+          "100011e2",
+          "8d 3c 87",
+          "lea edi,[edi+eax*4]"
+        ],
+        [
+          "100011e5",
+          "e8 16 fe ff ff",
+          "call ?InterpolateMagneticAngle@@YANABN00@Z"
+        ],
+        [
+          "100011ea",
+          "8d 54 24 20",
+          "lea edx,[esp+20h]"
+        ],
+        [
+          "100011ee",
+          "dd 5c 24 30",
+          "fstp qword ptr [esp+30h]"
+        ],
+        [
+          "100011f2",
+          "8d 4c 24 10",
+          "lea ecx,[esp+10h]"
+        ],
+        [
+          "100011f6",
+          "d9 47 04",
+          "fld dword ptr [edi+4]"
+        ],
+        [
+          "100011f9",
+          "dd 5c 24 20",
+          "fstp qword ptr [esp+20h]"
+        ],
+        [
+          "100011fd",
+          "d9 07",
+          "fld dword ptr [edi]"
+        ],
+        [
+          "100011ff",
+          "dd 5c 24 10",
+          "fstp qword ptr [esp+10h]"
+        ],
+        [
+          "10001203",
+          "e8 f8 fd ff ff",
+          "call ?InterpolateMagneticAngle@@YANABN00@Z"
+        ],
+        [
+          "10001208",
+          "8d 74 24 28",
+          "lea esi,[esp+28h]"
+        ],
+        [
+          "1000120c",
+          "dd 5c 24 20",
+          "fstp qword ptr [esp+20h]"
+        ],
+        [
+          "10001210",
+          "8d 54 24 20",
+          "lea edx,[esp+20h]"
+        ],
+        [
+          "10001214",
+          "8d 4c 24 30",
+          "lea ecx,[esp+30h]"
+        ],
+        [
+          "10001218",
+          "e8 e3 fd ff ff",
+          "call ?InterpolateMagneticAngle@@YANABN00@Z"
+        ],
+        [
+          "1000121d",
+          "dd 05 30 20 00 10",
+          "fld qword ptr [__real@4066800000000000]"
+        ],
+        [
+          "10001223",
+          "d8 d9",
+          "fcomp st(1)"
+        ],
+        [
+          "10001225",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "10001227",
+          "f6 c4 05",
+          "test ah,5"
+        ],
+        [
+          "1000122a",
+          "7a 0d",
+          "jp 10001239"
+        ],
+        [
+          "1000122c",
+          "dc 25 28 20 00 10",
+          "fsub qword ptr [__real@4076800000000000]"
+        ],
+        [
+          "10001232",
+          "5f",
+          "pop edi"
+        ],
+        [
+          "10001233",
+          "5e",
+          "pop esi"
+        ],
+        [
+          "10001234",
+          "5b",
+          "pop ebx"
+        ],
+        [
+          "10001235",
+          "8b e5",
+          "mov esp,ebp"
+        ],
+        [
+          "10001237",
+          "5d",
+          "pop ebp"
+        ],
+        [
+          "10001238",
+          "c3",
+          "ret"
+        ],
+        [
+          "10001239",
+          "dd 05 38 20 00 10",
+          "fld qword ptr [__real@c066800000000000]"
+        ],
+        [
+          "1000123f",
+          "d8 d9",
+          "fcomp st(1)"
+        ],
+        [
+          "10001241",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "10001243",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001246",
+          "75 06",
+          "jne 1000124E"
+        ],
+        [
+          "10001248",
+          "dc 05 28 20 00 10",
+          "fadd qword ptr [__real@4076800000000000]"
+        ],
+        [
+          "1000124e",
+          "5f",
+          "pop edi"
+        ],
+        [
+          "1000124f",
+          "5e",
+          "pop esi"
+        ],
+        [
+          "10001250",
+          "5b",
+          "pop ebx"
+        ],
+        [
+          "10001251",
+          "8b e5",
+          "mov esp,ebp"
+        ],
+        [
+          "10001253",
+          "5d",
+          "pop ebp"
+        ],
+        [
+          "10001254",
+          "c3",
+          "ret"
+        ]
+      ],
+      "leftHex": "8bff558bec83e4f883ec34538b1d289a442085db56577509d9ee5f5e5b8be55dc3dd02dc0540173420dd0548173420d8d1dfe0d9eef6c4057a06dddad9c0eb11d8d2dfe0f6c4417506dddad9c1eb02d9ca8b0d1c9a44208d41ff85c089442410db4424107d06dc0530dd3d20d9c9def2dec9dd4208dd0550173420d8d1dfe0f6c4417a06dddbd8e2eb0dd9cbd8d9dfe0f6c4417502d8c28b3d209a4420def28bd785d289542410db4424107d06dc0530dd3d20d97c240e0fb744240edeca0d000c000089442410d9c0d96c2410df7c24188b5424188bf2d96c240ed97c240ed9c10fb744240e0d000c000085f689442410d96c241089742410df7c24188b442418d96c240edb4424107d06dc0530dd3d20dee98bf085f689742410dd5c2418db4424107d06dc0530dd3d208bf1dee90faff0dd5c243803f28d34b383c0013bc7d906dd5c2420d94604dd5c2410720233c00fafc803ca8d048b8d7424188d542410d9008d4c2420dd5c2430d94004dd5c2428e8790000008d542428dd5c24208d4c2430e868000000dd5c24308d7424388d5424308d4c2420e853000000dd0548173420d8d9dfe0f6c4057a15dc2550173420d95c2410d94424105f5e5b8be55dc3dd05f0dc3d20d8d9dfe0f6c4417506dc05501734205fd95c240cd944240c5e5b8be55dc3",
+      "rightHex": "8bff558bec83e4f883ec2c5356578b3d0430001085ff7509d9ee5f5e5b8be55dc3dd01dc0558200010dd0530200010d8d1dfe0d9eef6c4057a04dddaeb13ddd9d8d1dfe0f6c4417506ddd9d9c0eb02d9c98b1d00300010dc0d502000108d43ff85c089442410db4424107d06dc0548200010dec9dd4108dd0528200010d8d1dfe0f6c4417a06dddbdee2eb11d9cbd8d9dfe0f6c4417504dec2eb02ddda8b1508300010d9c9dc0d402000108bca85c9894c2410db4424107d06dc0548200010dec9d9c0df7c24108b4424148b442410d9c1df7c24108b4c24148b4c24108bf185f689742410db4424107d06dc0548200010deea8bf085f6d9c989742410dd5c2418db4424107d06dc05482000100faff3dee9dd5c242803f183c0013bc28d34b7720233c0d946040fafc3dd5c2410d906dd5c242003c18d7424188d5424108d4c24208d3c87e816feffff8d542420dd5c24308d4c2410d94704dd5c2420d907dd5c2410e8f8fdffff8d742428dd5c24208d5424208d4c2430e8e3fdffffdd0530200010d8d9dfe0f6c4057a0ddc25282000105f5e5b8be55dc3dd0538200010d8d9dfe0f6c4417506dc05282000105f5e5b8be55dc3",
+      "mappedOffsets": [
+        37,
+        43,
+        83
+      ]
+    },
+    "tags": [
+      "Linked differences",
+      "Magnetic variation",
+      "Reconstructed"
+    ]
+  },
+  {
+    "entry": "203ecb90",
+    "name": "Interpolate a wrapped magnetic angle",
+    "group": "Magnetic variation",
+    "source": {
+      "file": "src/fe/magnetic_variation.cpp",
+      "symbol": "InterpolateMagneticAngle",
+      "line": 19
+    },
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "Complete linked interpolation helper. Comparison and x87 stack ordering differ.",
+      "evidence": "vm-share/modules/fe/runs/fe-magnetic-variation-20261124-002/magnetic-variation-comparison.json",
+      "symbol": "?InterpolateMagneticAngle@@YANABN00@Z",
+      "rebuilt": [
+        [
+          "10001000",
+          "dd 01",
+          "fld qword ptr [ecx]"
+        ],
+        [
+          "10001002",
+          "dc 22",
+          "fsub qword ptr [edx]"
+        ],
+        [
+          "10001004",
+          "dd 05 38 20 00 10",
+          "fld qword ptr [__real@c066800000000000]"
+        ],
+        [
+          "1000100a",
+          "d8 d1",
+          "fcom st(1)"
+        ],
+        [
+          "1000100c",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "1000100e",
+          "dd 05 30 20 00 10",
+          "fld qword ptr [__real@4066800000000000]"
+        ],
+        [
+          "10001014",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001017",
+          "7a 18",
+          "jp 10001031"
+        ],
+        [
+          "10001019",
+          "d8 d2",
+          "fcom st(2)"
+        ],
+        [
+          "1000101b",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "1000101d",
+          "dd da",
+          "fstp st(2)"
+        ],
+        [
+          "1000101f",
+          "f6 c4 01",
+          "test ah,1"
+        ],
+        [
+          "10001022",
+          "75 0f",
+          "jne 10001033"
+        ],
+        [
+          "10001024",
+          "dd d9",
+          "fstp st(1)"
+        ],
+        [
+          "10001026",
+          "dd d8",
+          "fstp st(0)"
+        ],
+        [
+          "10001028",
+          "dd 02",
+          "fld qword ptr [edx]"
+        ],
+        [
+          "1000102a",
+          "dc 21",
+          "fsub qword ptr [ecx]"
+        ],
+        [
+          "1000102c",
+          "dc 0e",
+          "fmul qword ptr [esi]"
+        ],
+        [
+          "1000102e",
+          "dc 01",
+          "fadd qword ptr [ecx]"
+        ],
+        [
+          "10001030",
+          "c3",
+          "ret"
+        ],
+        [
+          "10001031",
+          "dd da",
+          "fstp st(2)"
+        ],
+        [
+          "10001033",
+          "dd 01",
+          "fld qword ptr [ecx]"
+        ],
+        [
+          "10001035",
+          "d8 d2",
+          "fcom st(2)"
+        ],
+        [
+          "10001037",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "10001039",
+          "dd 05 28 20 00 10",
+          "fld qword ptr [__real@4076800000000000]"
+        ],
+        [
+          "1000103f",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001042",
+          "75 04",
+          "jne 10001048"
+        ],
+        [
+          "10001044",
+          "dc e9",
+          "fsub st(1),st"
+        ],
+        [
+          "10001046",
+          "eb 0f",
+          "jmp 10001057"
+        ],
+        [
+          "10001048",
+          "d9 c9",
+          "fxch st(1)"
+        ],
+        [
+          "1000104a",
+          "d8 d2",
+          "fcom st(2)"
+        ],
+        [
+          "1000104c",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "1000104e",
+          "f6 c4 05",
+          "test ah,5"
+        ],
+        [
+          "10001051",
+          "7a 02",
+          "jp 10001055"
+        ],
+        [
+          "10001053",
+          "d8 c1",
+          "fadd st,st(1)"
+        ],
+        [
+          "10001055",
+          "d9 c9",
+          "fxch st(1)"
+        ],
+        [
+          "10001057",
+          "dd 02",
+          "fld qword ptr [edx]"
+        ],
+        [
+          "10001059",
+          "d8 d4",
+          "fcom st(4)"
+        ],
+        [
+          "1000105b",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "1000105d",
+          "dd dc",
+          "fstp st(4)"
+        ],
+        [
+          "1000105f",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001062",
+          "75 08",
+          "jne 1000106C"
+        ],
+        [
+          "10001064",
+          "dd da",
+          "fstp st(2)"
+        ],
+        [
+          "10001066",
+          "d9 ca",
+          "fxch st(2)"
+        ],
+        [
+          "10001068",
+          "d8 e1",
+          "fsub st,st(1)"
+        ],
+        [
+          "1000106a",
+          "eb 0f",
+          "jmp 1000107B"
+        ],
+        [
+          "1000106c",
+          "d9 ca",
+          "fxch st(2)"
+        ],
+        [
+          "1000106e",
+          "d8 db",
+          "fcomp st(3)"
+        ],
+        [
+          "10001070",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "10001072",
+          "d9 ca",
+          "fxch st(2)"
+        ],
+        [
+          "10001074",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001077",
+          "75 02",
+          "jne 1000107B"
+        ],
+        [
+          "10001079",
+          "d8 c1",
+          "fadd st,st(1)"
+        ],
+        [
+          "1000107b",
+          "d8 e2",
+          "fsub st,st(2)"
+        ],
+        [
+          "1000107d",
+          "dc 0e",
+          "fmul qword ptr [esi]"
+        ],
+        [
+          "1000107f",
+          "de c2",
+          "faddp st(2),st"
+        ],
+        [
+          "10001081",
+          "d8 d1",
+          "fcom st(1)"
+        ],
+        [
+          "10001083",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "10001085",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001088",
+          "7a 03",
+          "jp 1000108D"
+        ],
+        [
+          "1000108a",
+          "de e9",
+          "fsubp st(1),st"
+        ],
+        [
+          "1000108c",
+          "c3",
+          "ret"
+        ],
+        [
+          "1000108d",
+          "d9 ee",
+          "fldz"
+        ],
+        [
+          "1000108f",
+          "d8 da",
+          "fcomp st(2)"
+        ],
+        [
+          "10001091",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "10001093",
+          "f6 c4 41",
+          "test ah,41h"
+        ],
+        [
+          "10001096",
+          "75 03",
+          "jne 1000109B"
+        ],
+        [
+          "10001098",
+          "de c1",
+          "faddp st(1),st"
+        ],
+        [
+          "1000109a",
+          "c3",
+          "ret"
+        ],
+        [
+          "1000109b",
+          "dd d8",
+          "fstp st(0)"
+        ],
+        [
+          "1000109d",
+          "c3",
+          "ret"
+        ]
+      ],
+      "leftHex": "dd01dc22dd05f0dc3d20d8d1dfe0dd0548173420f6c4417418d8d2dfe0dddaf6c4057b0fddd9ddd8dd02dc21dc0edc01c3dddadd02dd01d8d3dfe0dd0550173420f6c4417504dce9eb0fd9c9d8d3dfe0f6c4057a02d8c1d9c9d9ccd8dadfe0f6c4057a06dddad8e2eb0dd9cad8d9dfe0f6c4417502d8c2d8e1dc0edec1d8d1dfe0f6c4017503dee1c3d9eed8d9dfe0f6c4417503dec1c3ddd9c3",
+      "rightHex": "dd01dc22dd0538200010d8d1dfe0dd0530200010f6c4417a18d8d2dfe0dddaf6c401750fddd9ddd8dd02dc21dc0edc01c3dddadd01d8d2dfe0dd0528200010f6c4417504dce9eb0fd9c9d8d2dfe0f6c4057a02d8c1d9c9dd02d8d4dfe0dddcf6c4417508dddad9cad8e1eb0fd9cad8dbdfe0d9caf6c4417502d8c1d8e2dc0edec2d8d1dfe0f6c4417a03dee9c3d9eed8dadfe0f6c4417503dec1c3ddd8c3",
+      "mappedOffsets": [
+        6,
+        16
+      ]
+    },
+    "tags": [
+      "Linked differences",
+      "Magnetic variation",
+      "Reconstructed"
+    ]
+  }
+]

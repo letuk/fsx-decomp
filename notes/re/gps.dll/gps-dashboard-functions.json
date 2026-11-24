@@ -1,0 +1,154 @@
+[
+  {
+    "entry": "20855f20",
+    "bytes": 137,
+    "name": "Register FS9GPS provider (ordinal 1)",
+    "kind": "Ordinal export",
+    "group": "FS9GPS registration",
+    "comparison": {
+      "status": "Diagnostic",
+      "full": true,
+      "scope": "Two argument pushes moved across field stores. Checked 11 COFF relocations against the original targets.",
+      "evidence": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/provider-comparison.json",
+      "listing": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/worker-output/disassembly.txt",
+      "symbol": "_RegisterGpsProvider",
+      "leftHex": "8bff558bec51a1b0ea862056508d4dfc516a186a01ff150c1185208b75fc33c03bf07460c706b0198520c706e41985205689461489460889460c66c74610050066c7461204006894198520c7460401000000ff157c1185208b168b42048bceffd08b351c1185206880a386206a10ffd66820a586206a02ffd6ff1570118520a3a8ea86205e8be55dc3",
+      "rightHex": "8bff558bec51a10000000056508d4dfc516a186a01ff15000000008b75fc33c03bf0746056c70600000000c70600000000680000000089461489460889460c66c74610050066c746120400c7460401000000ff15000000008b168b42048bceffd08b350000000068000000006a10ffd668000000006a02ffd6ff1500000000a3000000005e8be55dc3"
+    }
+  },
+  {
+    "entry": "20855fb0",
+    "bytes": 42,
+    "name": "Unregister FS9GPS provider (ordinal 2)",
+    "kind": "Ordinal export",
+    "group": "FS9GPS registration",
+    "comparison": {
+      "status": "Normalized",
+      "full": true,
+      "scope": "Complete 42-byte function body against VC8 x86 COFF with five target-validated DIR32 fields. DLL linking and runtime verification remain open.",
+      "evidence": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/comparison.json",
+      "listing": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/worker-output/disassembly.txt",
+      "symbol": "_UnregisterGpsProvider",
+      "leftHex": "8bff566a006894198520ff157c1185208b35181185206820a586206a02ffd66880a386206a10ffd65ec3",
+      "rightHex": "8bff566a006800000000ff15000000008b350000000068000000006a02ffd668000000006a10ffd65ec3",
+      "mappedOffsets": [
+        6,
+        12,
+        18,
+        23,
+        32
+      ]
+    }
+  },
+  {
+    "entry": "20856050",
+    "bytes": 49,
+    "name": "Release FS9GPS provider",
+    "group": "FS9GPS registration",
+    "comparison": {
+      "status": "Diagnostic",
+      "full": true,
+      "scope": "Original CMP EDI,1 and JNC versus JNE using flags from the preceding decrement. Checked 2 COFF relocations against the original targets.",
+      "evidence": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/provider-comparison.json",
+      "listing": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/worker-output/disassembly.txt",
+      "symbol": "?Release@GpsProvider@@QAEIXZ",
+      "leftHex": "8bff558bec51568bf1834604ff578b7e0483ff01731356e8740000008d45fc508975fcff15141185208bc75f5e8be55dc3",
+      "rightHex": "8bff558bec51568bf1834604ff578b7e04751356e8000000008d45fc508975fcff15000000008bc75f5e8be55dc3"
+    }
+  },
+  {
+    "entry": "2086a380",
+    "bytes": 315,
+    "name": "Legacy GPS data lifecycle callback",
+    "group": "Legacy GPS data",
+    "comparison": {
+      "status": "Diagnostic",
+      "full": true,
+      "scope": "Event dispatch, allocation initialization, and ABI call setup differ; 147-byte request reset and publish block matches after target validation.",
+      "evidence": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/legacy-lifecycle-comparison.json",
+      "listing": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/worker-output/disassembly.txt",
+      "symbol": "_GpsLegacyDataLifecycle@8",
+      "leftHex": "8bff558bec8b450883e8365657743e83e8010f851d0100008b358011852068785c8520ffd668685c8520ffd68b35f0e9862033ff3bf70f84f9000000e8ff000000893df0e986205f5e5dc20800a1f0e9862033ff3bc7753ca1b0ea8620508d4d08516a106a01ff150c1185208b45083bc7741a8d480a6689396683090489780c893889780466c740080500eb0233c0a3f0e986208b500c52b8f8e98620e8ee050000d9eedd1560e9862057dd1568e9862057dd1570e98620c70540e98620b0000000dd1578e98620893d44e98620dd15c0e98620893d80e98620dd15d0e98620893d84e98620dd15d8e98620893d88e98620dd1de0e98620893d8ce98620893de8e98620c705ece9862040e18620e88d0000008b357811852068685c85206a2668f8e98620ffd668785c85206a266840e98620ffd65f5e5dc20800",
+      "rightHex": "8bff558bec8b450883f83656570f85eb000000a10000000033ff3bc77534a100000000508d4d08516a106a01ff15000000008b45083bc7741466c7400a040089780c893889780466c740080500a3000000008b500c895508ff7508b800000000e800000000d9eedd152000000057dd152800000057dd1530000000c70500000000b0000000dd1538000000893d04000000dd1580000000893d40000000dd1590000000893d44000000dd1598000000893d48000000dd1da0000000893d4c000000893da8000000c705ac00000000000000e8000000008b350000000068000000006a266800000000ffd668000000006a266800000000ffd65f5e5dc2080083f83775308b35000000006800000000ffd66800000000ffd6a10000000033ff3bc7894508740e8b7508e800000000893d000000005f5e5dc20800"
+    }
+  },
+  {
+    "entry": "2086a520",
+    "bytes": 1245,
+    "name": "Legacy GPS flight plan update callback",
+    "group": "Legacy GPS data"
+  },
+  {
+    "entry": "2086a4c0",
+    "bytes": 86,
+    "name": "Release legacy GPS data storage",
+    "group": "Legacy GPS data",
+    "comparison": {
+      "status": "Diagnostic",
+      "full": true,
+      "scope": "Rebuilt C++ body takes a stack argument through a separate ESI-to-stack adapter.",
+      "evidence": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/cleanup-comparison.json",
+      "listing": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/worker-output/disassembly.txt",
+      "symbol": "_ReleaseGpsLegacyStorageBody",
+      "leftHex": "8bff558bec518b4e0c85c9538b1d141185207432f6460a01742c837e040074268b0685c07e0233c089068d45fc50894dfcffd366834e0a01c7460c00000000c74604000000008d4dfc518975fcffd38bc65b8be55dc3",
+      "rightHex": "8bff558bec51568b75088b460c85c0578b3d000000008945087435f6460a01742f837e040074298b0633c985c00f9fc18d55085283e90123c18906ffd766834e0a01c7460c00000000c74604000000008d45fc508975fcffd75f5e8be55dc3"
+    }
+  },
+  {
+    "entry": "208560e0",
+    "name": "Destroy FS9GPS provider",
+    "bytes": 148,
+    "group": "FS9GPS registration",
+    "comparison": {
+      "status": "Diagnostic",
+      "full": true,
+      "scope": "RAII guard changes frame layout and storage base; count clamp uses SETG and AND.",
+      "evidence": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/cleanup-comparison.json",
+      "listing": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/worker-output/disassembly.txt",
+      "symbol": "_DestroyGpsProvider@4",
+      "leftHex": "8bff558bec6aff682bb8862064a1000000005056a108d0862033c5508d45f464a3000000008b7508c706e41985208bcec745fc00000000e894000000c745fcffffffff8b4e1485c97438f64612017432837e0c00742c8b460885c07e0233c08946088d450850894d08ff151411852066834e1201c7461400000000c7460c000000008b4df464890d00000000595e8be55dc20400",
+      "rightHex": "8bff558bec6aff680000000064a100000000505156a10000000033c5508d45f464a3000000008b4d088d7108c701000000008975f0c745fc00000000e8000000008b460c85c0c745fcffffffff8945087439f6460a017433837e0400742d8b0633c985c00f9fc18d55085283e90123c18906ff150000000066834e0a01c7460c00000000c74604000000008b4df464890d00000000595e8be55dc20400"
+    }
+  },
+  {
+    "entry": "208561b0",
+    "name": "Release provider entries",
+    "bytes": 78,
+    "group": "FS9GPS registration",
+    "comparison": {
+      "status": "Normalized",
+      "full": true,
+      "scope": "Complete 78-byte body with one target-validated api.dll ordinal 108 relocation.",
+      "evidence": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/cleanup-comparison.json",
+      "listing": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/worker-output/disassembly.txt",
+      "symbol": "?ReleaseEntries@GpsProvider@@QAEXXZ",
+      "leftHex": "8bff558bec5156578bf933f63977087e34538b1d14118520eb068d9b000000008b47148b0cb08d55fc52894dfcffd383c6013b77087ce95bc74708000000005f5e8be55dc38977085f5e8be55dc3",
+      "rightHex": "8bff558bec5156578bf933f63977087e34538b1d00000000eb068d9b000000008b47148b0cb08d55fc52894dfcffd383c6013b77087ce95bc74708000000005f5e8be55dc38977085f5e8be55dc3",
+      "mappedOffsets": [
+        20
+      ]
+    }
+  },
+  {
+    "entry": "20856500",
+    "name": "Release storage buffer during unwind",
+    "bytes": 71,
+    "group": "FS9GPS registration"
+  },
+  {
+    "entry": "2086aa10",
+    "name": "Initialize legacy GPS data record",
+    "bytes": 85,
+    "group": "Legacy GPS data",
+    "comparison": {
+      "status": "Diagnostic",
+      "full": true,
+      "scope": "85-byte body matches after EAX/ECX reassignment; separate 7-byte adapter preserves the EAX input.",
+      "evidence": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/legacy-lifecycle-comparison.json",
+      "listing": "vm-share/modules/gps/runs/gps-legacy-lifecycle-20261115-003/worker-output/disassembly.txt",
+      "symbol": "@InitializeGpsLegacyDataBody@12",
+      "leftHex": "8bff558becd9ee33c9dd5020894804dd5028894840dd5030894844dd5038894848dd908000000089484cdd90900000008988a80000008b4d08dd9098000000dd98a0000000c700b00000008988ac0000005dc20400",
+      "rightHex": "8bff558becd9ee33c0dd5120894104dd5128894140dd5130894144dd5138894148dd918000000089414cdd91900000008981a80000008b4508dd9198000000dd99a0000000c701b00000008981ac0000005dc20400"
+    }
+  }
+]

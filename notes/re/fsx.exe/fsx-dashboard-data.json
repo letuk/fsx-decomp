@@ -1,0 +1,166 @@
+[
+  {
+    "entry": "01004000",
+    "name": "ATL cached codepage getter",
+    "bytes": 4,
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "921f0001",
+    "evidence": "artifacts/fsx.exe/codeview-packaging-20261118/writable-exact.json",
+    "notes": [
+      {
+        "title": "BinPlace comparison",
+        "description": "The packaged RTM link retains the original thunk address, the 32-byte fsx.pdb record and the 40-byte zero gap. The packaging control uses a diagnostic version resource.",
+        "file": "artifacts/fsx.exe/codeview-packaging-20261118/trials.json"
+      },
+      {
+        "title": "ATL-first basename comparison",
+        "description": "The direct basename link placed the thunk 32 bytes early. That build has a normalized writable-image comparison.",
+        "file": "artifacts/fsx.exe/writable-object-order-20261118/match.json"
+      }
+    ],
+    "comparison": {
+      "status": "Exact",
+      "scope": "Four exact initial bytes at 0x01004000 in the packaged ATL-first RTM link. Both images resolve the pointer to the verified ATL thunk at 0x01001f92.",
+      "evidence": "artifacts/fsx.exe/codeview-packaging-20261118/writable-exact.json",
+      "leftHex": "921f0001",
+      "rightHex": "921f0001"
+    }
+  },
+  {
+    "entry": "01004018",
+    "bytes": 4,
+    "name": "___globallocalestatus",
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "feffffff",
+    "evidence": "artifacts/fsx.exe/writable-object-order-20261118/replay-data.json",
+    "comparison": {
+      "status": "Exact",
+      "scope": "4 exact initial bytes at rebuilt 0x01004018 in the ATL-first link.",
+      "evidence": "artifacts/fsx.exe/writable-object-order-20261118/replay-data.json",
+      "leftHex": "feffffff",
+      "rightHex": "feffffff"
+    }
+  },
+  {
+    "entry": "0100401c",
+    "bytes": 4,
+    "name": "___defaultmatherr",
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "01000000",
+    "evidence": "artifacts/fsx.exe/writable-object-order-20261118/replay-data.json",
+    "comparison": {
+      "status": "Exact",
+      "scope": "4 exact initial bytes at rebuilt 0x0100401c in the ATL-first link.",
+      "evidence": "artifacts/fsx.exe/writable-object-order-20261118/replay-data.json",
+      "leftHex": "01000000",
+      "rightHex": "01000000"
+    }
+  },
+  {
+    "entry": "01004024",
+    "bytes": 4,
+    "name": "argc output address, argument one",
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "00000000",
+    "evidence": "artifacts/fsx.exe/getter-placement-20261119/writable-ledger.json",
+    "comparison": {
+      "status": "Exact",
+      "scope": "Four matching initial bytes at the original VA 0x01004024 in the packaged RTM link with MFC nolib compiled under /GL.",
+      "evidence": "artifacts/fsx.exe/getter-placement-20261119/writable-ledger.json",
+      "leftHex": "00000000",
+      "rightHex": "00000000"
+    }
+  },
+  {
+    "entry": "01004028",
+    "bytes": 4,
+    "name": "environment output address, argument three",
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "00000000",
+    "evidence": "artifacts/fsx.exe/getter-placement-20261119/writable-ledger.json",
+    "comparison": {
+      "status": "Exact",
+      "scope": "Four matching initial bytes at the original VA 0x01004028 in the packaged RTM link with MFC nolib compiled under /GL.",
+      "evidence": "artifacts/fsx.exe/getter-placement-20261119/writable-ledger.json",
+      "leftHex": "00000000",
+      "rightHex": "00000000"
+    }
+  },
+  {
+    "entry": "0100402c",
+    "bytes": 4,
+    "name": "argv output address, argument two",
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "00000000",
+    "evidence": "artifacts/fsx.exe/getter-placement-20261119/writable-ledger.json",
+    "comparison": {
+      "status": "Exact",
+      "scope": "Four matching initial bytes at the original VA 0x0100402c in the packaged RTM link with MFC nolib compiled under /GL.",
+      "evidence": "artifacts/fsx.exe/getter-placement-20261119/writable-ledger.json",
+      "leftHex": "00000000",
+      "rightHex": "00000000"
+    }
+  },
+  {
+    "entry": "01004388",
+    "bytes": 88,
+    "name": "Observed window storage",
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "evidence": "artifacts/fsx.exe/writable-object-order-20261118/replay-data.json",
+    "comparison": {
+      "status": "Exact",
+      "scope": "88 exact initial bytes at rebuilt 0x01004388 in the ATL-first link.",
+      "evidence": "artifacts/fsx.exe/writable-object-order-20261118/replay-data.json",
+      "leftHex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "rightHex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  {
+    "entry": "01004384",
+    "name": "pfnGetApplication",
+    "functions": ["01001720", "010019e0", "01001d00", "01001d30"],
+    "bytes": 4,
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "00000000",
+    "evidence": "artifacts/fsx.exe/getter-placement-20261119/writable-ledger.json",
+    "comparison": {
+      "status": "Exact",
+      "scope": "Four bytes of virtual zero-fill at the original VA 0x01004384. The rebuilt MAP identifies pfnGetApplication and all seven linked reference instructions are byte-exact.",
+      "evidence": "artifacts/fsx.exe/getter-placement-20261119/writable-ledger.json",
+      "leftHex": "00000000",
+      "rightHex": "00000000"
+    },
+    "notes": [
+      {
+        "title": "Application getter references",
+        "description": "Six reads and one write match at the original instruction addresses.",
+        "file": "artifacts/fsx.exe/getter-placement-20261119/audit.json"
+      }
+    ]
+  },
+  {
+    "entry": "010043e0",
+    "name": "Observed app storage including event",
+    "bytes": 168,
+    "group": "Initial state",
+    "status": "Exact initial bytes",
+    "originalHex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "evidence": "artifacts/fsx.exe/writable-object-order-20261118/replay-data.json",
+    "comparison": {
+      "status": "Exact",
+      "scope": "168 exact initial bytes at rebuilt 0x010043e0, mapped by the known application symbol.",
+      "evidence": "artifacts/fsx.exe/writable-object-order-20261118/replay-data.json",
+      "leftHex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "rightHex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    }
+  }
+]

@@ -1,0 +1,13 @@
+<prototype name="__fsx_edi_eax_varargs" extrapop="4" stackshift="4">
+  <input>
+    <pentry minsize="1" maxsize="4"><register name="EDI"/></pentry>
+    <pentry minsize="1" maxsize="4"><register name="EAX"/></pentry>
+    <pentry minsize="1" maxsize="500" align="4"><addr offset="4" space="stack"/></pentry>
+  </input>
+  <output killedbycall="true"><pentry minsize="1" maxsize="4"><register name="EAX"/></pentry></output>
+  <unaffected>
+    <register name="ESP"/><register name="EBP"/><register name="ESI"/>
+    <register name="EDI"/><register name="EBX"/><register name="DF"/><register name="FS_OFFSET"/>
+  </unaffected>
+  <killedbycall><register name="ECX"/><register name="EDX"/></killedbycall>
+</prototype>

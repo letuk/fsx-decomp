@@ -1,0 +1,684 @@
+[
+  {
+    "entry": "20bbdb1c",
+    "name": "Heading transform VTable prefix",
+    "kind": "VTable",
+    "bytes": 16,
+    "status": "live verified",
+    "description": "Reconstructed entry names. The four slots and the target machine signatures are verified. The extent is a verified prefix.",
+    "evidence": "artifacts/sim1.dll/state-integration-ghidra.json",
+    "slots": [
+      {
+        "offset": "0x00",
+        "name": "Advance position and attitude",
+        "signature": "void __thiscall(HeadingTransform*, FlightDynamics*, double)",
+        "target": "20bdec10",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x04",
+        "name": "Rotate forward",
+        "signature": "void __thiscall(HeadingTransform*, Vector3*, const Vector3*)",
+        "target": "20bdeec0",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x08",
+        "name": "Rotate inverse",
+        "signature": "void __thiscall(HeadingTransform*, Vector3*, const Vector3*)",
+        "target": "20bdef30",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x0c",
+        "name": "Refresh coefficients",
+        "signature": "void __thiscall(HeadingTransform*, const FlightDynamics*)",
+        "target": "20bdefa0",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20c7c180",
+    "name": "gravityAcceleration",
+    "kind": "Global",
+    "bytes": 8,
+    "status": "live verified",
+    "functions": [
+      "20bccef0",
+      "20c42d90",
+      "20c010f0"
+    ],
+    "description": "GravitySeaLevel is initialized by FUN_20bd0600 with a fallback of 32.174. A positive configured value can override it.",
+    "evidence": "artifacts/sim1.dll/force-and-moment-ghidra.json"
+  },
+  {
+    "entry": "20bb11fc",
+    "name": "Published flight state IAT cell",
+    "kind": "IAT cell",
+    "bytes": 4,
+    "status": "live verified",
+    "functions": [
+      "20bd1bd0",
+      "20bd1c90"
+    ],
+    "initialValue": "api.dll ordinal 304",
+    "description": "Original import base for the fixed longitude words at +0x160/+0x164 and altitude words at +0x168/+0x16c.",
+    "evidence": "artifacts/sim1.dll/position-writers-ghidra.json"
+  },
+  {
+    "entry": "20bb11f0",
+    "name": "Byte-fill IAT cell",
+    "kind": "IAT cell",
+    "bytes": 4,
+    "status": "live verified",
+    "functions": [
+      "20bccae0"
+    ],
+    "initialValue": "api.dll ordinal 109",
+    "description": "The force collector calls this slot to clear the two 24-byte output vectors.",
+    "evidence": "artifacts/sim1.dll/force-and-moment-ghidra.json"
+  },
+  {
+    "entry": "20bbefd4",
+    "name": "Force contributor adapter VTable",
+    "kind": "VTable",
+    "status": "live verified",
+    "description": "Reviewed first slot. The adapter forwards a double and two vector pointers to its bound callback.",
+    "evidence": "artifacts/sim1.dll/force-and-moment-ghidra.json",
+    "slots": [
+      {
+        "offset": "0x00",
+        "name": "Evaluate",
+        "signature": "void __thiscall(ForceContributor*, double, Vector3*, Vector3*)",
+        "target": "20bf6a20",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bbeb88",
+    "name": "Base flight mass-change slot",
+    "kind": "VTable",
+    "status": "live verified",
+    "description": "Reviewed slot +0xe4. The caller passes the flight object in ECX.",
+    "evidence": "artifacts/sim1.dll/force-and-moment-ghidra.json",
+    "slots": [
+      {
+        "offset": "0xe4",
+        "name": "Mass properties changed",
+        "signature": "void __thiscall(FlightDynamics*)",
+        "target": "20c669a6",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bbecd0",
+    "name": "Airplane mass-change slot",
+    "kind": "VTable",
+    "status": "live verified",
+    "description": "Reviewed slot +0xe4. The caller passes the flight object in ECX.",
+    "evidence": "artifacts/sim1.dll/force-and-moment-ghidra.json",
+    "slots": [
+      {
+        "offset": "0xe4",
+        "name": "Mass properties changed",
+        "signature": "void __thiscall(FlightDynamics*)",
+        "target": "20c2edc0",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bbee38",
+    "name": "Helicopter mass-change slot",
+    "kind": "VTable",
+    "status": "live verified",
+    "description": "Reviewed slot +0xe4. The caller passes the flight object in ECX.",
+    "evidence": "artifacts/sim1.dll/force-and-moment-ghidra.json",
+    "slots": [
+      {
+        "offset": "0xe4",
+        "name": "Mass properties changed",
+        "signature": "void __thiscall(FlightDynamics*)",
+        "target": "20c2ee60",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20c20544",
+    "name": "Engine type dispatch table",
+    "kind": "Jump table",
+    "status": "live verified",
+    "bytes": 24,
+    "originalHex": "7404c2208b04c2209a04c2208204c2209a04c2208b04c220",
+    "functions": [
+      "20c20430"
+    ],
+    "description": "Six relocated pointers for engine types 0 through 5, in order: 0x20c20474, 0x20c2048b, 0x20c2049a, 0x20c20482, 0x20c2049a, 0x20c2048b. All six HIGHLOW fixups were verified in the original PE.",
+    "evidence": "artifacts/sim1.dll/engine-branches-ghidra.json",
+    "notes": [
+      {
+        "title": "Sim1 engine branch mapping",
+        "file": "notes/re/sim1.dll/sim1-engine-branches.md",
+        "description": "The branch table maps the six aircraft.cfg engine types."
+      }
+    ]
+  },
+  {
+    "entry": "20bb1760",
+    "name": "Propulsion moment blend divisor",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "3.0",
+    "originalHex": "0000000000000840",
+    "description": "The propulsion callback divides FlightDynamics+0x1f4 by this double before clamping the moment gain.",
+    "evidence": "artifacts/sim1.dll/propulsion-collector-comparison.json",
+    "functions": [
+      "20c010f0"
+    ]
+  },
+  {
+    "entry": "20bb4650",
+    "name": "Turbine output literal 0.5",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "0.5",
+    "originalHex": "000000000000e03f",
+    "description": "Threshold used by the turbine output helper.",
+    "evidence": "artifacts/sim1.dll/turbine-speed-output-comparison.json",
+    "functions": [
+      "20c2bc20"
+    ]
+  },
+  {
+    "entry": "20bbeaf8",
+    "name": "Turbine output literal 120",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "120",
+    "originalHex": "0000000000005e40",
+    "description": "Multiplier used by the turbine output helper.",
+    "evidence": "artifacts/sim1.dll/turbine-speed-output-comparison.json",
+    "functions": [
+      "20c2bc20"
+    ]
+  },
+  {
+    "entry": "20bbf7d8",
+    "name": "Turbine output literal 0.2",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "0.2",
+    "originalHex": "9a9999999999c93f",
+    "description": "Threshold used by the turbine output helper.",
+    "evidence": "artifacts/sim1.dll/turbine-speed-output-comparison.json",
+    "functions": [
+      "20c2bc20"
+    ]
+  },
+  {
+    "entry": "20bc3640",
+    "name": "Turbine output literal 80",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "80",
+    "originalHex": "0000000000005440",
+    "description": "Multiplier used by the turbine output helper.",
+    "evidence": "artifacts/sim1.dll/turbine-speed-output-comparison.json",
+    "functions": [
+      "20c2bc20"
+    ]
+  },
+  {
+    "entry": "20bb4048",
+    "name": "Turbine output literal 10",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "10",
+    "originalHex": "0000000000002440",
+    "description": "Multiplier used by the turbine output helper.",
+    "evidence": "artifacts/sim1.dll/turbine-speed-output-comparison.json",
+    "functions": [
+      "20c2bc20"
+    ]
+  },
+  {
+    "entry": "20bc2160",
+    "name": "Airplane model VTable prefix",
+    "kind": "VTable",
+    "bytes": 32,
+    "status": "live verified",
+    "originalHex": "505cc4200057c420000ac020800dc020400fc020a013c0209018c020a020c020",
+    "functions": [
+      "20c45510",
+      "20c45c90"
+    ],
+    "description": "Verified eight-pointer prefix. The three displayed moment slots have independently checked caller and target signatures. Names are reconstructed.",
+    "evidence": "artifacts/sim1.dll/flight-model-entrypoints-ghidra.json",
+    "slots": [
+      {
+        "offset": "0x14",
+        "name": "Moment component 0",
+        "target": "20c013a0",
+        "status": "live verified",
+        "signature": "x87 scalar __thiscall(Model*, FlightDynamics*, const Vector3*)"
+      },
+      {
+        "offset": "0x18",
+        "name": "Moment component 2",
+        "target": "20c01890",
+        "status": "live verified",
+        "signature": "x87 scalar __thiscall(Model*, FlightDynamics*, const Vector3*)"
+      },
+      {
+        "offset": "0x1c",
+        "name": "Moment component 1",
+        "target": "20c020a0",
+        "status": "live verified",
+        "signature": "x87 scalar __thiscall(Model*, FlightDynamics*, const Vector3*)"
+      }
+    ]
+  },
+  {
+    "entry": "20bc35a8",
+    "name": "Propeller RPM to angular speed factor",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "0.1047197551",
+    "originalHex": "1a4e66f3e9ceba3f",
+    "description": "Converts signed propeller RPM before applying the gyroscopic moment factors.",
+    "evidence": "artifacts/sim1.dll/aerodynamic-moment-comparison.json",
+    "functions": [
+      "20c013a0"
+    ]
+  },
+  {
+    "entry": "20c7b92c",
+    "name": "High-angle longitudinal reference shift",
+    "kind": "Global",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/moment-arm-ghidra.json",
+    "functions": [
+      "20c00530",
+      "20c01890",
+      "20c020a0"
+    ],
+    "description": "Written by the airplane model input update and used in the force-transfer moment terms."
+  },
+  {
+    "entry": "20c7b93c",
+    "name": "High-angle vertical reference shift",
+    "kind": "Global",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/moment-arm-ghidra.json",
+    "functions": [
+      "20c00530",
+      "20c013a0",
+      "20c020a0"
+    ],
+    "description": "Written by the airplane model input update and used in the force-transfer moment terms."
+  },
+  {
+    "entry": "20bbedec",
+    "name": "Airplane moment reference dispatch slots",
+    "kind": "VTable",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/moment-arm-ghidra.json",
+    "originalHex": "2084be204084be20",
+    "functions": [
+      "20c013a0",
+      "20c020a0"
+    ],
+    "description": "Two slots in the airplane table at 20bbecd0. The targets forward to the configuration model.",
+    "slots": [
+      {
+        "offset": "0x11c",
+        "name": "First moment vertical reference",
+        "target": "20be8420",
+        "signature": "float __thiscall(FlightDynamics*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x120",
+        "name": "Second moment vertical reference",
+        "target": "20be8440",
+        "signature": "float __thiscall(FlightDynamics*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bc2158",
+    "name": "Coefficient-model moment reference slots",
+    "kind": "VTable",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/moment-arm-ghidra.json",
+    "originalHex": "f054c4200055c420",
+    "functions": [
+      "20be8420",
+      "20be8440",
+      "20c50f70"
+    ],
+    "description": "Slots in the table at 20bc213c. The getters each load a float from the model to ST0.",
+    "slots": [
+      {
+        "offset": "0x1c",
+        "name": "Reference at model offset 0x1404",
+        "target": "20c454f0",
+        "signature": "float __thiscall(Model*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x20",
+        "name": "Reference at model offset 0x1408",
+        "target": "20c45500",
+        "signature": "float __thiscall(Model*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bbf7f0",
+    "name": "Degrees to radians scale",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0.017453292519943295",
+    "originalHex": "399d52a246df913f",
+    "evidence": "artifacts/sim1.dll/angle-curve-comparison.json",
+    "functions": [
+      "20c013a0"
+    ],
+    "description": "Binary64 argument conversion for the angle-dependent moment curve."
+  },
+  {
+    "entry": "20bc2180",
+    "name": "Airplane coefficient-view getter slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "originalHex": "504ec420",
+    "evidence": "artifacts/sim1.dll/angle-curve-ghidra.json",
+    "functions": [
+      "20c013a0"
+    ],
+    "description": "Slot +0x20 of 20bc2160 returns the coefficient view pointer from the model at +0x0c.",
+    "slots": [
+      {
+        "offset": "0x20",
+        "name": "Get coefficient view",
+        "target": "20c14e50",
+        "status": "live verified",
+        "signature": "CoefficientView* __thiscall(AirplaneMomentModel*)"
+      }
+    ]
+  },
+  {
+    "entry": "20bc266c",
+    "name": "Moment coefficient model slots",
+    "kind": "VTable",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "b0fcc42030ffc420",
+    "evidence": "artifacts/sim1.dll/baseline-moment-ghidra.json",
+    "functions": [
+      "20c013a0",
+      "20c4fcb0",
+      "20c4ff30"
+    ],
+    "description": "Two verified entries of 20bc2618. The angle-driven lookup and the baseline are queried separately.",
+    "slots": [
+      {
+        "offset": "0x54",
+        "name": "Angle-dependent moment coefficient",
+        "target": "20c4fcb0",
+        "status": "live verified",
+        "signature": "x87 scalar __thiscall(CoefficientView*, double)"
+      },
+      {
+        "offset": "0x58",
+        "name": "Baseline moment coefficient",
+        "target": "20c4ff30",
+        "status": "live verified",
+        "signature": "x87 scalar __thiscall(CoefficientView*)"
+      }
+    ]
+  },
+  {
+    "entry": "20bc25c0",
+    "name": "Mach interpolation knots",
+    "kind": "Fixed-point sample knots",
+    "bytes": 68,
+    "status": "live verified",
+    "originalHex": "0000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000ffff0000",
+    "initialValue": "0, 4096, 8192, 12288, 16384, 20480, 24576, 28672, 32768, 36864, 40960, 45056, 49152, 53248, 57344, 61440, 65535",
+    "evidence": "artifacts/sim1.dll/baseline-moment-ghidra.json",
+    "functions": [
+      "20c4f270",
+      "20c4ff30"
+    ],
+    "description": "Seventeen 32-bit knots used by the Mach index producer. The last interval spans 4095 units."
+  },
+  {
+    "entry": "20bb18e8",
+    "name": "Pitch Mach correction scale",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "ccdb0e400002403f",
+    "initialValue": "0.0004885197851",
+    "evidence": "artifacts/sim1.dll/baseline-moment-ghidra.json",
+    "functions": [
+      "20c4ff30",
+      "20c4fce0",
+      "20c4fe00",
+      "20c50020"
+    ],
+    "description": "Binary64 scale for the signed 16-bit corrections from AIR records 0x420, 0x421, 0x422 and 0x433."
+  },
+  {
+    "entry": "20bc3658",
+    "name": "Pitch-moment modifier weight",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "333333333333d33f",
+    "initialValue": "0.3",
+    "evidence": "artifacts/sim1.dll/baseline-moment-ghidra.json",
+    "functions": [
+      "20c4ff30"
+    ],
+    "description": "Binary64 constant for the optional modifier registered as 0xd07e."
+  },
+  {
+    "entry": "20bc2674",
+    "name": "Airplane elevator moment coefficient slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/elevator-moment-ghidra.json",
+    "originalHex": "e0fcc420",
+    "description": "Slot +0x5c of the coefficient model VTable at 20bc2618.",
+    "functions": [
+      "20c013a0",
+      "20c4fce0"
+    ],
+    "slots": [
+      {
+        "offset": "0x5c",
+        "name": "Airplane elevator moment coefficient slot",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "target": "20c4fce0",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bbede8",
+    "name": "Airplane control-surface getter slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/elevator-moment-ghidra.json",
+    "originalHex": "e083be20",
+    "description": "Slot +0x118 of the airplane table at 20bbecd0. The target reads the pointer at airplane +0x334.",
+    "functions": [
+      "20c013a0",
+      "20c4fce0"
+    ],
+    "slots": [
+      {
+        "offset": "0x118",
+        "name": "Airplane control-surface getter slot",
+        "signature": "ControlSurfaces* __thiscall(AirplaneDynamics*)",
+        "target": "20be83e0",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bc4198",
+    "name": "Elevator realism slope",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "989999999999b93f",
+    "initialValue": "0.09999999999999998",
+    "evidence": "artifacts/sim1.dll/elevator-moment-ghidra.json",
+    "functions": [
+      "20c4fce0"
+    ],
+    "description": "Binary64 multiplier applied to the flight-dynamics realism weight."
+  },
+  {
+    "entry": "20bb47b8",
+    "name": "Elevator realism offset",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "cdccccccccccec3f",
+    "initialValue": "0.9",
+    "evidence": "artifacts/sim1.dll/elevator-moment-ghidra.json",
+    "functions": [
+      "20c4fce0"
+    ],
+    "description": "Binary64 bias added to the weighted realism value."
+  },
+  {
+    "entry": "20bc2678",
+    "name": "Airplane pitch-rate coefficient slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/pitch-rate-ghidra.json",
+    "originalHex": "00fec420",
+    "description": "Slot +0x60 of the coefficient model VTable at 20bc2618.",
+    "functions": [
+      "20c013a0",
+      "20c4fe00"
+    ],
+    "slots": [
+      {
+        "offset": "0x60",
+        "name": "Pitch-rate moment coefficient",
+        "target": "20c4fe00",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bc3cb0",
+    "name": "Pitch-rate realism and control modifier weight",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "333333333333c33f",
+    "initialValue": "0.15",
+    "evidence": "artifacts/sim1.dll/pitch-rate-ghidra.json",
+    "functions": [
+      "20c4fe00"
+    ],
+    "description": "Binary64 factor used for both the realism gain and the control modifier loss."
+  },
+  {
+    "entry": "20bc3388",
+    "name": "Aerodynamic rate scaling quarter factor",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "000000000000d03f",
+    "initialValue": "0.25",
+    "evidence": "artifacts/sim1.dll/pitch-rate-ghidra.json",
+    "functions": [
+      "20c00530",
+      "20c013a0"
+    ],
+    "description": "Binary64 quarter factor multiplied by density, air-relative speed and geometry."
+  },
+  {
+    "entry": "20bc2680",
+    "name": "Airplane angle-of-attack rate coefficient slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/alpha-rate-ghidra.json",
+    "originalHex": "2000c520",
+    "description": "Slot +0x68 of the coefficient model VTable at 20bc2618.",
+    "functions": [
+      "20c013a0",
+      "20c50020"
+    ],
+    "slots": [
+      {
+        "offset": "0x68",
+        "name": "Angle-of-attack rate coefficient",
+        "target": "20c50020",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bc3fb0",
+    "name": "Negative airflow-angle rate limit",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "a915a15ddeecdbbf",
+    "initialValue": "-0.4363323129985824",
+    "evidence": "artifacts/sim1.dll/alpha-rate-ghidra.json",
+    "functions": [
+      "20bfb840"
+    ],
+    "description": "Binary64 negative limit equivalent to -25 degrees per second."
+  },
+  {
+    "entry": "20bbf2b0",
+    "name": "Positive airflow-angle rate limit",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "originalHex": "a915a15ddeecdb3f",
+    "initialValue": "0.4363323129985824",
+    "evidence": "artifacts/sim1.dll/alpha-rate-ghidra.json",
+    "functions": [
+      "20bfb840"
+    ],
+    "description": "Binary64 positive limit equivalent to 25 degrees per second."
+  }
+]

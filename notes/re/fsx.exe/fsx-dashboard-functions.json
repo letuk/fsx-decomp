@@ -1,0 +1,2555 @@
+[
+  {
+    "entry": "01001720",
+    "ghidraName": "LAB_01001720",
+    "source": { "symbol": "FSXAppPilot::ExitInstance" }
+  },
+  {
+    "entry": "01001d00",
+    "ghidraName": "LAB_01001d00",
+    "source": { "symbol": "FSXAppPilot::Run" }
+  },
+  {
+    "entry": "010021ac",
+    "notes": [
+      {
+        "title": "Exact MFC pair in the RTM getter build",
+        "description": "The independent pointer and thunk trial reproduces this MFC slot and all 80 thunk addresses. Three CRT slots move in that trial. The current comparison reproduces all 137 slots.",
+        "file": "artifacts/fsx.exe/mfc-getter-pair-20261119/result.json"
+      }
+    ]
+  },
+  {
+    "entry": "01002c38",
+    "notes": [
+      {
+        "title": "Exact MFC pair in the RTM getter build",
+        "description": "A LIB-generated ordinal import and native jump stub reproduce these six bytes at 0x01002c38. Three CRT slots move in that trial. The current comparison reproduces all 137 slots.",
+        "file": "artifacts/fsx.exe/mfc-getter-pair-20261119/result.json"
+      }
+    ]
+  },
+  {
+    "entry": "01001a51",
+    "name": "D3DXCheckVersion lookup and call",
+    "kind": "Code range",
+    "parentEntry": "010019e0",
+    "bytes": 26,
+    "group": "Startup",
+    "source": {
+      "symbol": "FSXAppPilot::HasRequiredD3DXVersion"
+    },
+    "notes": [
+      {
+        "title": "D3DXCheckVersion lookup at 0x01001a51",
+        "file": "notes/re/fsx.exe/initinstance-matching.md",
+        "description": "Resolves D3DXCheckVersion and calls it with SDK versions 32 and 34. Missing export or a false result reaches the shared D3DX error path."
+      }
+    ],
+    "asm": [
+      [
+        "01001a51",
+        "6824130001",
+        "PUSH 0x1001324"
+      ],
+      [
+        "01001a56",
+        "56",
+        "PUSH ESI"
+      ],
+      [
+        "01001a57",
+        "ff151c100001",
+        "CALL dword ptr [0x0100101c]"
+      ],
+      [
+        "01001a5d",
+        "3bc3",
+        "CMP EAX,EBX"
+      ],
+      [
+        "01001a5f",
+        "740a",
+        "JZ 0x01001a6b"
+      ],
+      [
+        "01001a61",
+        "6a22",
+        "PUSH 0x22"
+      ],
+      [
+        "01001a63",
+        "6a20",
+        "PUSH 0x20"
+      ],
+      [
+        "01001a65",
+        "ffd0",
+        "CALL EAX"
+      ],
+      [
+        "01001a67",
+        "85c0",
+        "TEST EAX,EAX"
+      ],
+      [
+        "01001a69",
+        "7515",
+        "JNZ 0x01001a80"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "26 linked bytes within the D3DX startup check. Two address fields validated.",
+      "evidence": "artifacts/fsx.exe/initinstance/d3dx-01001a51-20261118/match.json",
+      "mappedOffsets": [
+        1,
+        8
+      ],
+      "leftHex": "682413000156ff151c1000013bc3740a6a226a20ffd085c07515",
+      "rightHex": "680813000156ff15281000013bc3740a6a226a20ffd085c07515",
+      "rebuilt": [
+        [
+          "01001a31",
+          "6808130001",
+          "push        offset ??_C@_0BB@DDKDNGFF@D3DXCheckVersion?$AA@"
+        ],
+        [
+          "01001a36",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001a37",
+          "ff1528100001",
+          "call        dword ptr [__imp__GetProcAddress@8]"
+        ],
+        [
+          "01001a3d",
+          "3bc3",
+          "cmp         eax,ebx"
+        ],
+        [
+          "01001a3f",
+          "740a",
+          "je          01001A4B"
+        ],
+        [
+          "01001a41",
+          "6a22",
+          "push        22h"
+        ],
+        [
+          "01001a43",
+          "6a20",
+          "push        20h"
+        ],
+        [
+          "01001a45",
+          "ffd0",
+          "call        eax"
+        ],
+        [
+          "01001a47",
+          "85c0",
+          "test        eax,eax"
+        ],
+        [
+          "01001a49",
+          "7515",
+          "jne         01001A60"
+        ]
+      ]
+    }
+  },
+  {
+    "entry": "01001a44",
+    "name": "D3DX version check",
+    "kind": "Code range",
+    "parentEntry": "010019e0",
+    "bytes": 67,
+    "group": "Startup",
+    "source": {
+      "file": "src/fsx/startup_context_pilot.cpp",
+      "line": 89,
+      "symbol": "FSXAppPilot::InitInstance"
+    },
+    "notes": [
+      {
+        "title": "D3DX check at 0x01001a44",
+        "file": "notes/re/fsx.exe/initinstance-matching.md",
+        "description": "Loads D3DX9_34.DLL and checks D3DXCheckVersion(32, 34). Reports error 0x10 on failure and releases the loaded module on success."
+      }
+    ],
+    "asm": [
+      [
+        "01001a44",
+        "6814130001",
+        "PUSH 0x1001314"
+      ],
+      [
+        "01001a49",
+        "ffd7",
+        "CALL EDI"
+      ],
+      [
+        "01001a4b",
+        "8bf0",
+        "MOV ESI,EAX"
+      ],
+      [
+        "01001a4d",
+        "3bf3",
+        "CMP ESI,EBX"
+      ],
+      [
+        "01001a4f",
+        "741a",
+        "JZ 0x01001a6b"
+      ],
+      [
+        "01001a51",
+        "6824130001",
+        "PUSH 0x1001324"
+      ],
+      [
+        "01001a56",
+        "56",
+        "PUSH ESI"
+      ],
+      [
+        "01001a57",
+        "ff151c100001",
+        "CALL dword ptr [0x0100101c]"
+      ],
+      [
+        "01001a5d",
+        "3bc3",
+        "CMP EAX,EBX"
+      ],
+      [
+        "01001a5f",
+        "740a",
+        "JZ 0x01001a6b"
+      ],
+      [
+        "01001a61",
+        "6a22",
+        "PUSH 0x22"
+      ],
+      [
+        "01001a63",
+        "6a20",
+        "PUSH 0x20"
+      ],
+      [
+        "01001a65",
+        "ffd0",
+        "CALL EAX"
+      ],
+      [
+        "01001a67",
+        "85c0",
+        "TEST EAX,EAX"
+      ],
+      [
+        "01001a69",
+        "7515",
+        "JNZ 0x01001a80"
+      ],
+      [
+        "01001a6b",
+        "8b44240c",
+        "MOV EAX,dword ptr [ESP + 0xc]"
+      ],
+      [
+        "01001a6f",
+        "50",
+        "PUSH EAX"
+      ],
+      [
+        "01001a70",
+        "6a65",
+        "PUSH 0x65"
+      ],
+      [
+        "01001a72",
+        "53",
+        "PUSH EBX"
+      ],
+      [
+        "01001a73",
+        "68c8140001",
+        "PUSH 0x10014c8"
+      ],
+      [
+        "01001a78",
+        "53",
+        "PUSH EBX"
+      ],
+      [
+        "01001a79",
+        "6a10",
+        "PUSH 0x10"
+      ],
+      [
+        "01001a7b",
+        "e945020000",
+        "JMP 0x01001cc5"
+      ],
+      [
+        "01001a80",
+        "56",
+        "PUSH ESI"
+      ],
+      [
+        "01001a81",
+        "ff1520100001",
+        "CALL dword ptr [0x01001020]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "67 linked bytes within FSX_InitInstance. Five address fields validated in a fresh XP VC8 RTM build.",
+      "evidence": "artifacts/fsx.exe/initinstance/d3dx-01001a44-20261118/match.json",
+      "mappedOffsets": [
+        1,
+        14,
+        21,
+        48,
+        63
+      ],
+      "leftHex": "6814130001ffd78bf03bf3741a682413000156ff151c1000013bc3740a6a226a20ffd085c075158b44240c506a655368c8140001536a10e94502000056ff1520100001",
+      "rightHex": "682c130001ffd78bf03bf3741a680813000156ff15281000013bc3740a6a226a20ffd085c075158b44240c506a655368d8120001536a10e94502000056ff1510100001",
+      "rebuilt": [
+        [
+          "01001a24",
+          "682c130001",
+          "push        offset ??_C@_0N@GFGFENFA@D3DX9_34?4DLL?$AA@"
+        ],
+        [
+          "01001a29",
+          "ffd7",
+          "call        edi"
+        ],
+        [
+          "01001a2b",
+          "8bf0",
+          "mov         esi,eax"
+        ],
+        [
+          "01001a2d",
+          "3bf3",
+          "cmp         esi,ebx"
+        ],
+        [
+          "01001a2f",
+          "741a",
+          "je          01001A4B"
+        ],
+        [
+          "01001a31",
+          "6808130001",
+          "push        offset ??_C@_0BB@DDKDNGFF@D3DXCheckVersion?$AA@"
+        ],
+        [
+          "01001a36",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001a37",
+          "ff1528100001",
+          "call        dword ptr [__imp__GetProcAddress@8]"
+        ],
+        [
+          "01001a3d",
+          "3bc3",
+          "cmp         eax,ebx"
+        ],
+        [
+          "01001a3f",
+          "740a",
+          "je          01001A4B"
+        ],
+        [
+          "01001a41",
+          "6a22",
+          "push        22h"
+        ],
+        [
+          "01001a43",
+          "6a20",
+          "push        20h"
+        ],
+        [
+          "01001a45",
+          "ffd0",
+          "call        eax"
+        ],
+        [
+          "01001a47",
+          "85c0",
+          "test        eax,eax"
+        ],
+        [
+          "01001a49",
+          "7515",
+          "jne         01001A60"
+        ],
+        [
+          "01001a4b",
+          "8b44240c",
+          "mov         eax,dword ptr [esp+0Ch]"
+        ],
+        [
+          "01001a4f",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001a50",
+          "6a65",
+          "push        65h"
+        ],
+        [
+          "01001a52",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001a53",
+          "68d8120001",
+          "push        offset ??_C@_00CNPNBAHC@?$AA@"
+        ],
+        [
+          "01001a58",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001a59",
+          "6a10",
+          "push        10h"
+        ],
+        [
+          "01001a5b",
+          "e945020000",
+          "jmp         01001CA5"
+        ],
+        [
+          "01001a60",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001a61",
+          "ff1510100001",
+          "call        dword ptr [__imp__FreeLibrary@4]"
+        ]
+      ]
+    }
+  },
+  {
+    "entry": "01002c0d",
+    "name": "AfxInitialize",
+    "ghidraName": "AfxInitialize",
+    "source": {
+      "symbol": "InitializeMfcModuleState"
+    },
+    "asm": [
+      [
+        "01002c0d",
+        "e89ef4ffff",
+        "CALL 0x010020b0"
+      ],
+      [
+        "01002c12",
+        "8b4c2404",
+        "MOV ECX,dword ptr [ESP + 0x4]"
+      ],
+      [
+        "01002c16",
+        "85c9",
+        "TEST ECX,ECX"
+      ],
+      [
+        "01002c18",
+        "8b542408",
+        "MOV EDX,dword ptr [ESP + 0x8]"
+      ],
+      [
+        "01002c1c",
+        "884814",
+        "MOV byte ptr [EAX + 0x14],CL"
+      ],
+      [
+        "01002c1f",
+        "895044",
+        "MOV dword ptr [EAX + 0x44],EDX"
+      ],
+      [
+        "01002c22",
+        "7509",
+        "JNZ 0x01002c2d"
+      ],
+      [
+        "01002c24",
+        "6afd",
+        "PUSH -0x3"
+      ],
+      [
+        "01002c26",
+        "ff150c120001",
+        "CALL dword ptr [0x0100120c]"
+      ],
+      [
+        "01002c2c",
+        "59",
+        "POP ECX"
+      ],
+      [
+        "01002c2d",
+        "33c0",
+        "XOR EAX,EAX"
+      ],
+      [
+        "01002c2f",
+        "40",
+        "INC EAX"
+      ],
+      [
+        "01002c30",
+        "c20800",
+        "RET 0x8"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": true,
+      "scope": "Complete independently linked VC8 RTM source body, 38 bytes. Two import references verified. ICF disabled for this comparison.",
+      "evidence": "artifacts/fsx.exe/afx-initialize-20261118/match.json",
+      "symbol": "?InitializeMfcModuleState@@YGHHK@Z",
+      "listing": "artifacts/fsx.exe/afx-initialize-20261118/rebuilt-listing.txt",
+      "mappedOffsets": [
+        1,
+        27
+      ],
+      "leftHex": "e89ef4ffff8b4c240485c98b54240888481489504475096afdff150c1200015933c040c20800",
+      "rightHex": "e898fdffff8b4c240485c98b54240888481489504475096afdff15101200015933c040c20800"
+    }
+  },
+  {
+    "entry": "010019e0",
+    "ghidraName": "FSXApp::FSX_InitInstance",
+    "description": "The D3DX startup sequence at 0x01001a44 is independently scoped in the November 18 RTM replay. All 67 bytes match after five address checks. See the InitInstance notes.",
+    "source": {
+      "symbol": "FSXAppPilot::InitInstance",
+      "relatedSymbols": [
+        "FSXAppPilot::HasRequiredD3DXVersion"
+      ]
+    },
+    "comparison": {
+      "status": "Normalized",
+      "full": true,
+      "scope": "Complete VC8 SP1 linked method, 769 bytes and 246 instructions. All 44 address fields verified. All 15 internal jumps compare verbatim.",
+      "evidence": "artifacts/fsx.exe/initinstance/structured-20261117/match.json",
+      "symbol": "?InitInstance@FSXAppPilot@@UAEHXZ",
+      "mappedOffsets": [
+        15,
+        39,
+        45,
+        53,
+        66,
+        75,
+        88,
+        101,
+        114,
+        121,
+        148,
+        163,
+        183,
+        212,
+        235,
+        242,
+        250,
+        290,
+        349,
+        358,
+        442,
+        458,
+        484,
+        493,
+        536,
+        543,
+        548,
+        554,
+        569,
+        582,
+        595,
+        600,
+        613,
+        620,
+        646,
+        666,
+        670,
+        676,
+        692,
+        698,
+        717,
+        734,
+        742,
+        761
+      ],
+      "leftHex": "8bff558bec83e4f881ec54050000a10440000133c48984245005000053565733db53894c2418e8990600008b3d1810000183c4046804130001ffd78bf08974240ce83afdffff85c0751ae8d1fdffff85c07511566a655368c8140001536a17e9810200006814130001ffd78bf03bf3741a682413000156ff151c1000013bc3740a6a226a20ffd085c075158b44240c506a655368c8140001536a10e94502000056ff152010000168030100008d4c243d5351885c2444e8a911000083c40c68030100008d9424450100005352889c244c010000e88c11000083c40c68030100008d8424440100005053ff152810000150ff152410000185c08b350012000174475353535368000100008d8c246c040000516a038d54242c528d84246001000050ff150412000183c42453538d8c2460040000518d54241c528d442448680401000050ffd683c41868030100008d8c24550300005351889c245c030000e80311000083c40c5368381300018d54244052538d842460030000680401000050ffd633c083c4188d5424188d8c2450030000894424205289442420894424288944242c894424308944243489442438c744241c20000000894c2424ff152c10000183f8ff0f840e01000050ff153010000168030100008d84244d0200005350889c2454020000e87c10000083c40c5368481300018d4c244051538d942458020000680401000052ffd683c4188d84244802000050ffd73bc37411685013000150ff151c100001a384430001391d8443000175158b4c240c516a655368c8140001536a18e9a0000000e8b6fcffff3bc37515536a655368c814000168601300016a1ce982000000ff15844300018bf0e8600400008b4c24148bb9a40000008b494c8b40088b168b125768301d00016a0151508bceffd28bf03bf37426c7050044000188430001ff15844300018b108bc88b420c53ffd08b0d0044000150e81e0400008bc65f5e5b8b8c245005000033cce88c0900008be55dc38b4c240c516a655368c8140001536a19e8660000008b8c245c0500005f5e5b33cc33c0e8600900008be55dc3",
+      "rightHex": "8bff558bec83e4f881ec54050000a10040000133c48984245005000053565733db53894c2418e8990600008b3d2010000183c404681c130001ffd78bf08974240ce83afdffff85c0751ae8d1fdffff85c07511566a655368d8120001536a17e981020000682c130001ffd78bf03bf3741a680813000156ff151c1000013bc3740a6a226a20ffd085c075158b44240c506a655368d8120001536a10e94502000056ff152410000168030100008d4c243d5351885c2444e8a911000083c40c68030100008d9424450100005352889c244c010000e88c11000083c40c68030100008d8424440100005053ff150810000150ff152c10000185c08b350012000174475353535368000100008d8c246c040000516a038d54242c528d84246001000050ff150812000183c42453538d8c2460040000518d54241c528d442448680401000050ffd683c41868030100008d8c24550300005351889c245c030000e80311000083c40c53683c1300018d54244052538d842460030000680401000050ffd633c083c4188d5424188d8c2450030000894424205289442420894424288944242c894424308944243489442438c744241c20000000894c2424ff150410000183f8ff0f840e01000050ff151410000168030100008d84244d0200005350889c2454020000e87c10000083c40c53684c1300018d4c244051538d942458020000680401000052ffd683c4188d84244802000050ffd73bc37411685413000150ff151c100001a390430001391d9043000175158b4c240c516a655368d8120001536a18e9a0000000e8b6fcffff3bc37515536a655368d812000168641300016a1ce982000000ff15904300018bf0e8600400008b4c24148bb9a40000008b494c8b40088b168b125768101d00016a0151508bceffd28bf03bf37426c7051044000198430001ff15904300018b108bc88b420c53ffd08b0d1044000150e81e0400008bc65f5e5b8b8c245005000033cce88c0900008be55dc38b4c240c516a655368d8120001536a19e8660000008b8c245c0500005f5e5b33cc33c0e8600900008be55dc3",
+      "rebuilt": [
+        [
+          "010019c0",
+          "8bff",
+          "mov         edi,edi"
+        ],
+        [
+          "010019c2",
+          "55",
+          "push        ebp"
+        ],
+        [
+          "010019c3",
+          "8bec",
+          "mov         ebp,esp"
+        ],
+        [
+          "010019c5",
+          "83e4f8",
+          "and         esp,0FFFFFFF8h"
+        ],
+        [
+          "010019c8",
+          "81ec54050000",
+          "sub         esp,554h"
+        ],
+        [
+          "010019ce",
+          "a100400001",
+          "mov         eax,dword ptr [___security_cookie]"
+        ],
+        [
+          "010019d3",
+          "33c4",
+          "xor         eax,esp"
+        ],
+        [
+          "010019d5",
+          "89842450050000",
+          "mov         dword ptr [esp+550h],eax"
+        ],
+        [
+          "010019dc",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "010019dd",
+          "56",
+          "push        esi"
+        ],
+        [
+          "010019de",
+          "57",
+          "push        edi"
+        ],
+        [
+          "010019df",
+          "33db",
+          "xor         ebx,ebx"
+        ],
+        [
+          "010019e1",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "010019e2",
+          "894c2418",
+          "mov         dword ptr [esp+18h],ecx"
+        ],
+        [
+          "010019e6",
+          "e899060000",
+          "call        ?AfxEnableControlContainer@@YAXPAVCOccManager@@@Z"
+        ],
+        [
+          "010019eb",
+          "8b3d20100001",
+          "mov         edi,dword ptr [__imp__LoadLibraryA@4]"
+        ],
+        [
+          "010019f1",
+          "83c404",
+          "add         esp,4"
+        ],
+        [
+          "010019f4",
+          "681c130001",
+          "push        offset ??_C@_0N@BEMBHFGL@language?4dll?$AA@"
+        ],
+        [
+          "010019f9",
+          "ffd7",
+          "call        edi"
+        ],
+        [
+          "010019fb",
+          "8bf0",
+          "mov         esi,eax"
+        ],
+        [
+          "010019fd",
+          "8974240c",
+          "mov         dword ptr [esp+0Ch],esi"
+        ],
+        [
+          "01001a01",
+          "e83afdffff",
+          "call        ?CheckWindows51SP2OrLater@@YGHXZ"
+        ],
+        [
+          "01001a06",
+          "85c0",
+          "test        eax,eax"
+        ],
+        [
+          "01001a08",
+          "751a",
+          "jne         01001A24"
+        ],
+        [
+          "01001a0a",
+          "e8d1fdffff",
+          "call        ?CheckWindows52SP1OrLater@@YGHXZ"
+        ],
+        [
+          "01001a0f",
+          "85c0",
+          "test        eax,eax"
+        ],
+        [
+          "01001a11",
+          "7511",
+          "jne         01001A24"
+        ],
+        [
+          "01001a13",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001a14",
+          "6a65",
+          "push        65h"
+        ],
+        [
+          "01001a16",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001a17",
+          "68d8120001",
+          "push        offset ??_C@_00CNPNBAHC@?$AA@"
+        ],
+        [
+          "01001a1c",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001a1d",
+          "6a17",
+          "push        17h"
+        ],
+        [
+          "01001a1f",
+          "e981020000",
+          "jmp         01001CA5"
+        ],
+        [
+          "01001a24",
+          "682c130001",
+          "push        offset ??_C@_0N@GFGFENFA@D3DX9_34?4DLL?$AA@"
+        ],
+        [
+          "01001a29",
+          "ffd7",
+          "call        edi"
+        ],
+        [
+          "01001a2b",
+          "8bf0",
+          "mov         esi,eax"
+        ],
+        [
+          "01001a2d",
+          "3bf3",
+          "cmp         esi,ebx"
+        ],
+        [
+          "01001a2f",
+          "741a",
+          "je          01001A4B"
+        ],
+        [
+          "01001a31",
+          "6808130001",
+          "push        offset ??_C@_0BB@DDKDNGFF@D3DXCheckVersion?$AA@"
+        ],
+        [
+          "01001a36",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001a37",
+          "ff151c100001",
+          "call        dword ptr [__imp__GetProcAddress@8]"
+        ],
+        [
+          "01001a3d",
+          "3bc3",
+          "cmp         eax,ebx"
+        ],
+        [
+          "01001a3f",
+          "740a",
+          "je          01001A4B"
+        ],
+        [
+          "01001a41",
+          "6a22",
+          "push        22h"
+        ],
+        [
+          "01001a43",
+          "6a20",
+          "push        20h"
+        ],
+        [
+          "01001a45",
+          "ffd0",
+          "call        eax"
+        ],
+        [
+          "01001a47",
+          "85c0",
+          "test        eax,eax"
+        ],
+        [
+          "01001a49",
+          "7515",
+          "jne         01001A60"
+        ],
+        [
+          "01001a4b",
+          "8b44240c",
+          "mov         eax,dword ptr [esp+0Ch]"
+        ],
+        [
+          "01001a4f",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001a50",
+          "6a65",
+          "push        65h"
+        ],
+        [
+          "01001a52",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001a53",
+          "68d8120001",
+          "push        offset ??_C@_00CNPNBAHC@?$AA@"
+        ],
+        [
+          "01001a58",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001a59",
+          "6a10",
+          "push        10h"
+        ],
+        [
+          "01001a5b",
+          "e945020000",
+          "jmp         01001CA5"
+        ],
+        [
+          "01001a60",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001a61",
+          "ff1524100001",
+          "call        dword ptr [__imp__FreeLibrary@4]"
+        ],
+        [
+          "01001a67",
+          "6803010000",
+          "push        103h"
+        ],
+        [
+          "01001a6c",
+          "8d4c243d",
+          "lea         ecx,[esp+3Dh]"
+        ],
+        [
+          "01001a70",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001a71",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001a72",
+          "885c2444",
+          "mov         byte ptr [esp+44h],bl"
+        ],
+        [
+          "01001a76",
+          "e8a9110000",
+          "call        _memset"
+        ],
+        [
+          "01001a7b",
+          "83c40c",
+          "add         esp,0Ch"
+        ],
+        [
+          "01001a7e",
+          "6803010000",
+          "push        103h"
+        ],
+        [
+          "01001a83",
+          "8d942445010000",
+          "lea         edx,[esp+145h]"
+        ],
+        [
+          "01001a8a",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001a8b",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001a8c",
+          "889c244c010000",
+          "mov         byte ptr [esp+14Ch],bl"
+        ],
+        [
+          "01001a93",
+          "e88c110000",
+          "call        _memset"
+        ],
+        [
+          "01001a98",
+          "83c40c",
+          "add         esp,0Ch"
+        ],
+        [
+          "01001a9b",
+          "6803010000",
+          "push        103h"
+        ],
+        [
+          "01001aa0",
+          "8d842444010000",
+          "lea         eax,[esp+144h]"
+        ],
+        [
+          "01001aa7",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001aa8",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001aa9",
+          "ff1508100001",
+          "call        dword ptr [__imp__GetModuleHandleA@4]"
+        ],
+        [
+          "01001aaf",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001ab0",
+          "ff152c100001",
+          "call        dword ptr [__imp__GetModuleFileNameA@12]"
+        ],
+        [
+          "01001ab6",
+          "85c0",
+          "test        eax,eax"
+        ],
+        [
+          "01001ab8",
+          "8b3500120001",
+          "mov         esi,dword ptr [__imp___makepath_s]"
+        ],
+        [
+          "01001abe",
+          "7447",
+          "je          01001B07"
+        ],
+        [
+          "01001ac0",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001ac1",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001ac2",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001ac3",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001ac4",
+          "6800010000",
+          "push        100h"
+        ],
+        [
+          "01001ac9",
+          "8d8c246c040000",
+          "lea         ecx,[esp+46Ch]"
+        ],
+        [
+          "01001ad0",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001ad1",
+          "6a03",
+          "push        3"
+        ],
+        [
+          "01001ad3",
+          "8d54242c",
+          "lea         edx,[esp+2Ch]"
+        ],
+        [
+          "01001ad7",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001ad8",
+          "8d842460010000",
+          "lea         eax,[esp+160h]"
+        ],
+        [
+          "01001adf",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001ae0",
+          "ff1508120001",
+          "call        dword ptr [__imp___splitpath_s]"
+        ],
+        [
+          "01001ae6",
+          "83c424",
+          "add         esp,24h"
+        ],
+        [
+          "01001ae9",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001aea",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001aeb",
+          "8d8c2460040000",
+          "lea         ecx,[esp+460h]"
+        ],
+        [
+          "01001af2",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001af3",
+          "8d54241c",
+          "lea         edx,[esp+1Ch]"
+        ],
+        [
+          "01001af7",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001af8",
+          "8d442448",
+          "lea         eax,[esp+48h]"
+        ],
+        [
+          "01001afc",
+          "6804010000",
+          "push        104h"
+        ],
+        [
+          "01001b01",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001b02",
+          "ffd6",
+          "call        esi"
+        ],
+        [
+          "01001b04",
+          "83c418",
+          "add         esp,18h"
+        ],
+        [
+          "01001b07",
+          "6803010000",
+          "push        103h"
+        ],
+        [
+          "01001b0c",
+          "8d8c2455030000",
+          "lea         ecx,[esp+355h]"
+        ],
+        [
+          "01001b13",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001b14",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001b15",
+          "889c245c030000",
+          "mov         byte ptr [esp+35Ch],bl"
+        ],
+        [
+          "01001b1c",
+          "e803110000",
+          "call        _memset"
+        ],
+        [
+          "01001b21",
+          "83c40c",
+          "add         esp,0Ch"
+        ],
+        [
+          "01001b24",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001b25",
+          "683c130001",
+          "push        offset ??_C@_0BA@CIJLGFN@msxml4?4manifest?$AA@"
+        ],
+        [
+          "01001b2a",
+          "8d542440",
+          "lea         edx,[esp+40h]"
+        ],
+        [
+          "01001b2e",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001b2f",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001b30",
+          "8d842460030000",
+          "lea         eax,[esp+360h]"
+        ],
+        [
+          "01001b37",
+          "6804010000",
+          "push        104h"
+        ],
+        [
+          "01001b3c",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001b3d",
+          "ffd6",
+          "call        esi"
+        ],
+        [
+          "01001b3f",
+          "33c0",
+          "xor         eax,eax"
+        ],
+        [
+          "01001b41",
+          "83c418",
+          "add         esp,18h"
+        ],
+        [
+          "01001b44",
+          "8d542418",
+          "lea         edx,[esp+18h]"
+        ],
+        [
+          "01001b48",
+          "8d8c2450030000",
+          "lea         ecx,[esp+350h]"
+        ],
+        [
+          "01001b4f",
+          "89442420",
+          "mov         dword ptr [esp+20h],eax"
+        ],
+        [
+          "01001b53",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001b54",
+          "89442420",
+          "mov         dword ptr [esp+20h],eax"
+        ],
+        [
+          "01001b58",
+          "89442428",
+          "mov         dword ptr [esp+28h],eax"
+        ],
+        [
+          "01001b5c",
+          "8944242c",
+          "mov         dword ptr [esp+2Ch],eax"
+        ],
+        [
+          "01001b60",
+          "89442430",
+          "mov         dword ptr [esp+30h],eax"
+        ],
+        [
+          "01001b64",
+          "89442434",
+          "mov         dword ptr [esp+34h],eax"
+        ],
+        [
+          "01001b68",
+          "89442438",
+          "mov         dword ptr [esp+38h],eax"
+        ],
+        [
+          "01001b6c",
+          "c744241c20000000",
+          "mov         dword ptr [esp+1Ch],20h"
+        ],
+        [
+          "01001b74",
+          "894c2424",
+          "mov         dword ptr [esp+24h],ecx"
+        ],
+        [
+          "01001b78",
+          "ff1504100001",
+          "call        dword ptr [__imp__CreateActCtxA@4]"
+        ],
+        [
+          "01001b7e",
+          "83f8ff",
+          "cmp         eax,0FFFFFFFFh"
+        ],
+        [
+          "01001b81",
+          "0f840e010000",
+          "je          01001C95"
+        ],
+        [
+          "01001b87",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001b88",
+          "ff1514100001",
+          "call        dword ptr [__imp__ReleaseActCtx@4]"
+        ],
+        [
+          "01001b8e",
+          "6803010000",
+          "push        103h"
+        ],
+        [
+          "01001b93",
+          "8d84244d020000",
+          "lea         eax,[esp+24Dh]"
+        ],
+        [
+          "01001b9a",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001b9b",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001b9c",
+          "889c2454020000",
+          "mov         byte ptr [esp+254h],bl"
+        ],
+        [
+          "01001ba3",
+          "e87c100000",
+          "call        _memset"
+        ],
+        [
+          "01001ba8",
+          "83c40c",
+          "add         esp,0Ch"
+        ],
+        [
+          "01001bab",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001bac",
+          "684c130001",
+          "push        offset ??_C@_07DLKDHKFE@API?4DLL?$AA@"
+        ],
+        [
+          "01001bb1",
+          "8d4c2440",
+          "lea         ecx,[esp+40h]"
+        ],
+        [
+          "01001bb5",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001bb6",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001bb7",
+          "8d942458020000",
+          "lea         edx,[esp+258h]"
+        ],
+        [
+          "01001bbe",
+          "6804010000",
+          "push        104h"
+        ],
+        [
+          "01001bc3",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001bc4",
+          "ffd6",
+          "call        esi"
+        ],
+        [
+          "01001bc6",
+          "83c418",
+          "add         esp,18h"
+        ],
+        [
+          "01001bc9",
+          "8d842448020000",
+          "lea         eax,[esp+248h]"
+        ],
+        [
+          "01001bd0",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001bd1",
+          "ffd7",
+          "call        edi"
+        ],
+        [
+          "01001bd3",
+          "3bc3",
+          "cmp         eax,ebx"
+        ],
+        [
+          "01001bd5",
+          "7411",
+          "je          01001BE8"
+        ],
+        [
+          "01001bd7",
+          "6854130001",
+          "push        offset ??_C@_0P@FGMECEMI@GetApplication?$AA@"
+        ],
+        [
+          "01001bdc",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001bdd",
+          "ff151c100001",
+          "call        dword ptr [__imp__GetProcAddress@8]"
+        ],
+        [
+          "01001be3",
+          "a390430001",
+          "mov         dword ptr [?pfnGetApplication@@3P6APAVApplicationPilot@@XZA],eax"
+        ],
+        [
+          "01001be8",
+          "391d90430001",
+          "cmp         dword ptr [?pfnGetApplication@@3P6APAVApplicationPilot@@XZA],ebx"
+        ],
+        [
+          "01001bee",
+          "7515",
+          "jne         01001C05"
+        ],
+        [
+          "01001bf0",
+          "8b4c240c",
+          "mov         ecx,dword ptr [esp+0Ch]"
+        ],
+        [
+          "01001bf4",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001bf5",
+          "6a65",
+          "push        65h"
+        ],
+        [
+          "01001bf7",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001bf8",
+          "68d8120001",
+          "push        offset ??_C@_00CNPNBAHC@?$AA@"
+        ],
+        [
+          "01001bfd",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001bfe",
+          "6a18",
+          "push        18h"
+        ],
+        [
+          "01001c00",
+          "e9a0000000",
+          "jmp         01001CA5"
+        ],
+        [
+          "01001c05",
+          "e8b6fcffff",
+          "call        ?InitializeOleAndMessageFilterPilot@@YAHXZ"
+        ],
+        [
+          "01001c0a",
+          "3bc3",
+          "cmp         eax,ebx"
+        ],
+        [
+          "01001c0c",
+          "7515",
+          "jne         01001C23"
+        ],
+        [
+          "01001c0e",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001c0f",
+          "6a65",
+          "push        65h"
+        ],
+        [
+          "01001c11",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001c12",
+          "68d8120001",
+          "push        offset ??_C@_00CNPNBAHC@?$AA@"
+        ],
+        [
+          "01001c17",
+          "6864130001",
+          "push        offset ??_C@_0CB@JFMCJNGG@Unable?5to?5install?5message?5filter@"
+        ],
+        [
+          "01001c1c",
+          "6a1c",
+          "push        1Ch"
+        ],
+        [
+          "01001c1e",
+          "e982000000",
+          "jmp         01001CA5"
+        ],
+        [
+          "01001c23",
+          "ff1590430001",
+          "call        dword ptr [?pfnGetApplication@@3P6APAVApplicationPilot@@XZA]"
+        ],
+        [
+          "01001c29",
+          "8bf0",
+          "mov         esi,eax"
+        ],
+        [
+          "01001c2b",
+          "e860040000",
+          "call        ?AfxGetModuleState@@YGPAVAFX_MODULE_STATE@@XZ"
+        ],
+        [
+          "01001c30",
+          "8b4c2414",
+          "mov         ecx,dword ptr [esp+14h]"
+        ],
+        [
+          "01001c34",
+          "8bb9a4000000",
+          "mov         edi,dword ptr [ecx+0A4h]"
+        ],
+        [
+          "01001c3a",
+          "8b494c",
+          "mov         ecx,dword ptr [ecx+4Ch]"
+        ],
+        [
+          "01001c3d",
+          "8b4008",
+          "mov         eax,dword ptr [eax+8]"
+        ],
+        [
+          "01001c40",
+          "8b16",
+          "mov         edx,dword ptr [esi]"
+        ],
+        [
+          "01001c42",
+          "8b12",
+          "mov         edx,dword ptr [edx]"
+        ],
+        [
+          "01001c44",
+          "57",
+          "push        edi"
+        ],
+        [
+          "01001c45",
+          "68101d0001",
+          "push        offset _ShowErrorMessage@24"
+        ],
+        [
+          "01001c4a",
+          "6a01",
+          "push        1"
+        ],
+        [
+          "01001c4c",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001c4d",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001c4e",
+          "8bce",
+          "mov         ecx,esi"
+        ],
+        [
+          "01001c50",
+          "ffd2",
+          "call        edx"
+        ],
+        [
+          "01001c52",
+          "8bf0",
+          "mov         esi,eax"
+        ],
+        [
+          "01001c54",
+          "3bf3",
+          "cmp         esi,ebx"
+        ],
+        [
+          "01001c56",
+          "7426",
+          "je          01001C7E"
+        ],
+        [
+          "01001c58",
+          "c7051044000198430001",
+          "mov         dword ptr ds:[1004410h],offset ?g_mainWindowPilot@@3VCWnd@@A"
+        ],
+        [
+          "01001c62",
+          "ff1590430001",
+          "call        dword ptr [?pfnGetApplication@@3P6APAVApplicationPilot@@XZA]"
+        ],
+        [
+          "01001c68",
+          "8b10",
+          "mov         edx,dword ptr [eax]"
+        ],
+        [
+          "01001c6a",
+          "8bc8",
+          "mov         ecx,eax"
+        ],
+        [
+          "01001c6c",
+          "8b420c",
+          "mov         eax,dword ptr [edx+0Ch]"
+        ],
+        [
+          "01001c6f",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001c70",
+          "ffd0",
+          "call        eax"
+        ],
+        [
+          "01001c72",
+          "8b0d10440001",
+          "mov         ecx,dword ptr ds:[1004410h]"
+        ],
+        [
+          "01001c78",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001c79",
+          "e81e040000",
+          "call        ?Attach@CWnd@@QAEHPAUHWND__@@@Z"
+        ],
+        [
+          "01001c7e",
+          "8bc6",
+          "mov         eax,esi"
+        ],
+        [
+          "01001c80",
+          "5f",
+          "pop         edi"
+        ],
+        [
+          "01001c81",
+          "5e",
+          "pop         esi"
+        ],
+        [
+          "01001c82",
+          "5b",
+          "pop         ebx"
+        ],
+        [
+          "01001c83",
+          "8b8c2450050000",
+          "mov         ecx,dword ptr [esp+550h]"
+        ],
+        [
+          "01001c8a",
+          "33cc",
+          "xor         ecx,esp"
+        ],
+        [
+          "01001c8c",
+          "e88c090000",
+          "call        @__security_check_cookie@4"
+        ],
+        [
+          "01001c91",
+          "8be5",
+          "mov         esp,ebp"
+        ],
+        [
+          "01001c93",
+          "5d",
+          "pop         ebp"
+        ],
+        [
+          "01001c94",
+          "c3",
+          "ret"
+        ],
+        [
+          "01001c95",
+          "8b4c240c",
+          "mov         ecx,dword ptr [esp+0Ch]"
+        ],
+        [
+          "01001c99",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001c9a",
+          "6a65",
+          "push        65h"
+        ],
+        [
+          "01001c9c",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001c9d",
+          "68d8120001",
+          "push        offset ??_C@_00CNPNBAHC@?$AA@"
+        ],
+        [
+          "01001ca2",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001ca3",
+          "6a19",
+          "push        19h"
+        ],
+        [
+          "01001ca5",
+          "e866000000",
+          "call        _ShowErrorMessage@24"
+        ],
+        [
+          "01001caa",
+          "8b8c245c050000",
+          "mov         ecx,dword ptr [esp+55Ch]"
+        ],
+        [
+          "01001cb1",
+          "5f",
+          "pop         edi"
+        ],
+        [
+          "01001cb2",
+          "5e",
+          "pop         esi"
+        ],
+        [
+          "01001cb3",
+          "5b",
+          "pop         ebx"
+        ],
+        [
+          "01001cb4",
+          "33cc",
+          "xor         ecx,esp"
+        ],
+        [
+          "01001cb6",
+          "33c0",
+          "xor         eax,eax"
+        ],
+        [
+          "01001cb8",
+          "e860090000",
+          "call        @__security_check_cookie@4"
+        ],
+        [
+          "01001cbd",
+          "8be5",
+          "mov         esp,ebp"
+        ],
+        [
+          "01001cbf",
+          "5d",
+          "pop         ebp"
+        ],
+        [
+          "01001cc0",
+          "c3",
+          "ret"
+        ]
+      ]
+    }
+  },
+  {
+    "entry": "01001d30",
+    "ghidraName": "ShowErrorMessage",
+    "source": {
+      "symbol": "ShowErrorMessage",
+      "line": 26,
+      "file": "src/fsx/show_error_message.cpp"
+    },
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "Complete linked VC8 RTM callback, 437 bytes. Pinned VC8 SP1 confirms the same residual. Both builds validate 16 address fields and leave one unequal byte at +0xde, JL versus JS after TEST EAX,EAX.",
+      "symbol": "_ShowErrorMessage@24",
+      "leftHex": "8bff558bec83e4f881ec3c060000a10440000133c4898424380600008b451053568b751c33db8944243833c03bf3578b7d0c895c2414894424188944241c8944242089442424894424288944242c894424308944243489442438895c2410745d395d08744868ff0100008d4c24455351885c244ce89b0e00008b450883c40c68000200008d542444525056ff1524120001578d4c244451b8000400008dbc2448020000e8b8f7ffff83c408eb2e8bc78d8c2440020000e815f8ffffeb268b550857526884130001b8000400008dbc244c020000e888f7ffff83c40c85c00f8cb7000000a1844300013bc3c7442414280000007419ffd08b108bc88b420c53ffd050ff151c12000189442418eb04895c24188b44243c8a10f6da8d8c2440020000894c24201bd223d08b45140d800001008954242489442428e8430200008b48080fb755188b4424285353894c24248d4c241c51895424388b152012000152257fffffff530d3000040053895c243089442440ff15341000018bf03bf3741c6aff56ff15381000018d4424105056ff153c10000156ff150c1000018b8c24440600008b4424105f5e5b33cce85e0700008be55dc21800",
+      "rightHex": "8bff558bec83e4f881ec3c060000a10040000133c4898424380600008b451053568b751c33db8944243833c03bf3578b7d0c895c2414894424188944241c8944242089442424894424288944242c894424308944243489442438895c2410745d395d08744868ff0100008d4c24455351885c244ce89b0e00008b450883c40c68000200008d542444525056ff151c120001578d4c244451b8000400008dbc2448020000e8b8f7ffff83c408eb2e8bc78d8c2440020000e815f8ffffeb268b550857526888130001b8000400008dbc244c020000e888f7ffff83c40c85c00f88b7000000a1904300013bc3c7442414280000007419ffd08b108bc88b420c53ffd050ff152412000189442418eb04895c24188b44243c8a10f6da8d8c2440020000894c24201bd223d08b45140d800001008954242489442428e8430200008b48080fb755188b4424285353894c24248d4c241c51895424388b152012000152257fffffff530d3000040053895c243089442440ff15401000018bf03bf3741c6aff56ff15081000018d4424105056ff153010000156ff153c1000018b8c24440600008b4424105f5e5b33cce85e0700008be55dc21800",
+      "mappedOffsets": [
+        15,
+        117,
+        141,
+        164,
+        183,
+        195,
+        212,
+        228,
+        259,
+        313,
+        345,
+        372,
+        387,
+        399,
+        406,
+        427
+      ],
+      "rebuilt": [
+        [
+          "01001d10",
+          "8bff",
+          "mov         edi,edi"
+        ],
+        [
+          "01001d12",
+          "55",
+          "push        ebp"
+        ],
+        [
+          "01001d13",
+          "8bec",
+          "mov         ebp,esp"
+        ],
+        [
+          "01001d15",
+          "83e4f8",
+          "and         esp,0FFFFFFF8h"
+        ],
+        [
+          "01001d18",
+          "81ec3c060000",
+          "sub         esp,63Ch"
+        ],
+        [
+          "01001d1e",
+          "a100400001",
+          "mov         eax,dword ptr [___security_cookie]"
+        ],
+        [
+          "01001d23",
+          "33c4",
+          "xor         eax,esp"
+        ],
+        [
+          "01001d25",
+          "89842438060000",
+          "mov         dword ptr [esp+638h],eax"
+        ],
+        [
+          "01001d2c",
+          "8b4510",
+          "mov         eax,dword ptr [ebp+10h]"
+        ],
+        [
+          "01001d2f",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001d30",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001d31",
+          "8b751c",
+          "mov         esi,dword ptr [ebp+1Ch]"
+        ],
+        [
+          "01001d34",
+          "33db",
+          "xor         ebx,ebx"
+        ],
+        [
+          "01001d36",
+          "89442438",
+          "mov         dword ptr [esp+38h],eax"
+        ],
+        [
+          "01001d3a",
+          "33c0",
+          "xor         eax,eax"
+        ],
+        [
+          "01001d3c",
+          "3bf3",
+          "cmp         esi,ebx"
+        ],
+        [
+          "01001d3e",
+          "57",
+          "push        edi"
+        ],
+        [
+          "01001d3f",
+          "8b7d0c",
+          "mov         edi,dword ptr [ebp+0Ch]"
+        ],
+        [
+          "01001d42",
+          "895c2414",
+          "mov         dword ptr [esp+14h],ebx"
+        ],
+        [
+          "01001d46",
+          "89442418",
+          "mov         dword ptr [esp+18h],eax"
+        ],
+        [
+          "01001d4a",
+          "8944241c",
+          "mov         dword ptr [esp+1Ch],eax"
+        ],
+        [
+          "01001d4e",
+          "89442420",
+          "mov         dword ptr [esp+20h],eax"
+        ],
+        [
+          "01001d52",
+          "89442424",
+          "mov         dword ptr [esp+24h],eax"
+        ],
+        [
+          "01001d56",
+          "89442428",
+          "mov         dword ptr [esp+28h],eax"
+        ],
+        [
+          "01001d5a",
+          "8944242c",
+          "mov         dword ptr [esp+2Ch],eax"
+        ],
+        [
+          "01001d5e",
+          "89442430",
+          "mov         dword ptr [esp+30h],eax"
+        ],
+        [
+          "01001d62",
+          "89442434",
+          "mov         dword ptr [esp+34h],eax"
+        ],
+        [
+          "01001d66",
+          "89442438",
+          "mov         dword ptr [esp+38h],eax"
+        ],
+        [
+          "01001d6a",
+          "895c2410",
+          "mov         dword ptr [esp+10h],ebx"
+        ],
+        [
+          "01001d6e",
+          "745d",
+          "je          01001DCD"
+        ],
+        [
+          "01001d70",
+          "395d08",
+          "cmp         dword ptr [ebp+8],ebx"
+        ],
+        [
+          "01001d73",
+          "7448",
+          "je          01001DBD"
+        ],
+        [
+          "01001d75",
+          "68ff010000",
+          "push        1FFh"
+        ],
+        [
+          "01001d7a",
+          "8d4c2445",
+          "lea         ecx,[esp+45h]"
+        ],
+        [
+          "01001d7e",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001d7f",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001d80",
+          "885c244c",
+          "mov         byte ptr [esp+4Ch],bl"
+        ],
+        [
+          "01001d84",
+          "e89b0e0000",
+          "call        _memset"
+        ],
+        [
+          "01001d89",
+          "8b4508",
+          "mov         eax,dword ptr [ebp+8]"
+        ],
+        [
+          "01001d8c",
+          "83c40c",
+          "add         esp,0Ch"
+        ],
+        [
+          "01001d8f",
+          "6800020000",
+          "push        200h"
+        ],
+        [
+          "01001d94",
+          "8d542444",
+          "lea         edx,[esp+44h]"
+        ],
+        [
+          "01001d98",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001d99",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001d9a",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001d9b",
+          "ff151c120001",
+          "call        dword ptr [__imp__LoadStringA@16]"
+        ],
+        [
+          "01001da1",
+          "57",
+          "push        edi"
+        ],
+        [
+          "01001da2",
+          "8d4c2444",
+          "lea         ecx,[esp+44h]"
+        ],
+        [
+          "01001da6",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001da7",
+          "b800040000",
+          "mov         eax,400h"
+        ],
+        [
+          "01001dac",
+          "8dbc2448020000",
+          "lea         edi,[esp+248h]"
+        ],
+        [
+          "01001db3",
+          "e8b8f7ffff",
+          "call        ?StringCchPrintfA@@YAJPADIPBDZZ"
+        ],
+        [
+          "01001db8",
+          "83c408",
+          "add         esp,8"
+        ],
+        [
+          "01001dbb",
+          "eb2e",
+          "jmp         01001DEB"
+        ],
+        [
+          "01001dbd",
+          "8bc7",
+          "mov         eax,edi"
+        ],
+        [
+          "01001dbf",
+          "8d8c2440020000",
+          "lea         ecx,[esp+240h]"
+        ],
+        [
+          "01001dc6",
+          "e815f8ffff",
+          "call        ?StringCopyWorkerA@@YGJPADIPBD@Z"
+        ],
+        [
+          "01001dcb",
+          "eb26",
+          "jmp         01001DF3"
+        ],
+        [
+          "01001dcd",
+          "8b5508",
+          "mov         edx,dword ptr [ebp+8]"
+        ],
+        [
+          "01001dd0",
+          "57",
+          "push        edi"
+        ],
+        [
+          "01001dd1",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001dd2",
+          "6888130001",
+          "push        offset ??_C@_0BC@IBEDCDAL@Error?5ID?5?$DN?5?$CFd?$AN?6?$CFs?$AA@"
+        ],
+        [
+          "01001dd7",
+          "b800040000",
+          "mov         eax,400h"
+        ],
+        [
+          "01001ddc",
+          "8dbc244c020000",
+          "lea         edi,[esp+24Ch]"
+        ],
+        [
+          "01001de3",
+          "e888f7ffff",
+          "call        ?StringCchPrintfA@@YAJPADIPBDZZ"
+        ],
+        [
+          "01001de8",
+          "83c40c",
+          "add         esp,0Ch"
+        ],
+        [
+          "01001deb",
+          "85c0",
+          "test        eax,eax"
+        ],
+        [
+          "01001ded",
+          "0f88b7000000",
+          "js          01001EAA"
+        ],
+        [
+          "01001df3",
+          "a190430001",
+          "mov         eax,dword ptr [?pfnGetApplication@@3P6APAVApplicationPilot@@XZA]"
+        ],
+        [
+          "01001df8",
+          "3bc3",
+          "cmp         eax,ebx"
+        ],
+        [
+          "01001dfa",
+          "c744241428000000",
+          "mov         dword ptr [esp+14h],28h"
+        ],
+        [
+          "01001e02",
+          "7419",
+          "je          01001E1D"
+        ],
+        [
+          "01001e04",
+          "ffd0",
+          "call        eax"
+        ],
+        [
+          "01001e06",
+          "8b10",
+          "mov         edx,dword ptr [eax]"
+        ],
+        [
+          "01001e08",
+          "8bc8",
+          "mov         ecx,eax"
+        ],
+        [
+          "01001e0a",
+          "8b420c",
+          "mov         eax,dword ptr [edx+0Ch]"
+        ],
+        [
+          "01001e0d",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001e0e",
+          "ffd0",
+          "call        eax"
+        ],
+        [
+          "01001e10",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001e11",
+          "ff1524120001",
+          "call        dword ptr [__imp__GetLastActivePopup@4]"
+        ],
+        [
+          "01001e17",
+          "89442418",
+          "mov         dword ptr [esp+18h],eax"
+        ],
+        [
+          "01001e1b",
+          "eb04",
+          "jmp         01001E21"
+        ],
+        [
+          "01001e1d",
+          "895c2418",
+          "mov         dword ptr [esp+18h],ebx"
+        ],
+        [
+          "01001e21",
+          "8b44243c",
+          "mov         eax,dword ptr [esp+3Ch]"
+        ],
+        [
+          "01001e25",
+          "8a10",
+          "mov         dl,byte ptr [eax]"
+        ],
+        [
+          "01001e27",
+          "f6da",
+          "neg         dl"
+        ],
+        [
+          "01001e29",
+          "8d8c2440020000",
+          "lea         ecx,[esp+240h]"
+        ],
+        [
+          "01001e30",
+          "894c2420",
+          "mov         dword ptr [esp+20h],ecx"
+        ],
+        [
+          "01001e34",
+          "1bd2",
+          "sbb         edx,edx"
+        ],
+        [
+          "01001e36",
+          "23d0",
+          "and         edx,eax"
+        ],
+        [
+          "01001e38",
+          "8b4514",
+          "mov         eax,dword ptr [ebp+14h]"
+        ],
+        [
+          "01001e3b",
+          "0d80000100",
+          "or          eax,10080h"
+        ],
+        [
+          "01001e40",
+          "89542424",
+          "mov         dword ptr [esp+24h],edx"
+        ],
+        [
+          "01001e44",
+          "89442428",
+          "mov         dword ptr [esp+28h],eax"
+        ],
+        [
+          "01001e48",
+          "e843020000",
+          "call        ?AfxGetModuleState@@YGPAVAFX_MODULE_STATE@@XZ"
+        ],
+        [
+          "01001e4d",
+          "8b4808",
+          "mov         ecx,dword ptr [eax+8]"
+        ],
+        [
+          "01001e50",
+          "0fb75518",
+          "movzx       edx,word ptr [ebp+18h]"
+        ],
+        [
+          "01001e54",
+          "8b442428",
+          "mov         eax,dword ptr [esp+28h]"
+        ],
+        [
+          "01001e58",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001e59",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001e5a",
+          "894c2424",
+          "mov         dword ptr [esp+24h],ecx"
+        ],
+        [
+          "01001e5e",
+          "8d4c241c",
+          "lea         ecx,[esp+1Ch]"
+        ],
+        [
+          "01001e62",
+          "51",
+          "push        ecx"
+        ],
+        [
+          "01001e63",
+          "89542438",
+          "mov         dword ptr [esp+38h],edx"
+        ],
+        [
+          "01001e67",
+          "8b1520120001",
+          "mov         edx,dword ptr [__imp__MessageBoxIndirectA@4]"
+        ],
+        [
+          "01001e6d",
+          "52",
+          "push        edx"
+        ],
+        [
+          "01001e6e",
+          "257fffffff",
+          "and         eax,0FFFFFF7Fh"
+        ],
+        [
+          "01001e73",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001e74",
+          "0d30000400",
+          "or          eax,40030h"
+        ],
+        [
+          "01001e79",
+          "53",
+          "push        ebx"
+        ],
+        [
+          "01001e7a",
+          "895c2430",
+          "mov         dword ptr [esp+30h],ebx"
+        ],
+        [
+          "01001e7e",
+          "89442440",
+          "mov         dword ptr [esp+40h],eax"
+        ],
+        [
+          "01001e82",
+          "ff1540100001",
+          "call        dword ptr [__imp__CreateThread@24]"
+        ],
+        [
+          "01001e88",
+          "8bf0",
+          "mov         esi,eax"
+        ],
+        [
+          "01001e8a",
+          "3bf3",
+          "cmp         esi,ebx"
+        ],
+        [
+          "01001e8c",
+          "741c",
+          "je          01001EAA"
+        ],
+        [
+          "01001e8e",
+          "6aff",
+          "push        0FFFFFFFFh"
+        ],
+        [
+          "01001e90",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001e91",
+          "ff1508100001",
+          "call        dword ptr [__imp__WaitForSingleObject@8]"
+        ],
+        [
+          "01001e97",
+          "8d442410",
+          "lea         eax,[esp+10h]"
+        ],
+        [
+          "01001e9b",
+          "50",
+          "push        eax"
+        ],
+        [
+          "01001e9c",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001e9d",
+          "ff1530100001",
+          "call        dword ptr [__imp__GetExitCodeThread@8]"
+        ],
+        [
+          "01001ea3",
+          "56",
+          "push        esi"
+        ],
+        [
+          "01001ea4",
+          "ff153c100001",
+          "call        dword ptr [__imp__CloseHandle@4]"
+        ],
+        [
+          "01001eaa",
+          "8b8c2444060000",
+          "mov         ecx,dword ptr [esp+644h]"
+        ],
+        [
+          "01001eb1",
+          "8b442410",
+          "mov         eax,dword ptr [esp+10h]"
+        ],
+        [
+          "01001eb5",
+          "5f",
+          "pop         edi"
+        ],
+        [
+          "01001eb6",
+          "5e",
+          "pop         esi"
+        ],
+        [
+          "01001eb7",
+          "5b",
+          "pop         ebx"
+        ],
+        [
+          "01001eb8",
+          "33cc",
+          "xor         ecx,esp"
+        ],
+        [
+          "01001eba",
+          "e85e070000",
+          "call        @__security_check_cookie@4"
+        ],
+        [
+          "01001ebf",
+          "8be5",
+          "mov         esp,ebp"
+        ],
+        [
+          "01001ec1",
+          "5d",
+          "pop         ebp"
+        ],
+        [
+          "01001ec2",
+          "c21800",
+          "ret         18h"
+        ]
+      ],
+      "evidence": "artifacts/fsx.exe/show-error-jl-20261118/comparison.json"
+    }
+  }
+]

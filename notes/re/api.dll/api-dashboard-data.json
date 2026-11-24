@@ -1,0 +1,124 @@
+[
+  {
+    "entry": "2020e050",
+    "name": "g_privateHeap",
+    "status": "Verified initial bytes",
+    "bytes": 4,
+    "initialValue": "NULL",
+    "originalHex": "00000000",
+    "evidence": "artifacts/api.dll/pointer-owner-heap-20261124/ghidra-pointer-owner-heap.json",
+    "description": "Observed private heap handle cell passed to HeapFree at 0x200f40be. The initial zero value agrees between Ghidra and the original PE. Linked placement remains unverified."
+  },
+  {
+    "entry": "201fb138",
+    "name": "DAT_201fb138",
+    "group": "Construction defaults",
+    "status": "Verified initial bytes",
+    "bytes": 28,
+    "initialValue": "Zero-initialized",
+    "originalHex": "00000000000000000000000000000000000000000000000000000000",
+    "functions": [
+      "20161267"
+    ],
+    "evidence": "artifacts/api.dll/construction-default-copies-20261124/comparison.json",
+    "description": "The original copy reads 7 DWORDs. The rebuilt COFF symbol g_constructionDefaults_201fb138 occupies an uninitialized data range of that extent. Original source type and linked placement remain unverified."
+  },
+  {
+    "entry": "201fb154",
+    "name": "DAT_201fb154",
+    "group": "Construction defaults",
+    "status": "Verified initial bytes",
+    "bytes": 20,
+    "initialValue": "Zero-initialized",
+    "originalHex": "0000000000000000000000000000000000000000",
+    "functions": [
+      "20161285"
+    ],
+    "evidence": "artifacts/api.dll/construction-default-copies-20261124/comparison.json",
+    "description": "The original copy reads 5 DWORDs. The rebuilt COFF symbol g_constructionDefaults_201fb154 occupies an uninitialized data range of that extent. Original source type and linked placement remain unverified."
+  },
+  {
+    "entry": "201fb168",
+    "name": "DAT_201fb168",
+    "group": "Construction defaults",
+    "status": "Verified initial bytes",
+    "bytes": 20,
+    "initialValue": "Zero-initialized",
+    "originalHex": "0000000000000000000000000000000000000000",
+    "functions": [
+      "201612a3"
+    ],
+    "evidence": "artifacts/api.dll/construction-default-copies-20261124/comparison.json",
+    "description": "The original copy reads 5 DWORDs. The rebuilt COFF symbol g_constructionDefaults_201fb168 occupies an uninitialized data range of that extent. Original source type and linked placement remain unverified."
+  },
+  {
+    "entry": "201fb17c",
+    "name": "DAT_201fb17c",
+    "group": "Construction defaults",
+    "status": "Verified initial bytes",
+    "bytes": 24,
+    "initialValue": "Zero-initialized",
+    "originalHex": "000000000000000000000000000000000000000000000000",
+    "functions": [
+      "201612c1"
+    ],
+    "evidence": "artifacts/api.dll/construction-default-copies-20261124/comparison.json",
+    "description": "The original copy reads 6 DWORDs. The rebuilt COFF symbol g_constructionDefaults_201fb17c occupies an uninitialized data range of that extent. Original source type and linked placement remain unverified."
+  },
+  {
+    "entry": "201fb194",
+    "name": "DAT_201fb194",
+    "group": "Construction defaults",
+    "status": "Verified initial bytes",
+    "bytes": 32,
+    "initialValue": "Zero-initialized",
+    "originalHex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "functions": [
+      "201612df"
+    ],
+    "evidence": "artifacts/api.dll/construction-default-copies-20261124/comparison.json",
+    "description": "The original copy reads 8 DWORDs. The rebuilt COFF symbol g_constructionDefaults_201fb194 occupies an uninitialized data range of that extent. Original source type and linked placement remain unverified."
+  },
+  {
+    "entry": "201fb1b4",
+    "name": "DAT_201fb1b4",
+    "group": "Construction defaults",
+    "status": "Verified initial bytes",
+    "bytes": 20,
+    "initialValue": "Zero-initialized",
+    "originalHex": "0000000000000000000000000000000000000000",
+    "functions": [
+      "201612fd"
+    ],
+    "evidence": "artifacts/api.dll/construction-default-copies-20261124/comparison.json",
+    "description": "The original copy reads 5 DWORDs. The rebuilt COFF symbol g_constructionDefaults_201fb1b4 occupies an uninitialized data range of that extent. Original source type and linked placement remain unverified."
+  },
+  {
+    "entry": "201fb1c8",
+    "name": "DAT_201fb1c8",
+    "group": "Construction defaults",
+    "status": "Verified initial bytes",
+    "bytes": 32,
+    "initialValue": "Zero-initialized",
+    "originalHex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "functions": [
+      "2016131b"
+    ],
+    "evidence": "artifacts/api.dll/construction-default-copies-20261124/comparison.json",
+    "description": "The original copy reads 8 DWORDs. The rebuilt COFF symbol g_constructionDefaults_201fb1c8 occupies an uninitialized data range of that extent. Original source type and linked placement remain unverified."
+  },
+  {
+    "entry": "201fb1e8",
+    "name": "DAT_201fb1e8",
+    "group": "Construction defaults",
+    "status": "Verified initial bytes",
+    "bytes": 20,
+    "initialValue": "Zero-initialized",
+    "originalHex": "0000000000000000000000000000000000000000",
+    "functions": [
+      "20161339"
+    ],
+    "evidence": "artifacts/api.dll/construction-default-copies-20261124/comparison.json",
+    "description": "The original copy reads 5 DWORDs. The rebuilt COFF symbol g_constructionDefaults_201fb1e8 occupies an uninitialized data range of that extent. Original source type and linked placement remain unverified."
+  }
+]
