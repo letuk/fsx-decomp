@@ -1,5 +1,50 @@
 # FSX shared knowledge
 
+2026-11-25 — Reconstructed the remaining preparation and state
+routines and connected the full `sim1.dll:0x20c2b6d0` iteration.
+VC8 verifies one complete 75-byte exact function, 922 exact and
+644 normalized scoped bytes in the other bodies, and 540 exact
+schedule bytes. The host fixture passed 32 assertions. The shared
+effect and message renderers are adapter boundaries and simulator
+runtime remains open. Ghidra is saved at `1795634906543:62a95bf0:520`.
+[Turbine preparation and state](sim1.dll/sim1-turbine-preparation-and-state.md).
+
+2026-11-25 — Reconstructed the shared `sim1.dll` turbine thrust
+outputs and final inline speed blend. Verified the turbine-loop
+return at `0x20c2b9b9` and the independent propeller dispatch
+from `0x20c2049a`. Native VC8 verifies 42 exact and 114 normalized
+bytes plus 208 exact reverser table bytes. Nine host x86 cases passed.
+The complete turbine loop, shared effects and simulator runtime remain
+open. Ghidra revision `1795634906543:62a95bf0:520` is saved.
+[Turbine thrust and the engine-loop boundary](sim1.dll/sim1-turbine-thrust-and-tail.md).
+
+2026-11-25 — Reconstructed the turbine inlet correction
+(`sim1.dll:0x20c2b9d0`) in the turbine TU. Native VC8 verifies
+29 exact and 77 normalized bytes, including the complete publication
+sequence. Eight host x86 cases passed, including the handoff through
+spool speed to shaft torque. The full byte match and simulator
+runtime remain open. Ghidra revision `1795634906543:62a95bf0:520`
+is saved.
+[Turbine inlet conditions](sim1.dll/sim1-turbine-inlet.md).
+
+2026-11-25 — Reconstructed the shaft turbine spool update
+(`sim1.dll:0x20c2c6d0`) in the turbine TU. Native VC8 verifies
+12 exact and 50 normalized code bytes plus 68 exact schedule bytes.
+Twelve host x86 cases passed, including the handoff to shaft torque,
+and the native propeller checks passed. The full byte match,
+physical identification of the schedule inputs and simulator runtime
+remain open. Ghidra revision `1795634906543:62a95bf0:520` is saved.
+[Shaft turbine spool speed](sim1.dll/sim1-turbine-spool-speed.md).
+
+2026-11-25 — Reconstructed `sim1.dll:0x20c2c850` in a turbine
+translation unit. Native VC8 verifies 13 exact and 33 normalized
+bytes across four ranges. Eight host x86 cases and the propeller,
+aerodynamics and linked propulsion regression suites passed. The original
+auxiliary dispatch target, complete function byte match and simulator
+runtime remain open. Ghidra readback shows saved revision
+`1795634906543:62a95bf0:520`.
+[Turbine shaft torque](sim1.dll/sim1-turbine-shaft-torque.md).
+
 2026-11-25 — Moved the `sim1.dll` electrical circuit query and
 bus lookup to their own translation unit. The independent VC8
 objects, linked propulsion comparison and x86 fixtures preserve

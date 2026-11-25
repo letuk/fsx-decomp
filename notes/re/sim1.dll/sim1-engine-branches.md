@@ -53,6 +53,9 @@ after the type-specific update. The final loop advances
 The latter follows the original x87 compare and branch, including
 preservation of the old field on unordered input. Field names and
 units for this postprocessing remain open.
+The [turbine thrust and loop boundary](sim1-turbine-thrust-and-tail.md)
+records the last turbine-state calculation and the shared effects call
+before this dispatch resumes.
 
 ## Force and moment outputs
 

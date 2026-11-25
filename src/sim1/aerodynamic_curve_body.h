@@ -8,7 +8,8 @@ __declspec(noinline) double __fastcall SampleAerodynamicCurve(const AerodynamicC
     // Every loader stores the samples immediately after the common count.
     const AerodynamicSample* samples =
         reinterpret_cast<const AerodynamicSample*>(reinterpret_cast<const char*>(curve) + sizeof(*curve));
-    if (angle <= samples[0].angle) {
+    // The original returns the first sample for an unordered input as well.
+    if (!(angle > samples[0].angle)) {
         return samples[0].coefficient;
     }
     unsigned last = curve->count - 1;

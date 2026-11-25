@@ -1,6 +1,8 @@
 #include "flight_dynamics.h"
 #include "aerodynamic_curve.h"
+#include "coefficient_table.h"
 #include "electrical.h"
+#include "turbine.h"
 
 #include <float.h>
 #include <math.h>
@@ -11,18 +13,6 @@ namespace sim1 {
 extern "C" __declspec(dllimport) double __stdcall AdvanceWrappedAngle(double angle, double increment);
 
 #pragma pack(push, 4)
-
-// Reconstructed turbine state with the verified per-engine stride.
-struct TurbineEngineState {
-    int HasAutomaticFeatherTorque() const;
-
-    double turbineSpeed;
-    char unknown08[0x20];
-    double normalizedShaftTorque;
-    char unknown30[0x20];
-    double speedScaledOutput;
-    char unknown58[0x28];
-};
 
 // Reconstructed minimum layout of the inputs to one propeller step.
 struct PropellerStepInputs {
@@ -458,59 +448,10 @@ __declspec(noinline) void PropellerForceRecord::ApplyGovernorPitch(const FlightD
     }
 }
 
-struct CoefficientInterval {
-    unsigned lower;
-    unsigned upper;
-    double fraction;
-};
-
-// Reconstruction-only helper shared by both axes of the coefficient table.
-static __forceinline CoefficientInterval FindCoefficientInterval(const double* axis, unsigned count, unsigned stride,
-                                                                 double value)
-{
-    CoefficientInterval interval = {1, 2, 0.0};
-    if (value <= axis[stride]) {
-        return interval;
-    }
-
-    const unsigned last = count - 1;
-    if (value > axis[last * stride]) {
-        interval.lower = last - 1;
-        interval.upper = last;
-        interval.fraction = 1.0;
-        return interval;
-    }
-
-    unsigned upper = 2;
-    while (upper < last && axis[upper * stride] < value) {
-        ++upper;
-    }
-    if (value == axis[upper * stride]) {
-        interval.lower = upper;
-        interval.upper = upper < last ? upper + 1 : upper;
-    } else {
-        interval.lower = upper - 1;
-        interval.upper = upper;
-        const double lowerValue = axis[interval.lower * stride];
-        interval.fraction = (value - lowerValue) / (axis[upper * stride] - lowerValue);
-    }
-    return interval;
-}
-
 // Original: sim1.dll 0x20bcc030
 __declspec(noinline) double PropellerCoefficientTable::Evaluate(double advanceRatio, double bladePitchDegrees) const
 {
-    if (_isnan(advanceRatio) || _isnan(bladePitchDegrees)) {
-        return values[columns + 1];
-    }
-
-    const CoefficientInterval pitch = FindCoefficientInterval(values, rows, columns, bladePitchDegrees);
-    const CoefficientInterval advance = FindCoefficientInterval(values, columns, 1, advanceRatio);
-    const double* lowerRow = values + pitch.lower * columns;
-    const double* upperRow = values + pitch.upper * columns;
-    const double left = (upperRow[advance.lower] - lowerRow[advance.lower]) * pitch.fraction + lowerRow[advance.lower];
-    const double right = (upperRow[advance.upper] - lowerRow[advance.upper]) * pitch.fraction + lowerRow[advance.upper];
-    return left + (right - left) * advance.fraction;
+    return EvaluateCoefficientTable(*this, advanceRatio, bladePitchDegrees);
 }
 
 // Original: sim1.dll 0x20c47ae0

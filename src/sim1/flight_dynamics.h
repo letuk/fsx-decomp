@@ -18,6 +18,17 @@ struct AerodynamicCurve {
     unsigned count;
 };
 
+struct AerodynamicSample {
+    double angle;
+    double coefficient;
+};
+
+template <unsigned Count>
+struct AerodynamicCurveStorage {
+    AerodynamicCurve curve;
+    AerodynamicSample samples[Count];
+};
+
 class FlightDynamics;
 struct EngineForceRecord;
 struct IntegrationHistory;
@@ -26,6 +37,11 @@ struct ElectricalRuntime;
 struct ElectricalOwner;
 struct ForceContributors;
 struct TurbineEngineState;
+struct TurbinePerformanceData;
+struct EngineAuxiliaryControl;
+struct EngineConditionProvider;
+struct EngineTurbineEffectState;
+class TurbineStartActions;
 struct PropellerStepInputs;
 struct PitchMomentModifier;
 struct ZeroAlphaMomentTuning;
@@ -89,22 +105,47 @@ struct PropellerForceRecord {
 
 struct EngineForceRecord {
     void UpdateTurbineSpeedOutput(TurbineEngineState* turbine) const;
+    void UpdateTurbineShaftTorque(const FlightDynamics& airplane, TurbineEngineState& turbine, double step);
     void UpdateInducedAirSpeed(const FlightDynamics& airplane, const PropellerForceRecord& propeller,
                                const PropellerStepInputs& step);
 
     const EngineMount* mount;
-    char unknown04[8];
+    EngineAuxiliaryControl* auxiliaryControl;
+    int running;
     double reverseControlInput;
-    char unknown14[8];
+    double fuelControlPosition;
     double governorCommand;
-    char unknown24[0x10];
+    int ignitionEnabled;
+    float shaftTorqueReductionInput;
+    int starterEngaged;
+    float starterDrive;
     double thrust;
     double inducedAirSpeed;
     double propellerTorque;
     double propellerDerivedRpm;
     char unknown54[8];
     double speedFraction;
-    char unknown64[0x88];
+    double oilTemperature;
+    double spoolDriveSignal;
+    double exhaustTemperature;
+    char unknown7c[8];
+    double oilPressure;
+    int autoStartCompleted;
+    char unknown90[0x14];
+    float minimumOilPressureFraction;
+    char unknowna8[0x0c];
+    unsigned fuelSelector;
+    unsigned selectedFuelMask;
+    unsigned selectedFuelCount;
+    double fuelFlow;
+    double ignitionElapsed;
+    int ignitionRequested;
+    float driveAvailability;
+    EngineConditionProvider* driveSupply;
+    EngineConditionProvider* driveWear;
+    EngineConditionProvider* oilPressureInhibit;
+    const EngineTurbineEffectState* turbineEffect;
+    char unknowne8[4];
 };
 
 // Reconstructed layout of AIR record 0x512 with axis headers in the first row and column.
@@ -139,7 +180,9 @@ struct PropulsionConfiguration {
     double fixedBladePitch;
     double lowSpeedTheoryLimit;
     int propellerSyncAvailable;
-    char unknown26c[0x10];
+    char unknown26c[8];
+    int highRpmDriveBias;
+    char unknown278[4];
     double minimumRpmForFeather;
     double featherBladePitch;
     double featherPowerCoefficient;
@@ -148,16 +191,43 @@ struct PropulsionConfiguration {
     float reverseThrustFactor;
     double minimumGroundBladePitch;
     double minimumReverseBladePitch;
-    char unknown2b0[0x1a4];
+    char unknown2b0[0x20];
+    double fuelFlowScalar;
+    double maximumTorque;
+    float shaftSpecificFuelConsumption;
+    double exhaustTemperatureScale;
+    double exhaustTemperatureReference;
+    double exhaustTemperatureResponse;
+    double turbineTemperatureScale;
+    double turbineTemperatureReference;
+    double turbineTemperatureResponse;
+    char unknown314[8];
+    double pressureRatioReference;
+    double pressureRatioResponse;
+    char unknown32c[0x40];
+    double spoolDriveScale;
+    double spoolDriveReference;
+    double spoolDriveResponse;
+    double oilTemperatureScale;
+    char unknown38c[8];
+    double oilTemperatureReference;
+    double oilTemperatureResponse;
+    char unknown3a4[8];
+    double oilPressureReference;
+    double oilPressureResponse;
+    unsigned engineConditionFlags;
+    char unknown3c0[0x94];
     unsigned engineCount;
     unsigned propellerCount;
     unsigned engineForPropeller[4];
     unsigned char engineType;
-    char unknown46d[7];
+    char unknown46d[3];
+    int bypassStarterCircuit;
     float reverseControlScale;
     char unknown478[0x100];
     AerodynamicCurve elevatorTrimPressureCurve;
-    char unknown57c[0xe8];
+    char unknown57c[0xa4];
+    AerodynamicCurveStorage<4> shaftDragBySpeed;
     PropellerCoefficientTable thrustEfficiencyTable;
     PropellerCoefficientTable powerCoefficientTable;
     char unknown10f4[0x34];
@@ -184,6 +254,12 @@ struct PropulsionConfiguration {
     const AirplaneGeometry* geometry;
     char unknown1980[4];
     const FixedPitchCruiseSetting* fixedPitchCruise;
+    char unknown1988[0x0c];
+    const void* rotorConfiguration;
+    char unknown1998[0x28];
+    const ZeroAlphaMomentTuning* zeroAlphaMomentTuning;
+    char unknown19c4[0x20];
+    const TurbinePerformanceData* turbinePerformance;
 };
 
 struct PropulsionMomentControl {
@@ -192,7 +268,8 @@ struct PropulsionMomentControl {
     float pFactorGain;
     float propellerTorqueGain;
     float propellerGyroGain;
-    char unknown14[0x0c];
+    int defaultFuelAvailability;
+    char unknown18[8];
     int suppressPropellerGyro;
 };
 
@@ -242,9 +319,11 @@ struct ExternalFuelTank {
 
 struct ExternalFuelTankState {
     const ExternalFuelTank* configuration;
-    char unknown04[8];
+    float amount;
+    float minimumAmount;
     unsigned flags;
-    char unknown10[0x10];
+    unsigned selectionMask;
+    char unknown14[0x0c];
 };
 
 // Reconstructed minimum layout of the state reached through FlightDynamics+0x270.
@@ -255,7 +334,9 @@ struct IntegrationHistory {
     PropulsionConfiguration* propulsionConfiguration;
     char unknown04[0x10];
     double thrustToWeight;
-    char unknown1c[0x40];
+    char unknown1c[0x38];
+    int fuelCrossfeedMode;
+    char unknown58[4];
     double aerodynamicLift;
     double aerodynamicDrag;
     Vector3 propulsionForce;
@@ -268,7 +349,10 @@ struct IntegrationHistory {
     char unknown11c[0x18];
     Vector3 transformedAngularVelocity;
     double airRelativeSpeed;
-    char unknown154[0x38];
+    char unknown154[8];
+    double mach;
+    double speedOfSound;
+    char unknown16c[0x20];
     double attitudeAngle;
     double rawAerodynamicAngleDegrees;
     double aerodynamicAngleDegrees;
@@ -291,7 +375,10 @@ struct IntegrationHistory {
     const FlapGroupList* flapGroups;
     char unknown230[0x20];
     const PitchMomentModifier* pitchMomentModifier;
-    char unknown254[0x198];
+    double ambientTemperatureRatio;
+    double ambientPressureRatio;
+    char unknown264[0x68];
+    ExternalFuelTankState internalFuelTanks[9];
     ExternalFuelTankState firstExternalTank;
     ExternalFuelTankState secondExternalTank;
     char unknown42c[8];
@@ -300,15 +387,26 @@ struct IntegrationHistory {
     EngineForceRecord* engineForces;
     char unknown440[0x38];
     double liftAdjustment;
-    char unknown480[8];
+    char unknown480[4];
+    int autoStartActive;
     int propellerStopRequested;
-    char unknown48c[0x6c];
+    char unknown48c[8];
+    unsigned autoStartInitialRunningCount;
+    char unknown498[8];
+    int autoStartLeverReady;
+    char unknown4a4[4];
+    double autoStartRunningTime;
+    unsigned autoStartEngine;
+    double autoStartLeverTime;
+    char unknown4bc[8];
+    double autoStartCrankTime;
+    char unknown4cc[0x2c];
     double inertiaScale;
     char unknown500[0x1c];
     int propellerSynchronizationEnabled;
     int automaticFeatherSwitch;
     char unknown524[0x10];
-    const ElectricalRuntime* electrical;
+    ElectricalRuntime* electrical;
     char unknown538[0x18];
     double propellerDiameterToFifth;
     char unknown558[0xb8];
@@ -327,6 +425,8 @@ struct IntegrationHistory {
     double pitchRateMomentScale;
     double slipstreamPitchRateMomentScale;
     double slipstreamYawRateMomentScale;
+    char unknown778[0xac];
+    int autoStartArm;
 };
 
 struct ModelPoint {
@@ -388,6 +488,7 @@ public:
     __declspec(dllexport)
 #endif
     void CollectPropulsionForces(double step, Vector3* forceOutput, Vector3* momentOutput);
+    void UpdateTurbineEngines(double step, TurbineStartActions& actions);
 
     const FlightPositionDispatch* positionDispatch;
     char unknown04[0x10];
@@ -447,9 +548,7 @@ public:
 struct AirplaneConfiguration {
     char ownerPrefix[4];
     PropulsionConfiguration settings;
-    char unknown198c[0x38];
-    const ZeroAlphaMomentTuning* zeroAlphaMomentTuning;
-    char unknown19c8[0x34];
+    char unknown19ec[0x10];
     const class AirplaneHighAngleModel* highAngleModel;
 };
 

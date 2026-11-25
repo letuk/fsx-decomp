@@ -1,5 +1,41 @@
 # Sources and verification limits
 
+The turbine preparation and state routines use the live listings for
+the common loop and 23 entry points, the pinned PE literal and import
+data, and native VC8 COFF for the five translation units. The host x86
+loop uses adapters for the shared effects and start message renderers.
+The simulator's dynamic providers remain untested.
+[Turbine preparation and state](sim1.dll/sim1-turbine-preparation-and-state.md).
+
+Turbine thrust and the turbine-loop boundary use live `sim1.dll`
+listings, the AIR configuration reader, pinned PE call targets
+and native VC8 COFF. The reverser table is verified from the
+original x87 stack stores. Host x86 fixtures supply the loader-owned
+gravity scale. The final state filter's physical label and simulator
+runtime remain open.
+[Turbine thrust and the engine-loop boundary](sim1.dll/sim1-turbine-thrust-and-tail.md).
+
+Turbine inlet conditions use the live `sim1.dll:0x20c2b9d0`
+listing, the engine-loop call site, the AIR `0x1523` loader,
+the atmospheric ratio writer, the pinned PE imports and native
+VC8 COFF. The host x86 fixture covers the inlet, spool and torque
+handoff. The full turbine loop and simulator runtime remain open.
+[Turbine inlet conditions](sim1.dll/sim1-turbine-inlet.md).
+
+Shaft turbine spool speed uses the live `sim1.dll:0x20c2c6d0`
+listing, the turbine-loop call site, the atmosphere and inlet-ratio
+writers and native VC8 COFF. The host x86 fixture passes the inlet
+ratio explicitly and checks the handoff to the shaft torque function.
+The exact physical labels of the drive and schedule inputs remain open.
+[Shaft turbine spool speed](sim1.dll/sim1-turbine-spool-speed.md).
+
+Turbine shaft torque uses the live `sim1.dll:0x20c2c850` listing,
+its turbine-loop caller, the AIR and auxiliary configuration readers,
+and native VC8 COFF. Host x86 cases use the reconstructed curve evaluator
+and an auxiliary dispatch fixture. The original dynamic target of slot
+`+0x48` and simulator runtime remain unverified.
+[Turbine shaft torque](sim1.dll/sim1-turbine-shaft-torque.md).
+
 The electrical and propeller VC8 runs now retain separate object
 files. The electrical run verifies the circuit body and bus
 lookup. The propeller run verifies both electrical call relocations.

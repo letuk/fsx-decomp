@@ -216,7 +216,7 @@ typedef char CheckMachPitchMoment[offsetof(AirplaneAerodynamicTables, machPitchM
 typedef char CheckMachState[offsetof(AirplaneCoefficientModel, machFraction) == 8 ? 1 : -1];
 typedef char CheckModifierSlot[offsetof(PitchMomentModifierDispatch, factor) == 0x18 ? 1 : -1];
 typedef char CheckModifierOffset[offsetof(IntegrationHistory, pitchMomentModifier) == 0x250 ? 1 : -1];
-typedef char CheckZeroAlphaTuning[offsetof(AirplaneConfiguration, zeroAlphaMomentTuning) == 0x19c4 ? 1 : -1];
+typedef char CheckZeroAlphaTuning[offsetof(AirplaneConfiguration, settings.zeroAlphaMomentTuning) == 0x19c4 ? 1 : -1];
 typedef char CheckRealismWeight[offsetof(FlightDynamics, realismWeight) == 0x38 ? 1 : -1];
 
 // Both reference corrections are published by the same airplane model update.
@@ -377,7 +377,7 @@ __declspec(noinline) double AirplaneCoefficientModel::CalculateBaselineMoment() 
         coefficient = (1.0 - loss * 0.3) * machAdjusted;
     }
     const double realism = airplane->propulsionMomentControl->owner->realismWeight;
-    const ZeroAlphaMomentTuning& tuning = *configuration->zeroAlphaMomentTuning;
+    const ZeroAlphaMomentTuning& tuning = *configuration->settings.zeroAlphaMomentTuning;
     return ((1.0 - tuning.scale) * realism + tuning.scale) * coefficient + (1.0 - realism) * tuning.bias;
 }
 

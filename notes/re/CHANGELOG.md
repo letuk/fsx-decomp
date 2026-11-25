@@ -1,5 +1,35 @@
 # Analysis change log
 
+2026-11-25 — Reconstructed turbine preparation, jet spools, starter,
+fuel delivery and post-thrust state and connected the common turbine
+loop. Retained the 24 original and rebuilt listings, native VC8
+comparisons and host x86 loop checks.
+[Turbine preparation and state](sim1.dll/sim1-turbine-preparation-and-state.md).
+
+2026-11-25 — Reconstructed gross thrust, ram drag, the reverser
+and afterburner adjustments, net turbine thrust and the last inline
+turbine speed blend. Mapped the independent propeller handoff and
+retained original listings, native VC8 comparisons and host x86 evidence.
+[Turbine thrust and the engine-loop boundary](sim1.dll/sim1-turbine-thrust-and-tail.md).
+
+2026-11-25 — Reconstructed the common turbine inlet correction
+and shared ratio publications. Verified the AIR Mach cap selector,
+retained the VC8 and host x86 results, and mapped the original
+and rebuilt instructions and three ratio globals in the dashboard.
+[Turbine inlet conditions](sim1.dll/sim1-turbine-inlet.md).
+
+2026-11-25 — Reconstructed the type-3 and type-5 turbine spool
+update, traced the inlet temperature ratio and retained both native
+VC8 profiles and host x86 checks for the spool-to-torque handoff.
+Recorded the original listing and scoped comparisons in the dashboard.
+[Shaft turbine spool speed](sim1.dll/sim1-turbine-spool-speed.md).
+
+2026-11-25 — Reconstructed turbine shaft torque in a separate
+translation unit, preserved the original binary64 publication boundary,
+and corrected unordered input handling in the shared curve evaluator.
+Retained native VC8 and host x86 evidence and added dashboard listings.
+[Turbine shaft torque](sim1.dll/sim1-turbine-shaft-torque.md).
+
 2026-11-25 — Moved the electrical runtime and circuit checks into
 a separate translation unit. Updated the native and linked build
 workflows and the dashboard source and disassembly links.

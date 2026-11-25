@@ -1,5 +1,441 @@
 [
   {
+    "entry": "20c7ba68",
+    "name": "Turbine governor target",
+    "kind": "Runtime global",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0",
+    "originalHex": "0000000000000000",
+    "evidence": "artifacts/sim1.dll/turbine-state-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "description": "Shared target written by 0x20c2bdd0 and read by 0x20c2beb0 in the current turbine iteration."
+      }
+    ]
+  },
+  {
+    "entry": "20c7ba58",
+    "name": "Turbine ram drag",
+    "kind": "Runtime global",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0",
+    "originalHex": "0000000000000000",
+    "evidence": "artifacts/sim1.dll/turbine-thrust-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "description": "Verified use in the common turbine thrust or final state update."
+      }
+    ]
+  },
+  {
+    "entry": "20c7ba60",
+    "name": "Gross turbine thrust",
+    "kind": "Runtime global",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0",
+    "originalHex": "0000000000000000",
+    "evidence": "artifacts/sim1.dll/turbine-thrust-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "description": "Verified use in the common turbine thrust or final state update."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3758",
+    "name": "Linear turbine reverser gain",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0.375",
+    "originalHex": "000000000000d83f",
+    "evidence": "artifacts/sim1.dll/turbine-thrust-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "description": "Verified use in the common turbine thrust or final state update."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3648",
+    "name": "Unsigned afterburner stage conversion",
+    "kind": "Shared binary32 literal",
+    "bytes": 4,
+    "status": "live verified",
+    "initialValue": "4294967296",
+    "originalHex": "0000804f",
+    "evidence": "artifacts/sim1.dll/turbine-thrust-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "description": "Verified use in the common turbine thrust or final state update."
+      }
+    ]
+  },
+  {
+    "entry": "20bc00e8",
+    "name": "Turbine speed blend difference gain",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0.01",
+    "originalHex": "7b14ae47e17a843f",
+    "evidence": "artifacts/sim1.dll/turbine-thrust-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "description": "Verified use in the common turbine thrust or final state update."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3618",
+    "name": "Turbine speed blend shaft gain",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0.023",
+    "originalHex": "5a643bdf4f8d973f",
+    "evidence": "artifacts/sim1.dll/turbine-thrust-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "description": "Verified use in the common turbine thrust or final state update."
+      }
+    ]
+  },
+  {
+    "entry": "20c7ba70",
+    "name": "Turbine inlet temperature square root",
+    "kind": "Runtime global",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0",
+    "originalHex": "0000000000000000",
+    "evidence": "artifacts/sim1.dll/turbine-inlet-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-inlet.md",
+        "description": "Square root of the stored temperature ratio. The writer is 0x20c2ba4d and the verified reader is 0x20c2c322."
+      }
+    ]
+  },
+  {
+    "entry": "20c7ba78",
+    "name": "Turbine inlet pressure ratio",
+    "kind": "Runtime global",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0",
+    "originalHex": "0000000000000000",
+    "evidence": "artifacts/sim1.dll/turbine-inlet-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-inlet.md",
+        "description": "Pressure ratio using the ambient pressure and the ram temperature factor raised to 3.5. Written at 0x20c2ba3c."
+      }
+    ]
+  },
+  {
+    "entry": "20bb17c8",
+    "name": "Turbine inlet pressure exponent",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "3.5",
+    "originalHex": "0000000000000c40",
+    "evidence": "artifacts/sim1.dll/turbine-inlet-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-inlet.md",
+        "description": "Loaded at 0x20c2ba2b and passed to the CRT power operation."
+      }
+    ]
+  },
+  {
+    "entry": "20c7ba80",
+    "name": "Turbine inlet temperature ratio",
+    "kind": "Runtime global",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0",
+    "originalHex": "0000000000000000",
+    "evidence": "artifacts/sim1.dll/turbine-inlet-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-inlet.md",
+        "description": "Written at 0x20c2ba25 and reloaded at 0x20c2ba42 for the square root. The native VC8 object retains both relocations."
+      },
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Normalized inlet temperature written by 0x20c2b9d0 and read by the spool and shaft speed calculations. The original image starts at zero."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3620",
+    "name": "Spool schedule second breakpoint",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "100",
+    "originalHex": "0000000000005940",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3cd8",
+    "name": "Spool schedule second speed",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "62",
+    "originalHex": "0000000000004f40",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc39b0",
+    "name": "Spool schedule third breakpoint",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "150",
+    "originalHex": "0000000000c06240",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc1220",
+    "name": "Spool schedule third speed",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "50",
+    "originalHex": "0000000000004940",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3cd0",
+    "name": "Spool schedule fourth breakpoint",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "610",
+    "originalHex": "0000000000108340",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3cc8",
+    "name": "Spool schedule fourth speed",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "101.5",
+    "originalHex": "0000000000605940",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3590",
+    "name": "Spool schedule drive threshold",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0.0001",
+    "originalHex": "2d431cebe2361a3f",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3cc0",
+    "name": "Nonrunning spool airflow cap",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "130",
+    "originalHex": "0000000000406040",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3cb8",
+    "name": "Nonrunning spool response drop",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0.13999999999999999",
+    "originalHex": "eb51b81e85ebc13f",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bb4050",
+    "name": "Spool rate upper limit",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "20",
+    "originalHex": "0000000000003440",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc38d0",
+    "name": "Spool rate lower limit",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "-20",
+    "originalHex": "00000000000034c0",
+    "evidence": "artifacts/sim1.dll/turbine-spool-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "description": "Referenced by the shaft turbine spool update at 0x20c2c6d0. The name describes this use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc4308",
+    "name": "Turbine shaft torque reduction gain",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0.08",
+    "originalHex": "7b14ae47e17ab43f",
+    "evidence": "artifacts/sim1.dll/turbine-shaft-torque-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-shaft-torque.md",
+        "description": "Referenced by the turbine shaft torque update at 0x20c2c850. The name describes its role at that use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3ca8",
+    "name": "Running turbine shaft torque response rate",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "12.0",
+    "originalHex": "0000000000002840",
+    "evidence": "artifacts/sim1.dll/turbine-shaft-torque-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-shaft-torque.md",
+        "description": "Referenced by the turbine shaft torque update at 0x20c2c850. The name describes its role at that use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bc3790",
+    "name": "Nonrunning turbine shaft torque response gain",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "4.0",
+    "originalHex": "0000000000001040",
+    "evidence": "artifacts/sim1.dll/turbine-shaft-torque-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-shaft-torque.md",
+        "description": "Referenced by the turbine shaft torque update at 0x20c2c850. The name describes its role at that use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bb1700",
+    "name": "Nonrunning turbine shaft torque response baseline",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "0.1",
+    "originalHex": "9a9999999999b93f",
+    "evidence": "artifacts/sim1.dll/turbine-shaft-torque-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-shaft-torque.md",
+        "description": "Referenced by the turbine shaft torque update at 0x20c2c850. The name describes its role at that use site."
+      }
+    ]
+  },
+  {
+    "entry": "20bbfc48",
+    "name": "Turbine shaft torque response speed threshold",
+    "kind": "Shared binary64 literal",
+    "bytes": 8,
+    "status": "live verified",
+    "initialValue": "5.0",
+    "originalHex": "0000000000001440",
+    "evidence": "artifacts/sim1.dll/turbine-shaft-torque-ghidra.json",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-shaft-torque.md",
+        "description": "Referenced by the turbine shaft torque update at 0x20c2c850. The name describes its role at that use site."
+      }
+    ]
+  },
+  {
     "entry": "20bbdb1c",
     "name": "Heading transform VTable prefix",
     "kind": "VTable",

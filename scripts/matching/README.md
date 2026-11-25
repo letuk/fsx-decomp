@@ -57,6 +57,28 @@ for builds containing the automatic-feather stage.
 [Propeller induced airspeed](../../notes/re/sim1.dll/sim1-engine-branches.md#propeller-induced-airspeed).
 [Mapped propeller step and speed synchronization](../../notes/re/sim1.dll/sim1-propeller-step.md).
 
+Pass `-Target TurbineShaftTorque` to build `src/sim1/turbine.cpp` into
+`sim1-turbine-shaft-torque.obj`. Replay the native COFF comparisons with
+`node scripts/compare-sim1-turbine-shaft-torque.cjs <run-directory>` and
+`node scripts/compare-sim1-turbine-spool.cjs <run-directory>` for
+builds containing the spool update. Use
+`node scripts/compare-sim1-turbine-inlet.cjs <run-directory>` for
+builds containing the common inlet correction.
+Use `node scripts/compare-sim1-turbine-thrust.cjs <run-directory>`
+for builds containing the shared thrust and final speed-blend scopes.
+[Turbine shaft torque](../../notes/re/sim1.dll/sim1-turbine-shaft-torque.md).
+[Shaft turbine spool speed](../../notes/re/sim1.dll/sim1-turbine-spool-speed.md).
+[Turbine inlet conditions](../../notes/re/sim1.dll/sim1-turbine-inlet.md).
+[Turbine thrust and the engine-loop boundary](../../notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md).
+
+Use `-Target TurbineControls`, `TurbineIndications`, `TurbineStart`,
+`TurbineFuel` or `TurbineLoop` to build the remaining turbine
+translation units individually as native VC8 objects. Replay with
+`node scripts/compare-sim1-turbine-state.cjs <run-directory> <component>`.
+The component is `turbine-controls`, `turbine-indications`, `turbine-start`,
+`turbine-fuel` or `turbine-loop`.
+[Turbine preparation and state](../../notes/re/sim1.dll/sim1-turbine-preparation-and-state.md).
+
 Pass `-Target Electrical` to build `src/sim1/electrical.cpp` as
 `sim1-electrical-circuit.obj`. Replay with
 `node scripts/compare-sim1-electrical-circuit.cjs <run-directory>`.

@@ -1,5 +1,3240 @@
 [
   {
+    "entry": "20c205d0",
+    "name": "InitiateTurbineCombustion",
+    "ghidraName": "FUN_20c205d0",
+    "group": "Turbine state",
+    "description": "Initiate Turbine Combustion",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "InitiateTurbineCombustion"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "68 original and 72 rebuilt bytes. 23 exact and 8 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "InitiateTurbineCombustion",
+      "buildSymbol": "?InitiateTurbineCombustion@sim1@@YAXAAVFlightDynamics@1@AAUEngineForceRecord@1@AAVTurbineStartActions@1@@Z",
+      "leftHex": "8bff558bec83ec1c8b03c7430801000000dd00dd05b038bc2057dcc98d7de8d9c9dd5de8dd4008d8c9dd5df0dc4810dd5df8e829ccfdffd9ee5fdd9bc80000008be55dc3",
+      "rightHex": "8bff558bec83ec188b06c7460801000000dd00dd05000000008d55e8dcc9528b5508d9c952dd5de8dd4008d8c9dd5df0dc48108b018b00dd5df8ffd0d9eedd9ec80000008be55dc3",
+      "mappedOffsets": [
+        21
+      ]
+    }
+  },
+  {
+    "entry": "20c2bc90",
+    "name": "CalculateThrottleInput",
+    "ghidraName": "FUN_20c2bc90",
+    "group": "Turbine state",
+    "description": "Calculate Throttle Input",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::CalculateThrottleInput"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "309 original and 288 rebuilt bytes. 46 exact and 0 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "CalculateThrottleInput",
+      "buildSymbol": "?CalculateThrottleInput@TurbineEngineState@sim1@@QAENABUIntegrationHistory@2@ABUEngineForceRecord@2@@Z",
+      "leftHex": "8bff558becd9ee8b10dc560c8b8ae419000083ec18dfe0d9e8f6c4410f8aab0000008b5124ddd985d2dd460cdd55e80f86db000000d9eed85928dfe0f6c4050f8acb000000d94128d8d9dfe0f6c4417514ddd9d87128c7477c00000000dd5de8e9af000000ddd8dd55e8dd460cdc05e800bc20d86128d94128d8eadef9d8d1dfe0f6c4057b04ddd8eb02ddd9837e0800743285d28955f4db45f47d06dc055835bc20d97dfe0fb745fedec90d000c00008945f4d96df4df7df08b4df0894f7cd96dfeeb50c7477c00000000eb458a926c04000080fa057512ddd8ddd8dd05083bbc20dc4e0cdd5de8eb2a80fa03750addd8dc4e0cdd5de8eb1b80fa01ddd97508ddd8dd05203dbc20dc4e0cdd5de8eb04ddd9ddd88b46048b10508b4218ffd0dc4de88b8ee4000000d94108d9e8dee1dec98be55dc3",
+      "rightHex": "8bff558bec83ec088b450856578b7d0cdd470c8bf18b088b91e4190000dd55f8d9eed8d1dfe0d9e8f6c4417b458a896c040000ddd880f9057510ddd8dc0d00000000dd5df8e9b100000080f903750adec9dd5df8e9a200000080f901ddd80f8595000000dc0d00000000dd5df8e989000000837a2400ddd9747dd9eed85a28dfe0f6c4057a71d94228d95d08d94508d8d2dfe0f6c4417510ddd9c7467c00000000def9dd5df8eb53d9c9dd55f8d9cadc0500000000d8e1d9c2dee2def1d8d1dfe0f6c4057a04ddd9eb02ddd8837f0800741c8b4a24db422485c97d06dc0500000000dec9e80000000089467ceb0d33c0ddd889467ceb04ddd9ddd88b47048b10508b4218ffd0dc4df88b8fe4000000d941085fd9e85edee1dec98be55dc20800",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2bdd0",
+    "name": "UpdateGovernorTarget",
+    "ghidraName": "FUN_20c2bdd0",
+    "group": "Turbine state",
+    "description": "Update Governor Target",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::UpdateGovernorTarget"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "205 original and 194 rebuilt bytes. 33 exact and 44 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "UpdateGovernorTarget",
+      "buildSymbol": "?UpdateGovernorTarget@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@ABUEngineForceRecord@2@N@Z",
+      "leftHex": "8bff558bec83ec10d9e856dcb35c020000578b3b8bb7e419000083ec1081c6cc040000dd55f8dd4510dd5c2408dd1c24e82b02faff8bb7e4190000dd5df0dd451083ec10dd5c240881c6a4070000dd45f8dd1c24e80702faff8bbfe41900008b4508dd87d4040000dd40408b0bd8e18a816c0400003c05dd87ac070000dee2def1dd45f0dcead9c9decadec1dd1568bac72074043c03752b8b550cdd4214dc0d383abc20dc05d83cbc20d8d1dfe0ddd9f6c4057b0edd1d68bac7205f5e8be55dc210005fddd85e8be55dc21000",
+      "rightHex": "8bff558bec83ec108b4508d9e8dcb05c0200005356578b388bb7e419000083ec108bd98d8ecc040000dd55f0dd4510dd5c2408dd1c24e800000000dd5df883ec10dd45108d8ea4070000dd5c2408dd45f0dd1c24e800000000dd86d4040000dd86ac070000dd4340d8e2d9c9dee2def1dd45f8deeadec9dc45f8dd15000000008a876c0400003c035f5e5b74043c0575298b450cdd4014dc0d00000000dc0500000000d8d1dfe0ddd9f6c4057b0cdd1d000000008be55dc21000ddd88be55dc21000",
+      "mappedOffsets": [
+        85
+      ]
+    }
+  },
+  {
+    "entry": "20c2beb0",
+    "name": "UpdateFuelSchedule",
+    "ghidraName": "FUN_20c2beb0",
+    "group": "Turbine state",
+    "description": "Update Fuel Schedule",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::UpdateFuelSchedule"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "313 original and 277 rebuilt bytes. 37 exact and 47 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "UpdateFuelSchedule",
+      "buildSymbol": "?UpdateFuelSchedule@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@ABUEngineForceRecord@2@N@Z",
+      "leftHex": "8bff558becdd053836bc2056dc5f148b30dfe0d9eef6c4010f84130100008a8e6c04000080f901750edc5208dfe0f6c4440f8bfa00000080f905750ddc12dfe0f6c4440f8be800000080f903750ddc12dfe0f6c4440f8bd600000080f901750e8b8ee4190000dd4218dd4110eb1080f905742880f9037423d9c0d9c1d9c9dd0568bac7208b8ee4190000dee2d9cadc11dfe0f6c4057a12dd01eb148b86e4190000dd4210dd4010ebd5dd052036bc20decbd9cadc4d08d9e8d8d1dfe0f6c4417504ddd8eb02ddd9dec9dc4220dd5220dd053036bc20d8d1dfe0f6c4057a04ddd8eb02ddd9dd5a20dd8784000000d8e1d9e1dc1d9035bc20dfe0f6c4057a05dd5a20eb02ddd8837f0800752980be6c0400000175208b8ee4190000dd01dc0d2836bc20dc5220dfe0f6c4417505ddd8dd4220dd5a205e5dc20800",
+      "rightHex": "8bff558becdd05000000008b4508568b300fb6966c040000578b7d0cdc5f14dfe0d9eef6c4010f84d800000083fa017505dc5108eb0c83fa03740583fa05750ddc11dfe0f6c4440f8bb700000083fa01d9c08bb6e4190000d9c1742383fa03740583fa05750addd8ddd8dd4110dd4610d9cadc16dfe0f6c4057a0ddd06eb0fddd8ddd8dd4118ebe5dd0500000000decbd9cadc4d10d9e8d8d1dfe0f6c4417504ddd8eb02ddd9dd0500000000dee2dec9dc4120dd0500000000d8d1dfe0f6c4057a04ddd8eb02ddd9dd5920dd8784000000d9e1dc1d00000000dfe0f6c4057a05dd5920eb02ddd8837f0800752283fa01751ddd06dc0d00000000dc5120dfe0f6c44174095fdd59205e5dc21000ddd85f5e5dc21000",
+      "mappedOffsets": [
+        7
+      ]
+    }
+  },
+  {
+    "entry": "20c2bff0",
+    "name": "CanSustainCombustion",
+    "ghidraName": "FUN_20c2bff0",
+    "group": "Turbine state",
+    "description": "Can Sustain Combustion",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::CanSustainCombustion"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "65 original and 64 rebuilt bytes. 0 exact and 22 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "CanSustainCombustion",
+      "buildSymbol": "?CanSustainCombustion@TurbineEngineState@sim1@@QBE_NI@Z",
+      "leftHex": "83f8017513dd055040bb20dc5908dfe0f6c4057b2633c0c383f805750add054840bb20dc19ebe783f80375e9dd054840bb20dc19dfe0f6c4057adab801000000c3",
+      "rightHex": "8bff558bec8b450883f801750bdd0500000000dc5908eb1283f803740583f8057518dd0500000000dc19dfe0f6c4057a09b8010000005dc2040033c05dc20400",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c040",
+    "name": "UpdateCombustion",
+    "ghidraName": "FUN_20c2c040",
+    "group": "Turbine state",
+    "description": "Update Combustion",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::UpdateCombustion"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "216 original and 201 rebuilt bytes. 31 exact and 23 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "UpdateCombustion",
+      "buildSymbol": "?UpdateCombustion@TurbineEngineState@sim1@@QAEXAAVFlightDynamics@2@AAUEngineForceRecord@2@AAVTurbineStartActions@2@@Z",
+      "leftHex": "8bff558bec5153568bf08b45088b98700200008b470485c074198b088b511850ffd2d81dc401bc20dfe0f6c4447a04b101eb0232c9d9eedc5e20dfe0f6c4050f8a8500000083bfd000000000747c84c97578837e70007515837e7400740f8b46748b088b511c50ffd284c0755d837f08007543837f2c0074588b030fb6806c0400008bcee827ffffff85c07444dd476cdc25d0f6bb20d9e1dc1d9035bc20dfe0f6c4057b2c8b75088bdfe8e144ffff5e5b595dc204008b0b0fb6816c0400008bcee8eafeffff85c07507c74708000000005e5b595dc20400",
+      "rightHex": "8bff558bec568b750c8b460485c0578bf974198b088b511850ffd2dc1d00000000dfe0f6c4447a04b101eb0232c9d9eedc5f20dfe0f6c4057a4c83bed000000000744384c9753f837f70007515837f7400740f8b47748b088b511c50ffd284c07524837e08008b55088b82700200008b080fb6816c0400007419508bcfe80000000084c07507c74608000000005f5e5dc20c00837e2c0074f4508bcfe80000000084c074e8dd466cd9e1dc1d00000000dfe0f6c4057bd68b4d1052e80000000083c4045f5e5dc20c00",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c120",
+    "name": "UpdateJetHighSpool",
+    "ghidraName": "FUN_20c2c120",
+    "group": "Turbine state",
+    "description": "Update Jet High Spool",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::UpdateJetHighSpool"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "252 original and 221 rebuilt bytes. 10 exact and 67 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "UpdateJetHighSpool",
+      "buildSymbol": "?UpdateJetHighSpool@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@AAUEngineForceRecord@2@N@Z",
+      "leftHex": "8bff558bec51837b08008b00568945fc0f84830000008b80e4190000dd4720dc3083ec088db07c0a0000dd1c24e80efef9ffdd05183dbc20d8e9dc0d103dbc20dc355040bb20dd05a847bb20dcc1d8d1dfe0f6c4057a11dd05383abc20d8d2dfe0f6c441750fddd8d8d1dfe0f6c4057b0addd9eb08ddd9ddd9eb02ddd8dd436cd9eedce9d9c9d9e1dc1d9035bc20dfe0f6c4057a22dddaeb20837b2c00740edd05083dbc20dd050017bb20eb0cd9eedd050017bb20eb02ddd8d9c9dc6718dec9dc4d08dc4718dd5508dd5f18dd0580bac720e8cbad0300dc4d088b4dfc5edd5708dc352036bc20dd535c8b91e4190000dc4a18dd5b4c8be55dc20800",
+      "rightHex": "8bff558bec8b45085356578b7d0c837f08008bf18b088b99e4190000751e837f2c00740edd0500000000dd0500000000eb74d9eedd0500000000eb6add462083ec08dc338d8b7c0a0000dd1c24e800000000dd0500000000d8e9dc0d00000000dc3500000000dd0500000000dcc1d8d1dfe0f6c4057a15ddd8dd0500000000d8d1dfe0f6c4417504ddd8eb02ddd9dd476cd9e1dc1d00000000dfe0f6c4057a06ddd9d9eed9c9d9c9dc6618dec9dc4d10dc4618dd5e18dd0500000000e800000000dc4e18dd5608dc3500000000dd575cdc4b18dd5f4c5f5e5b5dc21000",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c230",
+    "name": "UpdateJetLowSpool",
+    "ghidraName": "FUN_20c2c230",
+    "group": "Turbine state",
+    "description": "Update Jet Low Spool",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::UpdateJetLowSpool"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "156 original and 141 rebuilt bytes. 21 exact and 50 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "UpdateJetLowSpool",
+      "buildSymbol": "?UpdateJetLowSpool@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@N@Z",
+      "leftHex": "8bff558bec51dd47188b08568bb1e419000083ec10dd5c240883c64cdd4740dd1c24e8d9fdf9ffdc6710d9eed8d9dfe0f6c4057a08dd051839bc20eb06dd05a83cbc20dec9dd05003dbc20d8d1dfe0f6c4057a15d9c1dd05f83cbc20d8d1dfe0ddd9f6c441750fddd8d8d1dfe0f6c4057b06ddd9eb04dddaddd8dc4d08dc4710dd5508dd5f10dd0580bac720e801ad0300dc4d085edd1f595dc20800",
+      "rightHex": "8bff558bec8b4508568bf18b08dd46188b81e419000083ec10dd5c24088d484cdd4640dd1c24e800000000dc6610d9eed8d9dfe0f6c4057a08dd0500000000eb06dd0500000000dec9dd0500000000d8d1dfe0f6c4057a15ddd8dd0500000000d8d1dfe0f6c4417504ddd8eb02ddd9dc4d0cdc4610dd5e10dd0500000000e800000000dc4e10dd1e5e5dc20c00",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c350",
+    "name": "UpdateBleedFactor",
+    "ghidraName": "FUN_20c2c350",
+    "group": "Turbine state",
+    "description": "Update Bleed Factor",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::UpdateBleedFactor"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "180 original and 162 rebuilt bytes. 29 exact and 13 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "UpdateBleedFactor",
+      "buildSymbol": "?UpdateBleedFactor@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@ABUEngineForceRecord@2@N@Z",
+      "leftHex": "8bff558bec8b078b88e41900008b493c83ec0c85c9560f848c000000d9eedc520cdfe0f6c4417506837a08007561ddd883ec10dd43108d7104dd5c2408dd875c010000dd1c24e895fcf9ff8bc7dd5df88bd3e879f7ffff8b178b82e41900008b483cd809dc45f8d9e8d8d1dfe0f6c441741bddd9dc6358dc0d9037bc20dc4d08dc4358dd5b585e8be55dc20800ddd8dc6358dc0d9037bc20dc4d08dc4358dd5b585e8be55dc20800d9e85edd5b588be55dc20800",
+      "rightHex": "8bff558bec83ec08538b5d088b0356578bb8e41900008bf18b4f3c85c9750ed9e85fdd5e585e5b8be55dc21000d9ee8b550cd9c0d9c9dc5a0cdfe0f6c4417506837a08007541ddd883ec10dd461083c104dd5c2408dd835c010000dd1c24e800000000dd5df8538bcee8000000008b4f3cd809dc45f8d9e8d8d1dfe0f6c4417404ddd9eb02ddd8dc66585fdc0d00000000dc4d10dc4658dd5e585e5b8be55dc21000",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c410",
+    "name": "UpdateReverserPosition",
+    "ghidraName": "FUN_20c2c410",
+    "group": "Turbine state",
+    "description": "Update Reverser Position",
+    "source": {
+      "file": "src/sim1/turbine_controls.cpp",
+      "symbol": "TurbineEngineState::UpdateReverserPosition"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "199 original and 151 rebuilt bytes. 37 exact and 12 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/controls/turbine-controls-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/controls/worker-output/disassembly.txt",
+      "symbol": "UpdateReverserPosition",
+      "buildSymbol": "?UpdateReverserPosition@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@ABUEngineForceRecord@2@N@Z",
+      "leftHex": "8bff558becd9ee83ec54568bf08b0e8b91e4190000d85a44dfe0d9eef6c4050f8a98000000dc570cdfe0f6c441750bd98174040000dc7f0ceb57837a48007467dd55b483ec08dd058833bc20c745b004000000dd55bcdd055046bb20dd5dc4dd5dccd9e8dd5dd4dd05f03cbc20dd5ddcdd05103dbb20dd5de4dd5decdd865c0100008d75b0dd1c24e8c3faf9ffd9eed9c9dc6360d8d1dfe0ddd9f6c441750cd9050c22bc20eb0ad9c0ebe6d90514f0bb20d95dfcd84dfcdc4d08dc4360dd5b605e8be55dc20800",
+      "rightHex": "8bff558becd9ee56578b7d088bf18b0f8b91e4190000d85a44dfe0d9eef6c4057a6c53d9c08b5d0cd9c9dc530cdfe0f6c441750dddd9d98174040000dc7b0ceb24837a4800741cddd983ec08ddd8b900000000dd875c010000dd1c24e800000000d9eed9c9dc66605bd8d1dfe0ddd9f6c4417508d90500000000eb06d90500000000d95d08d84d08dc4d10dc46605fdd5e605e5dc21000",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c980",
+    "name": "UpdatePressureRatio",
+    "ghidraName": "FUN_20c2c980",
+    "group": "Turbine state",
+    "description": "Update Pressure Ratio",
+    "source": {
+      "file": "src/sim1/turbine_indications.cpp",
+      "symbol": "TurbineEngineState::UpdatePressureRatio"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "278 original and 111 rebuilt bytes. 23 exact and 8 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/indications/turbine-indications-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/indications/worker-output/disassembly.txt",
+      "symbol": "UpdatePressureRatio",
+      "buildSymbol": "?UpdatePressureRatio@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@N@Z",
+      "leftHex": "8bff558bec81ecac000000d9ee8b4508dd955cffffff53dd9564ffffff8b18dd05d0f7bb2056dd9d6cffffff83ec10dd05b847bb208db554ffffffdd9d74ffffffc78554ffffff05000000c78558ffffff04000000dd957cffffffdd5584dd558cdd5d94dd05a03cbc20dd5d9cdd05983cbc20dd55a4dd5dacdd05903cbc20dd5db4dd05e8eabb20dd5dbcdd05883cbc20dd55c4dd5dccdd05803cbc20dd5dd4dd05783cbc20dd5ddcd9e8dd55e4dd5decdd05703cbc20dd5df4dd4718dd5c2408dd4740dd1c24e8e4f5f9ffdc8b1c0300008b4d08dc895c020000dd0510f7bb20dc5f40dfe0f6c4417511d9e8d8d1dfe0f6c4057b04ddd9eb02ddd8dc67305edc8b240300005bdc4d0cdc4730dd5f308be55dc20c00",
+      "rightHex": "8bff558bec538b5d08568bf1dd4618578b3b83ec10dd5c2408b900000000dd4640dd1c24e800000000dc8f1c030000dc8b5c020000dd0500000000dc5e40dfe0f6c4417511d9e8d8d1dfe0f6c4057b04ddd9eb02ddd8dc6630dc8f240300005fdc4d0cdc4630dd5e305e5b5dc20c00",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2caa0",
+    "name": "UpdateTurbineTemperature",
+    "ghidraName": "FUN_20c2caa0",
+    "group": "Turbine state",
+    "description": "Update Turbine Temperature",
+    "source": {
+      "file": "src/sim1/turbine_indications.cpp",
+      "symbol": "TurbineEngineState::UpdateTurbineTemperature"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "305 original and 195 rebuilt bytes. 9 exact and 8 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/indications/turbine-indications-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/indications/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineTemperature",
+      "buildSymbol": "?UpdateTurbineTemperature@TurbineEngineState@sim1@@QAEXABVFlightDynamics@2@ABUEngineForceRecord@2@N@Z",
+      "leftHex": "8bff558bec83ec64dd05c839bc208b8370020000dd5da056dd05483bbc2057dd5da88b38dd05e0eabb208a876c0400003c01dd5db0dd050043bc20c7459c05000000dd5db8dd054036bc20dd5dc0dd05f842bc20dd5dc8dd052036bc20dd5dd0dd05f042bc20dd5dd8dd05783cbc20dd5de0d9e8dd5de875088b4508dd4018eb123c0574083c037404d9eeeb068b4d08dd4110837a0800742283ec088d759cdd1c24e819f4f9ffdc8f04030000dc8ffc020000dd870c030000eb268b4318ddd8dd4040dc0dd037bc20dc05c837bc20dc05c037bc20d95df8d945f8dd05f03cbc208b4b18dd4140dc0dd037bc20dc05c837bc20dc05c037bc20d95df8d945f8d8d2dfe0f6c4057b04dddaeb02ddd8dd0580bac7208b4508deca5fd9c95edc6038dec9dc4d0cdc4038dd58388be55dc20c00",
+      "rightHex": "8bff558bec8b45088b5018dd424056dc0d00000000578bf98b8870020000dc05000000008b450c837808008b31dc0500000000d95d08d94508d9c0dd050000000074510fb6866c040000ddd983f801ddd9ddd87505dd4718eb1183f803740983f8057404d9eeeb03dd471083ec08b900000000dd1c24e800000000dc8e04030000dc8efc020000dd860c030000d94508d9cad9c9d9c9d8d2dfe0f6c4417404ddd8eb02dddadd0500000000decad9c9dc6738dec9dc4d10dc4738dd5f385f5e5dc21000",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2ce50",
+    "name": "UpdateTurbineExhaustTemperature",
+    "ghidraName": "FUN_20c2ce50",
+    "group": "Turbine state",
+    "description": "Update Turbine Exhaust Temperature",
+    "source": {
+      "file": "src/sim1/turbine_indications.cpp",
+      "symbol": "UpdateTurbineExhaustTemperature"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "296 original and 184 rebuilt bytes. 9 exact and 12 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/indications/turbine-indications-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/indications/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineExhaustTemperature",
+      "buildSymbol": "?UpdateTurbineExhaustTemperature@sim1@@YAXABVFlightDynamics@1@AAUEngineForceRecord@1@ABUTurbineEngineState@1@N@Z",
+      "leftHex": "8bff558bec83ec5cdd05983ebc208b4d08dd5da88b8170020000d9e856dd55b057dd05a03cbc208b388a876c040000dd5db83c01dd05083abc20dd5dc0c745a405000000dd054036bc20dd5dc8dd05b03bbc20dd5dd0dd052036bc20dd5dd8dd05c042bc20dd5de0dd05783cbc20dd5de8dd5df07505dd4218eb0f3c0574083c037404d9eeeb03dd4210837b0800741f83ec088d75a4dd1c24e872f0f9ffdc8fec0200008b4d08dc8fe4020000eb208b4118ddd8dd4040dc0dd037bc20dc05c837bc20dc05c037bc20d95d08d94508dc0d80bac720dc6374dc8ff4020000dc4d0cdc4374dd53748b4918dd4140dc0dd037bc20dc05c837bc20dc05c037bc20d95d08d94508d8d1dfe0f6c4057a0dddd8dd5b745f5e8be55dc20c00ddd95fdd5b745e8be55dc20c00",
+      "rightHex": "8bff558bec8b45088b5018dd42408b8870020000dc0d00000000568b3157dc05000000008b7d0c837f0800dc0500000000d95d08d94508d9c0744d0fb6866c040000ddd883f801ddd875088b4510dd4018eb1483f803740983f8057404d9eeeb068b4d10dd411083ec08b900000000dd1c24e800000000dc8eec020000dc8ee4020000d94508d9c9dc0d00000000dc6774dc8ef4020000dc4d14dc4774d8d1dfe0f6c4417509ddd9dd5f745f5e5dc3ddd8dd5f745f5e5dc3",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2cbe0",
+    "name": "UpdateTurbineDriveSignal",
+    "ghidraName": "FUN_20c2cbe0",
+    "group": "Turbine state",
+    "description": "Update Turbine Drive Signal",
+    "source": {
+      "file": "src/sim1/turbine_indications.cpp",
+      "symbol": "UpdateTurbineDriveSignal"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "407 original and 340 rebuilt bytes. 34 exact and 8 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/indications/turbine-indications-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/indications/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineDriveSignal",
+      "buildSymbol": "?UpdateTurbineDriveSignal@sim1@@YAXABUIntegrationHistory@1@AAUEngineForceRecord@1@ABUTurbineEngineState@1@N@Z",
+      "leftHex": "8bff558bec83ec58d9ee53dd55ac8b18dd5db456dd05683cbc2083ec08dd5dbc8d75a8dd05b03bbc20c745a804000000dd5dc4dd05e8eabb20dd5dccdd05603cbc20dd5dd4dd052036bc20dd5ddcd9e8dd5de4dd01dd1c24e823f3f9ffdc8b74030000dc8b6c030000dd55f0dd8330020000dc5f4cdfe0f6c4057a2f83bb0802000000752680bb6c04000005751d83bb7402000000d9e8dc671cdc0d583cbc207502d9e0dec1dd5df0eb02ddd88b87dc00000085c00f84b100000083bfd8000000000f84a40000008b10508b4218ffd0d9e8d8d1dfe0ddd9f6c44175768b87dc000000ddd88b088b511850ffd2d9e88b87dc000000dee18b088b513450dd5df8ffd2dc4df8d987d4000000d9c9dc4d08d95dfcd865fcd95dfcd945fcd997d4000000d9eed8d1dfe0f6c4057a13ddd8d95dfcd945fcd99fd4000000dd45f0eb37ddd9d95dfcd945fcd99fd4000000dd45f0eb248b87d8000000d99fd40000008b088b511850ffd2dc4df0eb0bdd476cd9e8d99fd4000000d88fd40000005edc676cdc8b7c0300005bdc4d08dc476cdd5f6c8be55dc20800",
+      "rightHex": "8bff558bec83ec108b4d10dd018b450856578b3883ec08b900000000dd1c24e800000000dc8f740300008b750cdc8f6c030000dd5df8dd8730020000dc5e4cdfe0f6c4057a2e83bf0802000000752580bf6c04000005751c83bf7402000000d9e8dc661cdc0d000000007502d9e0dc45f8dd5df883bed8000000000f84aa0000008b86dc00000085c00f849c0000008b10508b4218ffd0dc1d00000000dfe0f6c4057b1bd9e88b86d8000000d99ed4000000508b088b5118ffd2dc4df8eb778b86dc0000008b088b511850ffd2d9e88b86dc000000dee18b088b513450dd5df0ffd2dc4df0dc4d14d95d08d986d4000000d86508d95d08d9eed94508d8d1dfe0f6c4417513ddd9d95d08d94508d99ed4000000dd45f8eb1eddd8d95d08d94508d99ed4000000dd45f8eb0bd9e8d99ed4000000dd466cd88ed4000000dc666cdc8f7c0300005fdc4d14dc466cdd5e6c5e8be55dc3",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2cd80",
+    "name": "UpdateTurbineOilTemperature",
+    "ghidraName": "FUN_20c2cd80",
+    "group": "Turbine state",
+    "description": "Update Turbine Oil Temperature",
+    "source": {
+      "file": "src/sim1/turbine_indications.cpp",
+      "symbol": "UpdateTurbineOilTemperature"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "189 original and 114 rebuilt bytes. 12 exact and 20 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/indications/turbine-indications-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/indications/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineOilTemperature",
+      "buildSymbol": "?UpdateTurbineOilTemperature@sim1@@YAXABVFlightDynamics@1@AAUEngineForceRecord@1@ABUTurbineEngineState@1@N@Z",
+      "leftHex": "8bff558bec83ec50837b0800dd05683cbc20dd5db48b8870020000dd051036bc2056dd5dbc57dd05e842bc208b39dd5dc4c745b004000000dd05e042bc20dd5dccdd05d842bc20dd5dd4dd05d042bc20dd5ddcdd05e8eabb20dd5de4dd05c842bc20dd5dec741edd0283ec088d75b0dd1c24e869f1f9ffdc8f94030000dc8f84030000eb1e8b4018dd4040dc0dd037bc20dc05c837bc20dc05c037bc20d95dfcd945fcdc6364dc8f9c0300005f5edc4d08dc4364dd5b648be55dc20800",
+      "rightHex": "8bff558bec8b45088b5018dd42408b8870020000dc0d00000000568b750c837e0800dc0500000000578b39dc0500000000d95d08d9450874238b4510ddd8dd0083ec08b900000000dd1c24e800000000dc8f94030000dc8f84030000dc6664dc8f9c0300005fdc4d14dc4664dd5e645e5dc3",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2cf80",
+    "name": "UpdateTurbineOilPressure",
+    "ghidraName": "FUN_20c2cf80",
+    "group": "Turbine state",
+    "description": "Update Turbine Oil Pressure",
+    "source": {
+      "file": "src/sim1/turbine_indications.cpp",
+      "symbol": "UpdateTurbineOilPressure"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "200 original and 189 rebuilt bytes. 59 exact and 0 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/indications/turbine-indications-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/indications/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineOilPressure",
+      "buildSymbol": "?UpdateTurbineOilPressure@sim1@@YAXABVFlightDynamics@1@IM@Z",
+      "leftHex": "8bff558bec8b807002000069c9ec0000008b903c04000056578b388b0081c7a4030000f680bc030000108d340a742283bee00000000074198b86e00000008b088b511c50ffd2f6d81bc083c00185c0742c837e2c00dd465c741bdd050017bb20d8d1dfe0f6c4057b0addd9dc0d9037bc20eb0cddd8dc0d9037bc20eb02d9eed986a4000000d8d9dfe0f6c4057b08ddd8d986a4000000d9e8d8d1dfe0f6c4417404ddd9eb02ddd8dc4f08dca684000000dc4f105fd84d08dc8684000000dd9e840000005e5dc20400",
+      "rightHex": "8bff558bec83ec088b4508d9ee8b8070020000dd5df8568b750c69f6ec00000003b03c040000578b38f687bc0300001074168b86e000000085c0740c8b088b511c50ffd284c07523837e2c007412dd0500000000dc565cdfe0f6c4057a05ddd8dd465cdc0d00000000eb03dd45f8d986a4000000d8d9dfe0f6c4057b08ddd8d986a4000000d9e8d8d1dfe0f6c4417404ddd9eb02ddd8dc8fac030000dca684000000dc8fb40300005fd84d10dc8684000000dd9e840000005e8be55dc3",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c211c0",
+    "name": "ToggleAutomaticEngineStart",
+    "ghidraName": "FUN_20c211c0",
+    "group": "Engine preparation",
+    "description": "Toggle Automatic Engine Start",
+    "source": {
+      "file": "src/sim1/engine_start.cpp",
+      "symbol": "ToggleAutomaticEngineStart"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "620 original and 321 rebuilt bytes. 74 exact and 0 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/start/turbine-start-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/start/worker-output/disassembly.txt",
+      "symbol": "ToggleAutomaticEngineStart",
+      "buildSymbol": "?ToggleAutomaticEngineStart@sim1@@YAXAAVFlightDynamics@1@IAAVTurbineStartActions@1@@Z",
+      "leftHex": "8bff558bec568bb77002000085f60f8453020000833e000f844a02000083bfb40000000075168b4f648b018b9014010000ffd283f8010f852b02000083be84040000000f85800000008b0e33c0c786940400000000000039815404000076288b8e3c04000083c1088339007407838694040000018b1683c00181c1ec0000003b825404000072e1c786840400000100000083bfb40000000075168b4f648b018b9014010000ffd283f8010f85b7010000d90514f0bb2051b912960000d91c24e89cb7faff5e5dc204008b450883c0ff83f804c78684040000000000000f8785010000ff24852c14c22083bfb40000000075168b4f648b018b9014010000ffd283f8010f855f010000d90514f0bb2051b914960000d91c24e844b7faff5e5dc2040083bfb40000000075168b4f648b018b9014010000ffd283f8010f8527010000d90514f0bb2051b916960000d91c24e80cb7faff5e5dc2040083bfb40000000075168b4f648b018b9014010000ffd283f8010f85ef000000d90514f0bb2051b917960000d91c24e8d4b6faff5e5dc2040083bfb40000000075168b4f648b018b9014010000ffd283f8010f85b7000000d90514f0bb2051b918960000d91c24e89cb6faff5e5dc204008b0633d239905404000076238b863c0400008b0e8b895404000083c008833800740383c20105ec00000083e90175ee8bb6940400003bd6763483bfb40000000075128b4f648b118b8214010000ffd083f801754ad90514f0bb2051b913960000d91c24e82fb6faff5e5dc20400752f83bfb40000000075128b4f648b118b8214010000ffd083f8017514d90514f0bb2051b915960000d91c24e8f9b5faff5e5dc20400",
+      "rightHex": "8bff558bec56578b7d088bb77002000085f60f8425010000833e000f841c01000083bfb40000000075168b4f648b018b9014010000ffd283f8010f85fd00000083be840400000075468b0633d239905404000076238b863c0400008b0e8b895404000083c008833800740383c20105ec00000083e90175ee899694040000c7868404000001000000be12960000eb7b8b450c83f801c7868404000000000000754b8b0633d239905404000076258b863c0400008b0e8b895404000083c0088bff833800740383c20105ec00000083e90175ee8bb6940400003bd67607be13960000eb277558be15960000eb1e83f8027507be14960000eb128d50fd83fa02773d8db01396000085f6743383bfb40000000075128b4f648b018b9014010000ffd283f80175188b4d10dd05000000008b018b500883ec08dd1c245657ffd25f5e5dc3",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c214b0",
+    "name": "UpdateEngineStarterPower",
+    "ghidraName": "FUN_20c214b0",
+    "group": "Engine preparation",
+    "description": "Update Engine Starter Power",
+    "source": {
+      "file": "src/sim1/engine_start.cpp",
+      "symbol": "UpdateEngineStarterPower"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "252 original and 142 rebuilt bytes. 10 exact and 5 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/start/turbine-start-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/start/worker-output/disassembly.txt",
+      "symbol": "UpdateEngineStarterPower",
+      "buildSymbol": "?UpdateEngineStarterPower@sim1@@YAXABVFlightDynamics@1@H@Z",
+      "leftHex": "8bff558bec518b4508568bf18b8e700200008b1185d2570f84d800000083f8010f8ccf0000003b82540400000f8fc30000008bb93c04000069c0ec0000008d840714ffffff85c00f84a8000000d9eed85b04dfe0f6c401750dc703000000005f5e595dc204008b927004000083ea00757e8b450883c0ff83f8037773ff2485ac15c2208bc68bb134050000bf12000000e8ebd8fdff89035f5e595dc204008bc68bb134050000bf13000000e8d0d8fdff89035f5e595dc204008bc68bb134050000bf14000000e8b5d8fdff89035f5e595dc204008bc68bb134050000bf15000000e89ad8fdff89035f5e595dc20400c703010000005f5e595dc20400",
+      "rightHex": "8bff558bec538b5d088b8b70020000578b3985ff74748b550c83fa017c6c3b975404000077648b813c04000085c0745ad9ee568bf269f6ec000000d89c0644ffffff8db40614ffffffdfe0f6c401750cc7462c000000005e5f5b5dc383bf7004000000751d83fa047f188b893405000083c2115253e80000000089462c5e5f5b5dc3c7462c010000005e5f5b5dc3",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2a130",
+    "name": "AdvanceEngineControl",
+    "ghidraName": "FUN_20c2a130",
+    "group": "Engine preparation",
+    "description": "Advance Engine Control",
+    "source": {
+      "file": "src/sim1/engine_start.cpp",
+      "symbol": "AdvanceEngineControl"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": true,
+      "scope": "All 75 native VC8 COFF bytes match.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/start/turbine-start-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/start/worker-output/disassembly.txt",
+      "symbol": "AdvanceEngineControl",
+      "buildSymbol": "?AdvanceEngineControl@sim1@@YGNNNNN@Z",
+      "leftHex": "8bff558becdd4510dd4508d8d1dfe0f6c4057a17dd4518dc4d20dec1d8d1dfe0f6c4057b20ddd85dc22000d8d1dfe0f6c4417511dd4518dc4d20dee9d8d1dfe0f6c44175e0ddd95dc22000",
+      "rightHex": "8bff558becdd4510dd4508d8d1dfe0f6c4057a17dd4518dc4d20dec1d8d1dfe0f6c4057b20ddd85dc22000d8d1dfe0f6c4417511dd4518dc4d20dee9d8d1dfe0f6c44175e0ddd95dc22000",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2d410",
+    "name": "UpdateTurbineAutoStart",
+    "ghidraName": "FUN_20c2d410",
+    "group": "Engine preparation",
+    "description": "Update Turbine Auto Start",
+    "source": {
+      "file": "src/sim1/engine_start.cpp",
+      "symbol": "UpdateTurbineAutoStart"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "576 original and 585 rebuilt bytes. 103 exact and 142 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/start/turbine-start-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/start/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineAutoStart",
+      "buildSymbol": "?UpdateTurbineAutoStart@sim1@@YAXAAVFlightDynamics@1@AAUEngineForceRecord@1@AAUTurbineEngineState@1@INAAVTurbineStartActions@1@@Z",
+      "leftHex": "8bff558bec5356578bf88bb7700200008b8634050000bb010000008998440200008b45083b86b00400000f8509020000837908000f8564010000d9eedd511483bea004000000d9e8756dddd983ec20dd450cdd5c2418dd542410dd5c2408dd411cdd1c24e8b7ccffffdd511cd9e8dce9d9c9d9e1dc1d8835bc20dfe0f6c4057b26dd056017bb20dc9eb4040000dfe0f6c4057b13dd86b4040000dc450cdd9eb4040000d9eeeb47d9ee899ea0040000dd96b4040000eb3783be24080000007508899e24080000eb24837a70007505895a70eb193999b400000074088999b4000000eb09837924007503895924d9c9837a78007505895a78eb25d9c98999b4000000dd511cd9051421bc20d95930dd450cdc86c4040000dd9ec4040000d9c9dd96a8040000dd055040bb20dc9ec4040000dfe0f6c4057a07d9c9dd5914eb02ddd9dd05083dbc20dc9ec4040000dfe0f6c4050f8ae0000000d9eed95930dd9ec404000083b9d000000000750e6a03e83e3cffff5f5e5b5dc20c0083be8804000000740e6a04e8273cffff5f5e5b5dc20c006a05e8193cffff5f5e5b5dc20c00dd0548fcbb20dc9ea8040000dfe0f6c4417516dd450cdc86a8040000dd9ea80400005f5e5b5dc20c00d9ee6a00d9593053d9eec786a004000000000000dd96a8040000688d040100dd96c404000057dd9eb404000089998c0000008b0f8b5120ffd28b86b00400008b0e83c0013b8154040000730d8986b00400005f5e5b5dc20c0053c786b004000000000000e8803bffff5f5e5b5dc20c00ddd85f5e5b5dc20c00",
+      "rightHex": "8bff558bec8b55088b4d1453568bb2700200008b8634050000bb010000008998440200003b8eb00400000f85150200008b4d0c83790800570f849c000000dd0500000000dc9ea8040000dfe0f6c4417514dd45185fdc86a8040000dd9ea80400005e5b5dc3d9ee8b7d20d959306a00d9ee53dd96a8040000c786a004000000000000dd96c4040000688d040100dd9eb40400005289998c0000008b078b50048bcfffd2019eb00400008b86b00400008b0e3b81540400000f82870100008b5508575352c786b004000000000000e80000000083c40c5f5e5b5dc3d9ee8b7d10dd511483bea004000000d9e8756dddd983ec20dd4518dd5c2418dd542410dd5c2408dd411cdd1c24e800000000dd511cd9e8dce9d9c9d9e1dc1d00000000dfe0f6c4057b26dd0500000000dc9eb4040000dfe0f6c4057b13dd86b4040000dc4518dd9eb4040000d9eeeb47d9ee899ea0040000dd96b4040000eb3783be24080000007508899e24080000eb24837f70007505895f70eb193999b400000074088999b4000000eb09837924007503895924d9c9837f78007505895f78eb25d9c98999b4000000dd511cd90500000000d95930dd86c4040000dc4518dd9ec4040000d9c9dd96a8040000dd0500000000dc9ec4040000dfe0f6c4057a07d9c9dd5914eb02ddd9dd0500000000dc9ec4040000dfe0f6c4057a4cd9eed95930dd9ec404000083b9d00000000075188b452050be030000005652e80000000083c40c5f5e5b5dc38bb6880400008b4520f7de1bf65083c6055652e80000000083c40c5f5e5b5dc3ddd85f5e5b5dc3",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20bf77c0",
+    "name": "UpdateTurbineFuelDelivery",
+    "ghidraName": "FUN_20bf77c0",
+    "group": "Engine preparation",
+    "description": "Update Turbine Fuel Delivery",
+    "source": {
+      "file": "src/sim1/engine_fuel.cpp",
+      "symbol": "UpdateTurbineFuelDelivery"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "212 original and 132 rebuilt bytes. 5 exact and 12 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/fuel/turbine-fuel-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/fuel/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineFuelDelivery",
+      "buildSymbol": "?UpdateTurbineFuelDelivery@sim1@@YAXABVFlightDynamics@1@I@Z",
+      "leftHex": "8bff558bec83ec088b55085356578bba700200008b0f85c98bf0897dfc8d4601750433dbeb2883f8017d0433dbeb1f3b81540400007e0433dbeb138bbf3c04000069c0ec0000008d9c0714ffffff0fb6816c04000083f8058dbbb40000007726ff24859478bf2083b9941900000075168bc68bcae837090000eb08568bc2e8dd0700008b55088b82d8020000837814007409c7471c01000000eb07c7471c000000008b4dfc69f6ec00000003b13c0400008bcf568bc2e86501000033c0394324750989471c8947048947085f5e5b8be55dc20400",
+      "rightHex": "8bff558bec8b450c538b5d08568bf069f6ec000000578bbb700200008b178a8a6c04000003b73c04000080f901741380f905740e80f903751083ba941900000075078bd7e8000000008b83d802000033c93948148bc70f95c1898ed00000008bcee80000000033c039462475128986d00000008986b80000008986bc0000005f5e5b5dc3",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20bf79e0",
+    "name": "SelectEngineFuelTanks",
+    "ghidraName": "FUN_20bf79e0",
+    "group": "Engine preparation",
+    "description": "Select Engine Fuel Tanks",
+    "source": {
+      "file": "src/sim1/engine_fuel.cpp",
+      "symbol": "SelectEngineFuelTanks"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "1500 original and 1289 rebuilt bytes. 198 exact and 0 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/fuel/turbine-fuel-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/fuel/worker-output/disassembly.txt",
+      "symbol": "SelectEngineFuelTanks",
+      "rebuilt": [
+        ["00000000","8b ff","mov edi,edi"],
+        ["00000002","53","push ebx"],
+        ["00000003","56","push esi"],
+        ["00000004","57","push edi"],
+        ["00000005","8b f8","mov edi,eax"],
+        ["00000007","8b 81 b4 00 00 00","mov eax,dword ptr [ecx+0B4h]"],
+        ["0000000d","33 db","xor ebx,ebx"],
+        ["0000000f","83 f8 14","cmp eax,14h"],
+        ["00000012","8d 97 cc 02 00 00","lea edx,[edi+2CCh]"],
+        ["00000018","89 99 b8 00 00 00","mov dword ptr [ecx+0B8h],ebx"],
+        ["0000001e","89 99 bc 00 00 00","mov dword ptr [ecx+0BCh],ebx"],
+        ["00000024","0f 87 1a 03 00 00","ja $LN7"],
+        ["0000002a","0f b6 b0 00 00 00 00","movzx esi,byte ptr $LN139[eax]"],
+        ["00000031","ff 24 b5 00 00 00 00","jmp dword ptr $LN171[esi*4]"],
+        ["00000038","5f","pop edi"],
+        ["00000039","5e","pop esi"],
+        ["0000003a","89 99 d0 00 00 00","mov dword ptr [ecx+0D0h],ebx"],
+        ["00000040","5b","pop ebx"],
+        ["00000041","c3","ret"],
+        ["00000042","8d 78 fe","lea edi,[eax-2]"],
+        ["00000045","8d 77 04","lea esi,[edi+4]"],
+        ["00000048","c1 e6 05","shl esi,5"],
+        ["0000004b","d9 44 16 04","fld dword ptr [esi+edx+4]"],
+        ["0000004f","03 f2","add esi,edx"],
+        ["00000051","d9 46 08","fld dword ptr [esi+8]"],
+        ["00000054","de d9","fcompp"],
+        ["00000056","df e0","fnstsw ax"],
+        ["00000058","f6 c4 05","test ah,5"],
+        ["0000005b","0f 8b c5 02 00 00","jnp 00000326"],
+        ["00000061","8d 77 02","lea esi,[edi+2]"],
+        ["00000064","c1 e6 05","shl esi,5"],
+        ["00000067","d9 44 16 04","fld dword ptr [esi+edx+4]"],
+        ["0000006b","03 f2","add esi,edx"],
+        ["0000006d","d9 46 08","fld dword ptr [esi+8]"],
+        ["00000070","de d9","fcompp"],
+        ["00000072","df e0","fnstsw ax"],
+        ["00000074","f6 c4 05","test ah,5"],
+        ["00000077","7a 1e","jp 00000097"],
+        ["00000079","8b 56 10","mov edx,dword ptr [esi+10h]"],
+        ["0000007c","be 01 00 00 00","mov esi,1"],
+        ["00000081","5f","pop edi"],
+        ["00000082","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["00000088","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["0000008e","5e","pop esi"],
+        ["0000008f","89 91 b8 00 00 00","mov dword ptr [ecx+0B8h],edx"],
+        ["00000095","5b","pop ebx"],
+        ["00000096","c3","ret"],
+        ["00000097","c1 e7 05","shl edi,5"],
+        ["0000009a","d9 44 17 04","fld dword ptr [edi+edx+4]"],
+        ["0000009e","03 fa","add edi,edx"],
+        ["000000a0","d9 47 08","fld dword ptr [edi+8]"],
+        ["000000a3","de d9","fcompp"],
+        ["000000a5","df e0","fnstsw ax"],
+        ["000000a7","f6 c4 05","test ah,5"],
+        ["000000aa","0f 8a 0f 04 00 00","jp 000004BF"],
+        ["000000b0","8b 47 10","mov eax,dword ptr [edi+10h]"],
+        ["000000b3","e9 71 02 00 00","jmp 00000329"],
+        ["000000b8","8b 34 85 f0 ff ff ff","mov esi,dword ptr ?index@?4??SelectEngineFuelTanks@sim1@@YAXABUIntegrationHistory@2@AAUEngineForceRecord@2@@Z@4QBIB[eax*4+0FFFFFFF0h]"],
+        ["000000bf","c1 e6 05","shl esi,5"],
+        ["000000c2","d9 44 16 04","fld dword ptr [esi+edx+4]"],
+        ["000000c6","03 f2","add esi,edx"],
+        ["000000c8","d9 46 08","fld dword ptr [esi+8]"],
+        ["000000cb","de d9","fcompp"],
+        ["000000cd","df e0","fnstsw ax"],
+        ["000000cf","f6 c4 05","test ah,5"],
+        ["000000d2","0f 8a e7 03 00 00","jp 000004BF"],
+        ["000000d8","8b 56 10","mov edx,dword ptr [esi+10h]"],
+        ["000000db","be 01 00 00 00","mov esi,1"],
+        ["000000e0","5f","pop edi"],
+        ["000000e1","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["000000e7","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["000000ed","5e","pop esi"],
+        ["000000ee","89 91 b8 00 00 00","mov dword ptr [ecx+0B8h],edx"],
+        ["000000f4","5b","pop ebx"],
+        ["000000f5","c3","ret"],
+        ["000000f6","d9 87 f0 03 00 00","fld dword ptr [edi+3F0h]"],
+        ["000000fc","d9 87 f4 03 00 00","fld dword ptr [edi+3F4h]"],
+        ["00000102","de d9","fcompp"],
+        ["00000104","df e0","fnstsw ax"],
+        ["00000106","f6 c4 05","test ah,5"],
+        ["00000109","0f 8a b0 03 00 00","jp 000004BF"],
+        ["0000010f","8b 87 fc 03 00 00","mov eax,dword ptr [edi+3FCh]"],
+        ["00000115","e9 0f 02 00 00","jmp 00000329"],
+        ["0000011a","d9 87 10 04 00 00","fld dword ptr [edi+410h]"],
+        ["00000120","d9 87 14 04 00 00","fld dword ptr [edi+414h]"],
+        ["00000126","de d9","fcompp"],
+        ["00000128","df e0","fnstsw ax"],
+        ["0000012a","f6 c4 05","test ah,5"],
+        ["0000012d","0f 8a 8c 03 00 00","jp 000004BF"],
+        ["00000133","8b 97 1c 04 00 00","mov edx,dword ptr [edi+41Ch]"],
+        ["00000139","be 01 00 00 00","mov esi,1"],
+        ["0000013e","5f","pop edi"],
+        ["0000013f","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["00000145","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["0000014b","5e","pop esi"],
+        ["0000014c","89 91 b8 00 00 00","mov dword ptr [ecx+0B8h],edx"],
+        ["00000152","5b","pop ebx"],
+        ["00000153","c3","ret"],
+        ["00000154","d9 82 a4 00 00 00","fld dword ptr [edx+0A4h]"],
+        ["0000015a","d9 82 a8 00 00 00","fld dword ptr [edx+0A8h]"],
+        ["00000160","de d9","fcompp"],
+        ["00000162","df e0","fnstsw ax"],
+        ["00000164","f6 c4 05","test ah,5"],
+        ["00000167","0f 8a 52 03 00 00","jp 000004BF"],
+        ["0000016d","8b 82 b0 00 00 00","mov eax,dword ptr [edx+0B0h]"],
+        ["00000173","e9 b1 01 00 00","jmp 00000329"],
+        ["00000178","d9 82 84 00 00 00","fld dword ptr [edx+84h]"],
+        ["0000017e","d9 82 88 00 00 00","fld dword ptr [edx+88h]"],
+        ["00000184","de d9","fcompp"],
+        ["00000186","df e0","fnstsw ax"],
+        ["00000188","f6 c4 05","test ah,5"],
+        ["0000018b","0f 8a 2e 03 00 00","jp 000004BF"],
+        ["00000191","8b 92 90 00 00 00","mov edx,dword ptr [edx+90h]"],
+        ["00000197","be 01 00 00 00","mov esi,1"],
+        ["0000019c","5f","pop edi"],
+        ["0000019d","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["000001a3","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["000001a9","5e","pop esi"],
+        ["000001aa","89 91 b8 00 00 00","mov dword ptr [ecx+0B8h],edx"],
+        ["000001b0","5b","pop ebx"],
+        ["000001b1","c3","ret"],
+        ["000001b2","d9 82 84 00 00 00","fld dword ptr [edx+84h]"],
+        ["000001b8","be 01 00 00 00","mov esi,1"],
+        ["000001bd","d9 82 88 00 00 00","fld dword ptr [edx+88h]"],
+        ["000001c3","de d9","fcompp"],
+        ["000001c5","df e0","fnstsw ax"],
+        ["000001c7","f6 c4 05","test ah,5"],
+        ["000001ca","7a 08","jp 000001D4"],
+        ["000001cc","8b 82 90 00 00 00","mov eax,dword ptr [edx+90h]"],
+        ["000001d2","eb 26","jmp 000001FA"],
+        ["000001d4","d9 42 44","fld dword ptr [edx+44h]"],
+        ["000001d7","d9 42 48","fld dword ptr [edx+48h]"],
+        ["000001da","de d9","fcompp"],
+        ["000001dc","df e0","fnstsw ax"],
+        ["000001de","f6 c4 05","test ah,5"],
+        ["000001e1","7a 05","jp 000001E8"],
+        ["000001e3","8b 42 50","mov eax,dword ptr [edx+50h]"],
+        ["000001e6","eb 12","jmp 000001FA"],
+        ["000001e8","d9 42 04","fld dword ptr [edx+4]"],
+        ["000001eb","d9 42 08","fld dword ptr [edx+8]"],
+        ["000001ee","de d9","fcompp"],
+        ["000001f0","df e0","fnstsw ax"],
+        ["000001f2","f6 c4 05","test ah,5"],
+        ["000001f5","7a 15","jp 0000020C"],
+        ["000001f7","8b 42 10","mov eax,dword ptr [edx+10h]"],
+        ["000001fa","89 81 b8 00 00 00","mov dword ptr [ecx+0B8h],eax"],
+        ["00000200","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["00000206","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["0000020c","d9 82 a4 00 00 00","fld dword ptr [edx+0A4h]"],
+        ["00000212","d9 82 a8 00 00 00","fld dword ptr [edx+0A8h]"],
+        ["00000218","de d9","fcompp"],
+        ["0000021a","df e0","fnstsw ax"],
+        ["0000021c","f6 c4 05","test ah,5"],
+        ["0000021f","7a 0b","jp 0000022C"],
+        ["00000221","8b 92 b0 00 00 00","mov edx,dword ptr [edx+0B0h]"],
+        ["00000227","e9 81 02 00 00","jmp 000004AD"],
+        ["0000022c","d9 42 64","fld dword ptr [edx+64h]"],
+        ["0000022f","d9 42 68","fld dword ptr [edx+68h]"],
+        ["00000232","de d9","fcompp"],
+        ["00000234","df e0","fnstsw ax"],
+        ["00000236","f6 c4 05","test ah,5"],
+        ["00000239","0f 8a 5c 02 00 00","jp 0000049B"],
+        ["0000023f","8b 42 70","mov eax,dword ptr [edx+70h]"],
+        ["00000242","09 81 b8 00 00 00","or dword ptr [ecx+0B8h],eax"],
+        ["00000248","01 b1 bc 00 00 00","add dword ptr [ecx+0BCh],esi"],
+        ["0000024e","5f","pop edi"],
+        ["0000024f","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["00000255","5e","pop esi"],
+        ["00000256","5b","pop ebx"],
+        ["00000257","c3","ret"],
+        ["00000258","d9 87 f0 03 00 00","fld dword ptr [edi+3F0h]"],
+        ["0000025e","be 01 00 00 00","mov esi,1"],
+        ["00000263","d9 87 f4 03 00 00","fld dword ptr [edi+3F4h]"],
+        ["00000269","de d9","fcompp"],
+        ["0000026b","df e0","fnstsw ax"],
+        ["0000026d","f6 c4 05","test ah,5"],
+        ["00000270","7a 18","jp 0000028A"],
+        ["00000272","8b 87 fc 03 00 00","mov eax,dword ptr [edi+3FCh]"],
+        ["00000278","89 81 b8 00 00 00","mov dword ptr [ecx+0B8h],eax"],
+        ["0000027e","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["00000284","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["0000028a","d9 87 10 04 00 00","fld dword ptr [edi+410h]"],
+        ["00000290","d9 87 14 04 00 00","fld dword ptr [edi+414h]"],
+        ["00000296","de d9","fcompp"],
+        ["00000298","df e0","fnstsw ax"],
+        ["0000029a","f6 c4 05","test ah,5"],
+        ["0000029d","0f 8a 1c 02 00 00","jp 000004BF"],
+        ["000002a3","8b 97 1c 04 00 00","mov edx,dword ptr [edi+41Ch]"],
+        ["000002a9","e9 ff 01 00 00","jmp 000004AD"],
+        ["000002ae","be 01 00 00 00","mov esi,1"],
+        ["000002b3","39 77 54","cmp dword ptr [edi+54h],esi"],
+        ["000002b6","0f 85 7c fd ff ff","jne $LN23"],
+        ["000002bc","d9 ee","fldz"],
+        ["000002be","8b 39","mov edi,dword ptr [ecx]"],
+        ["000002c0","dc 17","fcom qword ptr [edi]"],
+        ["000002c2","df e0","fnstsw ax"],
+        ["000002c4","f6 c4 05","test ah,5"],
+        ["000002c7","7a 1b","jp 000002E4"],
+        ["000002c9","8b 42 10","mov eax,dword ptr [edx+10h]"],
+        ["000002cc","dd d8","fstp st(0)"],
+        ["000002ce","5f","pop edi"],
+        ["000002cf","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["000002d5","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["000002db","5e","pop esi"],
+        ["000002dc","89 81 b8 00 00 00","mov dword ptr [ecx+0B8h],eax"],
+        ["000002e2","5b","pop ebx"],
+        ["000002e3","c3","ret"],
+        ["000002e4","dc 1f","fcomp qword ptr [edi]"],
+        ["000002e6","df e0","fnstsw ax"],
+        ["000002e8","f6 c4 44","test ah,44h"],
+        ["000002eb","0f 8a ce 01 00 00","jp 000004BF"],
+        ["000002f1","8b 52 30","mov edx,dword ptr [edx+30h]"],
+        ["000002f4","5f","pop edi"],
+        ["000002f5","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["000002fb","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["00000301","5e","pop esi"],
+        ["00000302","89 91 b8 00 00 00","mov dword ptr [ecx+0B8h],edx"],
+        ["00000308","5b","pop ebx"],
+        ["00000309","c3","ret"],
+        ["0000030a","8d 70 ed","lea esi,[eax-13h]"],
+        ["0000030d","c1 e6 05","shl esi,5"],
+        ["00000310","d9 44 16 04","fld dword ptr [esi+edx+4]"],
+        ["00000314","03 f2","add esi,edx"],
+        ["00000316","d9 46 08","fld dword ptr [esi+8]"],
+        ["00000319","de d9","fcompp"],
+        ["0000031b","df e0","fnstsw ax"],
+        ["0000031d","f6 c4 05","test ah,5"],
+        ["00000320","0f 8a 99 01 00 00","jp 000004BF"],
+        ["00000326","8b 46 10","mov eax,dword ptr [esi+10h]"],
+        ["00000329","be 01 00 00 00","mov esi,1"],
+        ["0000032e","5f","pop edi"],
+        ["0000032f","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["00000335","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["0000033b","5e","pop esi"],
+        ["0000033c","89 81 b8 00 00 00","mov dword ptr [ecx+0B8h],eax"],
+        ["00000342","5b","pop ebx"],
+        ["00000343","c3","ret"],
+        ["00000344","d9 87 f0 03 00 00","fld dword ptr [edi+3F0h]"],
+        ["0000034a","be 01 00 00 00","mov esi,1"],
+        ["0000034f","d9 87 f4 03 00 00","fld dword ptr [edi+3F4h]"],
+        ["00000355","de d9","fcompp"],
+        ["00000357","df e0","fnstsw ax"],
+        ["00000359","f6 c4 05","test ah,5"],
+        ["0000035c","7a 18","jp 00000376"],
+        ["0000035e","8b 87 fc 03 00 00","mov eax,dword ptr [edi+3FCh]"],
+        ["00000364","89 81 b8 00 00 00","mov dword ptr [ecx+0B8h],eax"],
+        ["0000036a","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["00000370","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["00000376","d9 87 10 04 00 00","fld dword ptr [edi+410h]"],
+        ["0000037c","d9 87 14 04 00 00","fld dword ptr [edi+414h]"],
+        ["00000382","de d9","fcompp"],
+        ["00000384","df e0","fnstsw ax"],
+        ["00000386","f6 c4 05","test ah,5"],
+        ["00000389","7a 18","jp 000003A3"],
+        ["0000038b","8b 87 1c 04 00 00","mov eax,dword ptr [edi+41Ch]"],
+        ["00000391","09 81 b8 00 00 00","or dword ptr [ecx+0B8h],eax"],
+        ["00000397","01 b1 bc 00 00 00","add dword ptr [ecx+0BCh],esi"],
+        ["0000039d","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["000003a3","39 99 bc 00 00 00","cmp dword ptr [ecx+0BCh],ebx"],
+        ["000003a9","0f 85 10 01 00 00","jne 000004BF"],
+        ["000003af","d9 82 04 01 00 00","fld dword ptr [edx+104h]"],
+        ["000003b5","d9 82 08 01 00 00","fld dword ptr [edx+108h]"],
+        ["000003bb","de d9","fcompp"],
+        ["000003bd","df e0","fnstsw ax"],
+        ["000003bf","f6 c4 05","test ah,5"],
+        ["000003c2","7a 08","jp 000003CC"],
+        ["000003c4","8b 82 10 01 00 00","mov eax,dword ptr [edx+110h]"],
+        ["000003ca","eb 38","jmp 00000404"],
+        ["000003cc","d9 82 e4 00 00 00","fld dword ptr [edx+0E4h]"],
+        ["000003d2","d9 82 e8 00 00 00","fld dword ptr [edx+0E8h]"],
+        ["000003d8","de d9","fcompp"],
+        ["000003da","df e0","fnstsw ax"],
+        ["000003dc","f6 c4 05","test ah,5"],
+        ["000003df","7a 08","jp 000003E9"],
+        ["000003e1","8b 82 f0 00 00 00","mov eax,dword ptr [edx+0F0h]"],
+        ["000003e7","eb 1b","jmp 00000404"],
+        ["000003e9","d9 82 c4 00 00 00","fld dword ptr [edx+0C4h]"],
+        ["000003ef","d9 82 c8 00 00 00","fld dword ptr [edx+0C8h]"],
+        ["000003f5","de d9","fcompp"],
+        ["000003f7","df e0","fnstsw ax"],
+        ["000003f9","f6 c4 05","test ah,5"],
+        ["000003fc","7a 18","jp 00000416"],
+        ["000003fe","8b 82 d0 00 00 00","mov eax,dword ptr [edx+0D0h]"],
+        ["00000404","09 81 b8 00 00 00","or dword ptr [ecx+0B8h],eax"],
+        ["0000040a","89 b1 bc 00 00 00","mov dword ptr [ecx+0BCh],esi"],
+        ["00000410","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["00000416","83 7f 54 03","cmp dword ptr [edi+54h],3"],
+        ["0000041a","d9 ee","fldz"],
+        ["0000041c","75 0b","jne 00000429"],
+        ["0000041e","8b 01","mov eax,dword ptr [ecx]"],
+        ["00000420","dc 10","fcom qword ptr [eax]"],
+        ["00000422","df e0","fnstsw ax"],
+        ["00000424","f6 c4 01","test ah,1"],
+        ["00000427","75 55","jne 0000047E"],
+        ["00000429","d9 82 84 00 00 00","fld dword ptr [edx+84h]"],
+        ["0000042f","d9 82 88 00 00 00","fld dword ptr [edx+88h]"],
+        ["00000435","de d9","fcompp"],
+        ["00000437","df e0","fnstsw ax"],
+        ["00000439","f6 c4 05","test ah,5"],
+        ["0000043c","7a 08","jp 00000446"],
+        ["0000043e","8b 82 90 00 00 00","mov eax,dword ptr [edx+90h]"],
+        ["00000444","eb 26","jmp 0000046C"],
+        ["00000446","d9 42 44","fld dword ptr [edx+44h]"],
+        ["00000449","d9 42 48","fld dword ptr [edx+48h]"],
+        ["0000044c","de d9","fcompp"],
+        ["0000044e","df e0","fnstsw ax"],
+        ["00000450","f6 c4 05","test ah,5"],
+        ["00000453","7a 05","jp 0000045A"],
+        ["00000455","8b 42 50","mov eax,dword ptr [edx+50h]"],
+        ["00000458","eb 12","jmp 0000046C"],
+        ["0000045a","d9 42 04","fld dword ptr [edx+4]"],
+        ["0000045d","d9 42 08","fld dword ptr [edx+8]"],
+        ["00000460","de d9","fcompp"],
+        ["00000462","df e0","fnstsw ax"],
+        ["00000464","f6 c4 05","test ah,5"],
+        ["00000467","7a 15","jp 0000047E"],
+        ["00000469","8b 42 10","mov eax,dword ptr [edx+10h]"],
+        ["0000046c","09 81 b8 00 00 00","or dword ptr [ecx+0B8h],eax"],
+        ["00000472","01 b1 bc 00 00 00","add dword ptr [ecx+0BCh],esi"],
+        ["00000478","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["0000047e","83 7f 54 02","cmp dword ptr [edi+54h],2"],
+        ["00000482","75 10","jne 00000494"],
+        ["00000484","8b 01","mov eax,dword ptr [ecx]"],
+        ["00000486","dc 18","fcomp qword ptr [eax]"],
+        ["00000488","df e0","fnstsw ax"],
+        ["0000048a","f6 c4 41","test ah,41h"],
+        ["0000048d","7a 30","jp 000004BF"],
+        ["0000048f","e9 78 fd ff ff","jmp 0000020C"],
+        ["00000494","dd d8","fstp st(0)"],
+        ["00000496","e9 71 fd ff ff","jmp 0000020C"],
+        ["0000049b","d9 42 24","fld dword ptr [edx+24h]"],
+        ["0000049e","d9 42 28","fld dword ptr [edx+28h]"],
+        ["000004a1","de d9","fcompp"],
+        ["000004a3","df e0","fnstsw ax"],
+        ["000004a5","f6 c4 05","test ah,5"],
+        ["000004a8","7a 15","jp 000004BF"],
+        ["000004aa","8b 52 30","mov edx,dword ptr [edx+30h]"],
+        ["000004ad","09 91 b8 00 00 00","or dword ptr [ecx+0B8h],edx"],
+        ["000004b3","01 b1 bc 00 00 00","add dword ptr [ecx+0BCh],esi"],
+        ["000004b9","89 b1 d0 00 00 00","mov dword ptr [ecx+0D0h],esi"],
+        ["000004bf","5f","pop edi"],
+        ["000004c0","5e","pop esi"],
+        ["000004c1","5b","pop ebx"],
+        ["000004c2","c3","ret"],
+        ["000004c3","90","nop"],
+        ["000004c4","00 00","add byte ptr [eax],al"],
+        ["000004c6","00 00","add byte ptr [eax],al"],
+        ["000004c8","00 00","add byte ptr [eax],al"],
+        ["000004ca","00 00","add byte ptr [eax],al"],
+        ["000004cc","00 00","add byte ptr [eax],al"],
+        ["000004ce","00 00","add byte ptr [eax],al"],
+        ["000004d0","00 00","add byte ptr [eax],al"],
+        ["000004d2","00 00","add byte ptr [eax],al"],
+        ["000004d4","00 00","add byte ptr [eax],al"],
+        ["000004d6","00 00","add byte ptr [eax],al"],
+        ["000004d8","00 00","add byte ptr [eax],al"],
+        ["000004da","00 00","add byte ptr [eax],al"],
+        ["000004dc","00 00","add byte ptr [eax],al"],
+        ["000004de","00 00","add byte ptr [eax],al"],
+        ["000004e0","00 00","add byte ptr [eax],al"],
+        ["000004e2","00 00","add byte ptr [eax],al"],
+        ["000004e4","00 00","add byte ptr [eax],al"],
+        ["000004e6","00 00","add byte ptr [eax],al"],
+        ["000004e8","00 00","add byte ptr [eax],al"],
+        ["000004ea","00 00","add byte ptr [eax],al"],
+        ["000004ec","00 00","add byte ptr [eax],al"],
+        ["000004ee","00 00","add byte ptr [eax],al"],
+        ["000004f0","00 00","add byte ptr [eax],al"],
+        ["000004f2","00 00","add byte ptr [eax],al"],
+        ["000004f4","00 0b","add byte ptr [ebx],cl"],
+        ["000004f6","01 01","add dword ptr [ecx],eax"],
+        ["000004f8","02 02","add al,byte ptr [edx]"],
+        ["000004fa","02 02","add al,byte ptr [edx]"],
+        ["000004fc","02 03","add al,byte ptr [ebx]"],
+        ["000004fe","04 05","add al,5"],
+        ["00000500","06","push es"],
+        ["00000501","0b 0b","or ecx,dword ptr [ebx]"],
+        ["00000503","0b 07","or eax,dword ptr [edi]"],
+        ["00000505","08 09","or byte ptr [ecx],cl"],
+        ["00000507","0a 0a","or cl,byte ptr [edx]"]
+      ],
+      "buildSymbol": "?SelectEngineFuelTanks@sim1@@YAXABUIntegrationHistory@1@AAUEngineForceRecord@1@@Z",
+      "leftHex": "8bff558bec8b90700200008b015333db83f81456578959048959080f8750040000ff2485bc7fbf205f5e89590489591c5b5dc20400d98250030000d98254030000ded9dfe0f6c4050f8b62010000d98210030000d98214030000ded9dfe0f6c4057a1b8b821c030000be010000005f89710889711c5e8941045b5dc20400d982d0020000d982d4020000ded9dfe0f6c4050f8a3e0500008b92dc020000be010000005f89710889711c5e8951045b5dc20400d98270030000d98274030000ded9dfe0f6c4050f8b19010000d98230030000d98234030000ded9dfe0f6c4057a1b8b923c030000be010000005f89710889711c5e8951045b5dc20400d982f0020000d982f4020000ded9dfe0f6c4050f8ac10400008b82fc020000be010000005f89710889711c5e8941045b5dc20400d98210030000d98214030000ded9dfe0f6c4050f8a8d0400008b921c030000be010000005f89710889711c5e8951045b5dc20400d98230030000d98234030000ded9dfe0f6c4050f8a590400008b823c030000be010000005f89710889711c5e8941045b5dc20400d98250030000d98254030000ded9dfe0f6c4050f8a250400008b925c030000be010000005f89710889711c5e8951045b5dc20400d98270030000d98274030000ded9dfe0f6c4050f8af10300008b827c030000be010000005f89710889711c5e8941045b5dc20400d98290030000d98294030000ded9dfe0f6c4050f8abd0300008b929c030000be010000005f89710889711c5e8951045b5dc20400d982b0030000d982b4030000ded9dfe0f6c4050f8a890300008b82bc030000be010000005f89710889711c5e8941045b5dc20400d982d0030000d982d4030000ded9dfe0f6c4050f8a550300008b92dc030000be010000005f89710889711c5e8951045b5dc20400d982f0030000d982f4030000ded9dfe0f6c4050f8a210300008b82fc030000be010000005f89710889711c5e8941045b5dc20400d98210040000d98214040000ded9dfe0f6c4050f8aed0200008b921c040000be010000005f89710889711c5e8951045b5dc20400d982f0030000be01000000d982f4030000ded9dfe0f6c4057a0f8b82fc03000089410489710889711cd98210040000d98214040000ded9dfe0f6c4050f8a900200008b921c0400000951040171085f89711c5e5b5dc20400d98250030000be01000000d98254030000ded9dfe0f6c4057a088b825c030000eb38d98210030000d98214030000ded9dfe0f6c4057a088b821c030000eb1bd982d0020000d982d4020000ded9dfe0f6c4057a0f8b82dc02000089410489710889711cd98270030000d98274030000ded9dfe0f6c4057a168b927c0300000951040171085f89711c5e5b5dc20400d98230030000d98234030000ded9dfe0f6c4050f8aaf0100008b823c0300000941040171085f89711c5e5b5dc20400be010000003972540f8502fcffff8b4508d9ee8b38dc17dfe0f6c4057a188b92dc020000ddd85f89710889711c5e8951045b5dc20400dc1fdfe0f6c4410f857a0100008b82fc0200005f89710889711c5e8941045b5dc20400d982f003000033ffd982f4030000be01000000ded9dfe0f6c4057a118b82fc03000089410489710889711c8bfed98210040000d98214040000ded9dfe0f6c4050f8b8efeffff3bfb0f8516010000d982d0030000d982d4030000ded9dfe0f6c4057a088b82dc030000eb38d982b0030000d982b4030000ded9dfe0f6c4057a088b82bc030000eb1bd98290030000d98294030000ded9dfe0f6c4057a0f8b829c03000009410401710889711c837a5403d9ee750e8b45088b00dc10dfe0f6c401755ed98250030000d98254030000ded9dfe0f6c4057a088b825c030000eb38d98210030000d98214030000ded9dfe0f6c4057a088b821c030000eb1bd982d0020000d982d4020000ded9dfe0f6c4057a0f8b82dc02000009410401710889711c837a540275138b45088b00dc18dfe0f6c4417a30e914feffffddd8e90dfeffffd982f0020000d982f4020000ded9dfe0f6c4057a0f8b92fc02000009510401710889711c5f5e5b5dc20400",
+      "rightHex": "8bff5356578bf88b81b400000033db83f8148d97cc0200008999b80000008999bc0000000f871a0300000fb6b000000000ff24b5000000005f5e8999d00000005bc38d78fe8d7704c1e605d944160403f2d94608ded9dfe0f6c4050f8bc50200008d7702c1e605d944160403f2d94608ded9dfe0f6c4057a1e8b5610be010000005f89b1bc00000089b1d00000005e8991b80000005bc3c1e705d944170403fad94708ded9dfe0f6c4050f8a0f0400008b4710e9710200008b3485f0ffffffc1e605d944160403f2d94608ded9dfe0f6c4050f8ae70300008b5610be010000005f89b1bc00000089b1d00000005e8991b80000005bc3d987f0030000d987f4030000ded9dfe0f6c4050f8ab00300008b87fc030000e90f020000d98710040000d98714040000ded9dfe0f6c4050f8a8c0300008b971c040000be010000005f89b1bc00000089b1d00000005e8991b80000005bc3d982a4000000d982a8000000ded9dfe0f6c4050f8a520300008b82b0000000e9b1010000d98284000000d98288000000ded9dfe0f6c4050f8a2e0300008b9290000000be010000005f89b1bc00000089b1d00000005e8991b80000005bc3d98284000000be01000000d98288000000ded9dfe0f6c4057a088b8290000000eb26d94244d94248ded9dfe0f6c4057a058b4250eb12d94204d94208ded9dfe0f6c4057a158b42108981b800000089b1bc00000089b1d0000000d982a4000000d982a8000000ded9dfe0f6c4057a0b8b92b0000000e981020000d94264d94268ded9dfe0f6c4050f8a5c0200008b42700981b800000001b1bc0000005f89b1d00000005e5bc3d987f0030000be01000000d987f4030000ded9dfe0f6c4057a188b87fc0300008981b800000089b1bc00000089b1d0000000d98710040000d98714040000ded9dfe0f6c4050f8a1c0200008b971c040000e9ff010000be010000003977540f857cfdffffd9ee8b39dc17dfe0f6c4057a1b8b4210ddd85f89b1bc00000089b1d00000005e8981b80000005bc3dc1fdfe0f6c4440f8ace0100008b52305f89b1bc00000089b1d00000005e8991b80000005bc38d70edc1e605d944160403f2d94608ded9dfe0f6c4050f8a990100008b4610be010000005f89b1bc00000089b1d00000005e8981b80000005bc3d987f0030000be01000000d987f4030000ded9dfe0f6c4057a188b87fc0300008981b800000089b1bc00000089b1d0000000d98710040000d98714040000ded9dfe0f6c4057a188b871c0400000981b800000001b1bc00000089b1d00000003999bc0000000f8510010000d98204010000d98208010000ded9dfe0f6c4057a088b8210010000eb38d982e4000000d982e8000000ded9dfe0f6c4057a088b82f0000000eb1bd982c4000000d982c8000000ded9dfe0f6c4057a188b82d00000000981b800000089b1bc00000089b1d0000000837f5403d9ee750b8b01dc10dfe0f6c4017555d98284000000d98288000000ded9dfe0f6c4057a088b8290000000eb26d94244d94248ded9dfe0f6c4057a058b4250eb12d94204d94208ded9dfe0f6c4057a158b42100981b800000001b1bc00000089b1d0000000837f540275108b01dc18dfe0f6c4417a30e978fdffffddd8e971fdffffd94224d94228ded9dfe0f6c4057a158b52300991b800000001b1bc00000089b1d00000005f5e5bc390000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000b01010202020202030405060b0b0b0708090a0a",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20bf8170",
+    "name": "CalculateTurbineFuelFlow",
+    "ghidraName": "FUN_20bf8170",
+    "group": "Engine preparation",
+    "description": "Calculate Turbine Fuel Flow",
+    "source": {
+      "file": "src/sim1/engine_fuel.cpp",
+      "symbol": "CalculateTurbineFuelFlow"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "401 original and 400 rebuilt bytes. 70 exact and 52 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/fuel/turbine-fuel-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/fuel/worker-output/disassembly.txt",
+      "symbol": "CalculateTurbineFuelFlow",
+      "buildSymbol": "?CalculateTurbineFuelFlow@sim1@@YAXABUIntegrationHistory@1@I@Z",
+      "leftHex": "8bff558bec83ec148bd069c0ec0000005356578bb97002000003873c040000c1e2070397340400008bf085d28b078945fc0f845301000085f60f844b0100008b98e419000085db0f843d010000837e0800dd4248dd55f07418dd03dc0dc03fbc20d8d1dfe0ddd9f6c4057b05dd5df0eb02ddd88bc7e836390300d95df8837b2400d9ee7618d945f8d8d1dfe0f6c441750ad94338dc4df0dec9eb08ddd8d94334dc4df0dd9ec00000008b178a8a6c040000d9ee80f905740980f9030f859e000000837e0800dd46448b5dfc741bdd83d8020000dc0d0017bb20d8d1dfe0f6c4057b04ddd9eb02ddd880f905740580f903756bd9c9dc93d8020000dfe0f6c4057a248b92e4190000d9cad85a20dfe0f6c4057a14d94220dc4e5cd9c9dcb3d8020000dec9eb24ddda80f9057519dd464cdc0da835bc20dcb340020000dec9dc355036bc20eb04ddd8d9c0d88be0020000dc86c0000000dd9ec0000000eb04ddd8ddd9dc96c0000000dfe0f6c4057a08ddd8dd86c0000000dd96c00000008b17dc8ad0020000dd9ec00000005f5e5b8be55dc3",
+      "rightHex": "8bff558bec83ec0c8b8a3c04000085c956578b3a8bb7e41900008975fc0f8467010000538b9a3404000085db0f845701000085f60f844f0100008bf069f6ec000000c1e00703c38b5dfc03f1837e08008bc8dd4148dd55f47418dd03dc0d00000000d8d1dfe0ddd9f6c4057b05dd5df4eb02ddd852e800000000d95dfc837b2400d9ee7418d945fcd8d1dfe0f6c441750ad94338dc4df4dec9eb08ddd8d94334dc4df4dd96c00000008a8f6c04000080f903d9ee740980f9050f85a5000000837e0800dd4644741bdd87d8020000dc0d00000000d8d1dfe0f6c4057b04ddd9eb02ddd8d9c1d9cadc97d8020000dfe0f6c4057a2ed9ccd85b20dfe0f6c4057a24ddd9d94320dc4e5cd9c9dcb7d8020000dec9d88fe0020000dec1dd9ec0000000eb46dddc80f9057529ddd9dd464cdc0d00000000dcb740020000dec9dc3500000000d88fe0020000dec1dd9ec0000000eb16ddd8d88fe0020000dec1dd9ec0000000eb04ddd9ddd9dc96c0000000dfe0f6c4057a08ddd8dd86c0000000dc8fd0020000dd9ec00000005b5f5e8be55dc3",
+      "mappedOffsets": [
+        118
+      ]
+    }
+  },
+  {
+    "entry": "20c2b989",
+    "bytes": 5,
+    "name": "Call the shared engine effects update",
+    "parentEntry": "20c2b6d0",
+    "description": "Passes the current step to 0x20c207a0 before the loop advances to the next engine.",
+    "kind": "Original instruction",
+    "group": "Engine updates",
+    "asm": [
+      [
+        "20c2b989",
+        "e8 12 4e ff ff",
+        "CALL 0x20c207a0"
+      ]
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine loop boundary",
+        "description": "Passes the current step to 0x20c207a0 before the loop advances to the next engine."
+      }
+    ]
+  },
+  {
+    "entry": "20c2b9b9",
+    "bytes": 3,
+    "name": "Return from the turbine engine loop",
+    "parentEntry": "20c2b6d0",
+    "description": "The common turbine loop returns to the caller after processing all engines.",
+    "kind": "Original instruction",
+    "group": "Engine updates",
+    "asm": [
+      [
+        "20c2b9b9",
+        "c2 0c 00",
+        "RET 0xc"
+      ]
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine loop boundary",
+        "description": "The common turbine loop returns to the caller after processing all engines."
+      }
+    ]
+  },
+  {
+    "entry": "20c2049a",
+    "bytes": 2,
+    "name": "Begin the independent propeller check",
+    "parentEntry": "20c20430",
+    "description": "Reloads the shared configuration before checking the propeller count.",
+    "kind": "Original instruction",
+    "group": "Engine updates",
+    "asm": [
+      [
+        "20c2049a",
+        "8b 06",
+        "MOV EAX,dword ptr [ESI]"
+      ]
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine loop boundary",
+        "description": "Reloads the shared configuration before checking the propeller count."
+      }
+    ]
+  },
+  {
+    "entry": "20c204ac",
+    "bytes": 5,
+    "name": "Dispatch the independent propeller update",
+    "parentEntry": "20c20430",
+    "description": "Calls 0x20c47420 when the configured propeller count is nonzero.",
+    "kind": "Original instruction",
+    "group": "Engine updates",
+    "asm": [
+      [
+        "20c204ac",
+        "e8 6f 6f 02 00",
+        "CALL 0x20c47420"
+      ]
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine loop boundary",
+        "description": "Calls 0x20c47420 when the configured propeller count is nonzero."
+      }
+    ]
+  },
+  {
+    "entry": "20c2b879",
+    "name": "Calculate gross turbine thrust",
+    "ghidraName": "FUN_20c2b6d0",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2b6d0",
+    "kind": "Original inline range",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateGrossThrust"
+    },
+    "tags": [
+      "Engine updates",
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine thrust and the engine-loop boundary",
+        "description": "Original listing, native VC8 comparison and host x86 results."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": false,
+      "scope": "70 original and 66 rebuilt bytes. 0 exact and 26 normalized VC8 COFF bytes in the listed scopes.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "symbol": "UpdateGrossThrust",
+      "buildSymbol": "?UpdateGrossThrust@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@@Z",
+      "leftHex": "8b45f8dd46108b388bb7e419000083ec10dd5c240881c6200b0000dd805c010000dd1c24e88e07faff8b87e4190000dc088b4df88b75e451dc0d78bac7208bfedd1d60bac720",
+      "rightHex": "8bff558bec8b4508dd41108b10568bb2e419000083ec10dd5c24088d8e200b0000dd805c010000dd1c24e800000000dc0e5edc0d00000000dd1d000000005dc20400"
+    }
+  },
+  {
+    "entry": "20c2b894",
+    "name": "Pass raw Mach and call the gross thrust table evaluator",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2b879",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateGrossThrust"
+    },
+    "bytes": 14,
+    "asm": [
+      [
+        "20c2b894",
+        "dd 80 5c 01 00 00",
+        "FLD double ptr [EAX + 0x15c]"
+      ],
+      [
+        "20c2b89a",
+        "dd 1c 24",
+        "FSTP double ptr [ESP]"
+      ],
+      [
+        "20c2b89d",
+        "e8 8e 07 fa ff",
+        "CALL 0x20bcc030"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "14 normalized VC8 COFF bytes in UpdateGrossThrust.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateGrossThrust@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000021",
+          "dd 80 5c 01 00 00",
+          "fld qword ptr [eax+15Ch]"
+        ],
+        [
+          "00000027",
+          "dd 1c 24",
+          "fstp qword ptr [esp]"
+        ],
+        [
+          "0000002a",
+          "e8 00 00 00 00",
+          "call ?Evaluate@?$TurbineCoefficientTable@$0OH@@sim1@@QBENNN@Z"
+        ]
+      ],
+      "leftHex": "dd805c010000dd1c24e88e07faff",
+      "rightHex": "dd805c010000dd1c24e800000000",
+      "mappedOffsets": [
+        10
+      ]
+    }
+  },
+  {
+    "entry": "20c2b8b1",
+    "name": "Apply inlet pressure ratio to gross thrust",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2b879",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateGrossThrust"
+    },
+    "bytes": 6,
+    "asm": [
+      [
+        "20c2b8b1",
+        "dc 0d 78 ba c7 20",
+        "FMUL double ptr [0x20c7ba78]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "6 normalized VC8 COFF bytes in UpdateGrossThrust.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateGrossThrust@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000032",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [?turbineInletPressureRatio@sim1@@3NA]"
+        ]
+      ],
+      "leftHex": "dc0d78bac720",
+      "rightHex": "dc0d00000000",
+      "mappedOffsets": [
+        2
+      ]
+    }
+  },
+  {
+    "entry": "20c2b8b9",
+    "name": "Publish gross thrust",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2b879",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateGrossThrust"
+    },
+    "bytes": 6,
+    "asm": [
+      [
+        "20c2b8b9",
+        "dd 1d 60 ba c7 20",
+        "FSTP double ptr [0x20c7ba60]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "6 normalized VC8 COFF bytes in UpdateGrossThrust.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateGrossThrust@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000038",
+          "dd 1d 00 00 00 00",
+          "fstp qword ptr [?turbineGrossThrust@sim1@@3NA]"
+        ]
+      ],
+      "leftHex": "dd1d60bac720",
+      "rightHex": "dd1d00000000",
+      "mappedOffsets": [
+        2
+      ]
+    }
+  },
+  {
+    "entry": "20c2c2e0",
+    "name": "Calculate turbine ram drag",
+    "ghidraName": "FUN_20c2c2e0",
+    "group": "Engine force outputs",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateRamDrag"
+    },
+    "tags": [
+      "Engine updates",
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine thrust and the engine-loop boundary",
+        "description": "Original listing, native VC8 comparison and host x86 results."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "100 original and 93 rebuilt bytes. 5 exact and 34 normalized VC8 COFF bytes in the listed scopes.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "symbol": "UpdateRamDrag",
+      "buildSymbol": "?UpdateRamDrag@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@@Z",
+      "leftHex": "8bff558bec518b4508dd4710538b18568bb3e419000083ec10dd5c240881c660120000dd4740dd1c24e822fdf9ff8b8be4190000dc49088b55085e5bdc0d78bac720dc3570bac720dd8264010000dc4f40dec9dc3580c1c720dd1d58bac720595dc20400",
+      "rightHex": "8bff558bec538b5d088b03568bf1dd4610578bb8e419000083ec10dd5c24088d8f60120000dd4640dd1c24e800000000dc4f085fdc0d00000000dc3500000000dd8364010000dc4e405e5bdec9dc3500000000dd1d000000005dc20400"
+    }
+  },
+  {
+    "entry": "20c2c306",
+    "name": "Pass inlet Mach and call the inlet flow table evaluator",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c2e0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateRamDrag"
+    },
+    "bytes": 8,
+    "asm": [
+      [
+        "20c2c306",
+        "dd 1c 24",
+        "FSTP double ptr [ESP]"
+      ],
+      [
+        "20c2c309",
+        "e8 22 fd f9 ff",
+        "CALL 0x20bcc030"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "8 normalized VC8 COFF bytes in UpdateRamDrag.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateRamDrag@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000028",
+          "dd 1c 24",
+          "fstp qword ptr [esp]"
+        ],
+        [
+          "0000002b",
+          "e8 00 00 00 00",
+          "call ?Evaluate@?$TurbineCoefficientTable@$0OH@@sim1@@QBENNN@Z"
+        ]
+      ],
+      "leftHex": "dd1c24e822fdf9ff",
+      "rightHex": "dd1c24e800000000",
+      "mappedOffsets": [
+        4
+      ]
+    }
+  },
+  {
+    "entry": "20c2c31c",
+    "name": "Apply inlet pressure and temperature corrections",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c2e0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateRamDrag"
+    },
+    "bytes": 12,
+    "asm": [
+      [
+        "20c2c31c",
+        "dc 0d 78 ba c7 20",
+        "FMUL double ptr [0x20c7ba78]"
+      ],
+      [
+        "20c2c322",
+        "dc 35 70 ba c7 20",
+        "FDIV double ptr [0x20c7ba70]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "12 normalized VC8 COFF bytes in UpdateRamDrag.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateRamDrag@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000034",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [?turbineInletPressureRatio@sim1@@3NA]"
+        ],
+        [
+          "0000003a",
+          "dc 35 00 00 00 00",
+          "fdiv qword ptr [?turbineInletTemperatureRoot@sim1@@3NA]"
+        ]
+      ],
+      "leftHex": "dc0d78bac720dc3570bac720",
+      "rightHex": "dc0d00000000dc3500000000",
+      "mappedOffsets": [
+        2,
+        8
+      ]
+    }
+  },
+  {
+    "entry": "20c2c331",
+    "name": "Apply inlet velocity and gravity scale and publish ram drag",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c2e0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateRamDrag"
+    },
+    "bytes": 14,
+    "asm": [
+      [
+        "20c2c331",
+        "de c9",
+        "FMULP"
+      ],
+      [
+        "20c2c333",
+        "dc 35 80 c1 c7 20",
+        "FDIV double ptr [0x20c7c180]"
+      ],
+      [
+        "20c2c339",
+        "dd 1d 58 ba c7 20",
+        "FSTP double ptr [0x20c7ba58]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "14 normalized VC8 COFF bytes in UpdateRamDrag.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateRamDrag@TurbineEngineState@sim1@@QBEXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "0000004b",
+          "de c9",
+          "fmulp st(1),st"
+        ],
+        [
+          "0000004d",
+          "dc 35 00 00 00 00",
+          "fdiv qword ptr [?gravityAcceleration@sim1@@3NA]"
+        ],
+        [
+          "00000053",
+          "dd 1d 00 00 00 00",
+          "fstp qword ptr [?turbineRamDrag@sim1@@3NA]"
+        ]
+      ],
+      "leftHex": "dec9dc3580c1c720dd1d58bac720",
+      "rightHex": "dec9dc3500000000dd1d00000000",
+      "mappedOffsets": [
+        4,
+        10
+      ]
+    }
+  },
+  {
+    "entry": "20c2bb20",
+    "name": "Calculate afterburner stage fraction",
+    "ghidraName": "FUN_20c2bb20",
+    "group": "Engine force outputs",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::AfterburnerFraction"
+    },
+    "tags": [
+      "Engine updates",
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine thrust and the engine-loop boundary",
+        "description": "Original listing, native VC8 comparison and host x86 results."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "75 original and 80 rebuilt bytes. 7 exact and 0 normalized VC8 COFF bytes in the listed scopes.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "symbol": "AfterburnerFraction",
+      "buildSymbol": "?AfterburnerFraction@TurbineEngineState@sim1@@QBEMABUIntegrationHistory@2@@Z",
+      "leftHex": "8bff558bec518b088b81e419000085c074338b402485c0742c8b4a7cdb427c85c97d06d8054836bc2085c08945fcdb45fc7d06d8054836bc20def9d95dfcd945fc8be55dc3d9ee8be55dc3",
+      "rightHex": "8bff558bec8b45088b108b82e419000085c074368b402485c0742f8b497c85c9894d08db45087d06dc050000000085c0894508db45087d06dc0500000000def9d95d08d945085dc20400d9ee5dc20400"
+    }
+  },
+  {
+    "entry": "20c2bb59",
+    "name": "Divide current afterburner stage by configured stages",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2bb20",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::AfterburnerFraction"
+    },
+    "bytes": 2,
+    "asm": [
+      [
+        "20c2bb59",
+        "de f9",
+        "FDIVP"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "2 exact VC8 COFF bytes in AfterburnerFraction.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?AfterburnerFraction@TurbineEngineState@sim1@@QBEMABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "0000003e",
+          "de f9",
+          "fdivp st(1),st"
+        ]
+      ],
+      "leftHex": "def9",
+      "rightHex": "def9",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c4e0",
+    "name": "Calculate turbine reverser multiplier",
+    "ghidraName": "FUN_20c2c4e0",
+    "group": "Engine force outputs",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::ReverserThrustFactor"
+    },
+    "tags": [
+      "Engine updates",
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine thrust and the engine-loop boundary",
+        "description": "Original listing, native VC8 comparison and host x86 results."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "314 original and 97 rebuilt bytes. 10 exact and 26 normalized VC8 COFF bytes in the listed scopes.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "symbol": "ReverserThrustFactor",
+      "buildSymbol": "?ReverserThrustFactor@TurbineEngineState@sim1@@QBENABUIntegrationHistory@2@@Z",
+      "leftHex": "8bff558bec8b088b89e419000081ecd400000083794800560f84f0000000d9ee83ec10dd9538ffffffb905000000dd055046bb208db530ffffffdd9d40ffffff898d30ffffffd9e8898d34ffffffdd9548ffffffdd05103dbb20dd9d50ffffffdd057806bc20dd9d58ffffffd9c9dd9d60ffffffdd05a03bbc20dd9d68ffffffdd05b847bb20dd9570ffffffd9c9dd9578ffffffdd5580dd05f03cbc20dd5d88dd05e83cbc20dd5d90dd5598d9c9dd55a0dd05583bbc20dd5da8dd058833bc20dd5db0d9c9dd55b8d9c9dd5dc0dd05c03bbc20dd5dc8dd05e03cbc20dd5dd0dd5dd8dd052837bc20dd55e0dd55e8dd55f0dd5df8dd4260dd5c2408dd805c010000dd1c24e847faf9ff5e8be55dc3d9eed85944dfe0f6c4057a19d94144dc0d5837bc20d9e8dcc1d9c9dc4a60dee95e8be55dc3d9e85e8be55dc3",
+      "rightHex": "8bff558bec8b45088b108b92e4190000837a48007421dd416083ec10dd5c2408b900000000dd805c010000dd1c24e8000000005dc20400d9eed85a44dfe0f6c4057a18d94244dc0d00000000d9e8dcc1d9c9dc4960dee95dc20400d9e85dc20400"
+    }
+  },
+  {
+    "entry": "20c2c5db",
+    "name": "Pass raw Mach and call the tabulated reverser evaluator",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c4e0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::ReverserThrustFactor"
+    },
+    "bytes": 14,
+    "asm": [
+      [
+        "20c2c5db",
+        "dd 80 5c 01 00 00",
+        "FLD double ptr [EAX + 0x15c]"
+      ],
+      [
+        "20c2c5e1",
+        "dd 1c 24",
+        "FSTP double ptr [ESP]"
+      ],
+      [
+        "20c2c5e4",
+        "e8 47 fa f9 ff",
+        "CALL 0x20bcc030"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "14 normalized VC8 COFF bytes in ReverserThrustFactor.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?ReverserThrustFactor@TurbineEngineState@sim1@@QBENABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000025",
+          "dd 80 5c 01 00 00",
+          "fld qword ptr [eax+15Ch]"
+        ],
+        [
+          "0000002b",
+          "dd 1c 24",
+          "fstp qword ptr [esp]"
+        ],
+        [
+          "0000002e",
+          "e8 00 00 00 00",
+          "call ?Evaluate@?$TurbineCoefficientTable@$0BJ@@sim1@@QBENNN@Z"
+        ]
+      ],
+      "leftHex": "dd805c010000dd1c24e847faf9ff",
+      "rightHex": "dd805c010000dd1c24e800000000",
+      "mappedOffsets": [
+        10
+      ]
+    }
+  },
+  {
+    "entry": "20c2c5f3",
+    "name": "Read the ordered reverser-effectiveness comparison",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c4e0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::ReverserThrustFactor"
+    },
+    "bytes": 5,
+    "asm": [
+      [
+        "20c2c5f3",
+        "df e0",
+        "FNSTSW AX"
+      ],
+      [
+        "20c2c5f5",
+        "f6 c4 05",
+        "TEST AH,0x5"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "5 exact VC8 COFF bytes in ReverserThrustFactor.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?ReverserThrustFactor@TurbineEngineState@sim1@@QBENABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "0000003c",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "0000003e",
+          "f6 c4 05",
+          "test ah,5"
+        ]
+      ],
+      "leftHex": "dfe0f6c405",
+      "rightHex": "dfe0f6c405",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c5fd",
+    "name": "Calculate the linear reverser slope",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c4e0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::ReverserThrustFactor"
+    },
+    "bytes": 12,
+    "asm": [
+      [
+        "20c2c5fd",
+        "dc 0d 58 37 bc 20",
+        "FMUL double ptr [0x20bc3758]"
+      ],
+      [
+        "20c2c603",
+        "d9 e8",
+        "FLD1"
+      ],
+      [
+        "20c2c605",
+        "dc c1",
+        "FADD ST1,ST0"
+      ],
+      [
+        "20c2c607",
+        "d9 c9",
+        "FXCH"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "12 normalized VC8 COFF bytes in ReverserThrustFactor.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?ReverserThrustFactor@TurbineEngineState@sim1@@QBENABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000046",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [__real@3fd8000000000000]"
+        ],
+        [
+          "0000004c",
+          "d9 e8",
+          "fld1"
+        ],
+        [
+          "0000004e",
+          "dc c1",
+          "fadd st(1),st"
+        ],
+        [
+          "00000050",
+          "d9 c9",
+          "fxch st(1)"
+        ]
+      ],
+      "leftHex": "dc0d5837bc20d9e8dcc1d9c9",
+      "rightHex": "dc0d00000000d9e8dcc1d9c9",
+      "mappedOffsets": [
+        2
+      ]
+    }
+  },
+  {
+    "entry": "20c2c667",
+    "name": "Load raw Mach and reserve the curve argument",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c620",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::PublishNetThrust"
+    },
+    "bytes": 9,
+    "asm": [
+      [
+        "20c2c667",
+        "dd 86 5c 01 00 00",
+        "FLD double ptr [ESI + 0x15c]"
+      ],
+      [
+        "20c2c66d",
+        "83 ec 08",
+        "SUB ESP,0x8"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "9 exact VC8 COFF bytes in PublishNetThrust.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?PublishNetThrust@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@AAUEngineForceRecord@2@@Z",
+      "rebuilt": [
+        [
+          "00000049",
+          "dd 86 5c 01 00 00",
+          "fld qword ptr [esi+15Ch]"
+        ],
+        [
+          "0000004f",
+          "83 ec 08",
+          "sub esp,8"
+        ]
+      ],
+      "leftHex": "dd865c01000083ec08",
+      "rightHex": "dd865c01000083ec08",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c676",
+    "name": "Store Mach and call the afterburner curve",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c620",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::PublishNetThrust"
+    },
+    "bytes": 8,
+    "asm": [
+      [
+        "20c2c676",
+        "dd 1c 24",
+        "FSTP double ptr [ESP]"
+      ],
+      [
+        "20c2c679",
+        "e8 e2 f8 f9 ff",
+        "CALL 0x20bcbf60"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "8 normalized VC8 COFF bytes in PublishNetThrust.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?PublishNetThrust@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@AAUEngineForceRecord@2@@Z",
+      "rebuilt": [
+        [
+          "00000058",
+          "dd 1c 24",
+          "fstp qword ptr [esp]"
+        ],
+        [
+          "0000005b",
+          "e8 00 00 00 00",
+          "call ?SampleAerodynamicCurve@sim1@@YINPBUAerodynamicCurve@1@N@Z"
+        ]
+      ],
+      "leftHex": "dd1c24e8e2f8f9ff",
+      "rightHex": "dd1c24e800000000",
+      "mappedOffsets": [
+        4
+      ]
+    }
+  },
+  {
+    "entry": "20c2c67e",
+    "name": "Subtract one from the afterburner multiplier",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c620",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::PublishNetThrust"
+    },
+    "bytes": 4,
+    "asm": [
+      [
+        "20c2c67e",
+        "d9 e8",
+        "FLD1"
+      ],
+      [
+        "20c2c680",
+        "dc e9",
+        "FSUB ST1,ST0"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "4 exact VC8 COFF bytes in PublishNetThrust.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?PublishNetThrust@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@AAUEngineForceRecord@2@@Z",
+      "rebuilt": [
+        [
+          "00000060",
+          "d9 e8",
+          "fld1"
+        ],
+        [
+          "00000062",
+          "dc e9",
+          "fsub st(1),st"
+        ]
+      ],
+      "leftHex": "d9e8dce9",
+      "rightHex": "d9e8dce9",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c6af",
+    "name": "Subtract the stored ram drag from adjusted thrust",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2c620",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::PublishNetThrust"
+    },
+    "bytes": 6,
+    "asm": [
+      [
+        "20c2c6af",
+        "dc 25 58 ba c7 20",
+        "FSUB double ptr [0x20c7ba58]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "6 normalized VC8 COFF bytes in PublishNetThrust.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?PublishNetThrust@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@AAUEngineForceRecord@2@@Z",
+      "rebuilt": [
+        [
+          "0000008f",
+          "dc 25 00 00 00 00",
+          "fsub qword ptr [?turbineRamDrag@sim1@@3NA]"
+        ]
+      ],
+      "leftHex": "dc2558bac720",
+      "rightHex": "dc2500000000",
+      "mappedOffsets": [
+        2
+      ]
+    }
+  },
+  {
+    "entry": "20c2b951",
+    "name": "Update the final turbine speed blend",
+    "ghidraName": "FUN_20c2b6d0",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2b6d0",
+    "kind": "Original inline range",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpeedBlend"
+    },
+    "tags": [
+      "Engine updates",
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine thrust and the engine-loop boundary",
+        "description": "Original listing, native VC8 comparison and host x86 results."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": false,
+      "scope": "43 original and 45 rebuilt bytes. 2 exact and 14 normalized VC8 COFF bytes in the listed scopes.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "symbol": "UpdateSpeedBlend",
+      "buildSymbol": "?UpdateSpeedBlend@TurbineEngineState@sim1@@QAEXN@Z",
+      "leftHex": "dd4608dc2683ec08dc0de800bc20dd4608dc0d1836bc20dec1dc6668dcc0dd450cdcc9d9c9dc4668dd5e68",
+      "rightHex": "8bff558becdd4108dc21dc0d00000000dd4108dc0d00000000dec1dc6168dcc0dc4d08dc4168dd59685dc20800"
+    }
+  },
+  {
+    "entry": "20c2b959",
+    "name": "Scale the shaft and turbine speed difference",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2b951",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpeedBlend"
+    },
+    "bytes": 6,
+    "asm": [
+      [
+        "20c2b959",
+        "dc 0d e8 00 bc 20",
+        "FMUL double ptr [0x20bc00e8]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "6 normalized VC8 COFF bytes in UpdateSpeedBlend.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpeedBlend@TurbineEngineState@sim1@@QAEXN@Z",
+      "rebuilt": [
+        [
+          "0000000a",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [__real@3f847ae147ae147b]"
+        ]
+      ],
+      "leftHex": "dc0de800bc20",
+      "rightHex": "dc0d00000000",
+      "mappedOffsets": [
+        2
+      ]
+    }
+  },
+  {
+    "entry": "20c2b962",
+    "name": "Scale shaft speed and add both target terms",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2b951",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpeedBlend"
+    },
+    "bytes": 8,
+    "asm": [
+      [
+        "20c2b962",
+        "dc 0d 18 36 bc 20",
+        "FMUL double ptr [0x20bc3618]"
+      ],
+      [
+        "20c2b968",
+        "de c1",
+        "FADDP"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "8 normalized VC8 COFF bytes in UpdateSpeedBlend.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpeedBlend@TurbineEngineState@sim1@@QAEXN@Z",
+      "rebuilt": [
+        [
+          "00000013",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [__real@3f978d4fdf3b645a]"
+        ],
+        [
+          "00000019",
+          "de c1",
+          "faddp st(1),st"
+        ]
+      ],
+      "leftHex": "dc0d1836bc20dec1",
+      "rightHex": "dc0d00000000dec1",
+      "mappedOffsets": [
+        2
+      ]
+    }
+  },
+  {
+    "entry": "20c2b96d",
+    "name": "Apply the blend response gain of two",
+    "group": "Engine force outputs",
+    "parentEntry": "20c2b951",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpeedBlend"
+    },
+    "bytes": 2,
+    "asm": [
+      [
+        "20c2b96d",
+        "dc c0",
+        "FADD ST0,ST0"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "2 exact VC8 COFF bytes in UpdateSpeedBlend.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpeedBlend@TurbineEngineState@sim1@@QAEXN@Z",
+      "rebuilt": [
+        [
+          "0000001e",
+          "dc c0",
+          "fadd st(0),st"
+        ]
+      ],
+      "leftHex": "dcc0",
+      "rightHex": "dcc0",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2b9d0",
+    "name": "Update turbine inlet conditions",
+    "ghidraName": "FUN_20c2b9d0",
+    "group": "Engine updates",
+    "description": "Applies the configured Mach cap, computes the inlet pressure and temperature ratios, and publishes the common temperature correction.",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateInletConditions"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-inlet.md",
+        "title": "Turbine inlet conditions",
+        "description": "AIR Mach cap selector, ram temperature factor, shared pressure and temperature outputs."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "Native VC8 COFF body, 132 original and 123 rebuilt bytes. Five scopes verify 29 exact and 77 normalized code bytes.",
+      "evidence": "artifacts/sim1.dll/turbine-inlet-vc8/turbine-inlet-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-inlet-vc8/worker-output/disassembly.txt",
+      "symbol": "UpdateInletConditions",
+      "buildSymbol": "?UpdateInletConditions@TurbineEngineState@sim1@@QAIXABUIntegrationHistory@2@@Z",
+      "leftHex": "8b06d9e88b90e4190000837a4000741ddd055046bb20dc965c010000dfe0f6c4417519ddd8dd865c010000eb0fdc965c010000dfe0f6c44174ebd9c0dd5940dd4140dc0dd8f7bb20dc4940dec1dd8654020000d8c9dd1d80bac720dd05c817bb20e8a4b50300dc8e5c020000dd1d78bac720dd0580bac720e875b50300dd1d70bac720c3",
+      "rightHex": "d9e8568bf28b068b90e4190000837a40007408dd0500000000eb02d9c0dc965c010000dfe0f6c4417508ddd8dd865c010000dd5940dd4140dc0d00000000dc4940dec1dd8654020000d8c9dd1d00000000dd0500000000e800000000dc8e5c020000dd1d00000000dd0500000000e800000000dd1d000000005ec3"
+    }
+  },
+  {
+    "entry": "20c2b9d4",
+    "name": "Load turbine performance data and test the Mach-cap selector",
+    "group": "Engine updates",
+    "parentEntry": "20c2b9d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateInletConditions"
+    },
+    "bytes": 10,
+    "asm": [
+      [
+        "20c2b9d4",
+        "8b 90 e4 19 00 00",
+        "MOV EDX,dword ptr [EAX + 0x19e4]"
+      ],
+      [
+        "20c2b9da",
+        "83 7a 40 00",
+        "CMP dword ptr [EDX + 0x40],0x0"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "10 exact VC8 COFF bytes in the turbine inlet update.",
+      "evidence": "artifacts/sim1.dll/turbine-inlet-vc8/turbine-inlet-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-inlet-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateInletConditions@TurbineEngineState@sim1@@QAIXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000007",
+          "8b 90 e4 19 00 00",
+          "mov edx,dword ptr [eax+19E4h]"
+        ],
+        [
+          "0000000d",
+          "83 7a 40 00",
+          "cmp dword ptr [edx+40h],0"
+        ]
+      ],
+      "leftHex": "8b90e4190000837a4000",
+      "rightHex": "8b90e4190000837a4000",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2b9e0",
+    "name": "Load the alternative half-Mach cap",
+    "group": "Engine updates",
+    "parentEntry": "20c2b9d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateInletConditions"
+    },
+    "bytes": 6,
+    "asm": [
+      [
+        "20c2b9e0",
+        "dd 05 50 46 bb 20",
+        "FLD double ptr [0x20bb4650]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "6 normalized VC8 COFF bytes in the turbine inlet update.",
+      "evidence": "artifacts/sim1.dll/turbine-inlet-vc8/turbine-inlet-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-inlet-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateInletConditions@TurbineEngineState@sim1@@QAIXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000013",
+          "dd 05 00 00 00 00",
+          "fld qword ptr [__real@3fe0000000000000]"
+        ]
+      ],
+      "leftHex": "dd055046bb20",
+      "rightHex": "dd0500000000",
+      "mappedOffsets": [
+        2
+      ]
+    }
+  },
+  {
+    "entry": "20c2b9e6",
+    "name": "Compare Mach with the selected cap",
+    "group": "Engine updates",
+    "parentEntry": "20c2b9d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateInletConditions"
+    },
+    "bytes": 11,
+    "asm": [
+      [
+        "20c2b9e6",
+        "dc 96 5c 01 00 00",
+        "FCOM double ptr [ESI + 0x15c]"
+      ],
+      [
+        "20c2b9ec",
+        "df e0",
+        "FNSTSW AX"
+      ],
+      [
+        "20c2b9ee",
+        "f6 c4 41",
+        "TEST AH,0x41"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "11 exact VC8 COFF bytes in the turbine inlet update.",
+      "evidence": "artifacts/sim1.dll/turbine-inlet-vc8/turbine-inlet-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-inlet-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateInletConditions@TurbineEngineState@sim1@@QAIXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "0000001d",
+          "dc 96 5c 01 00 00",
+          "fcom qword ptr [esi+15Ch]"
+        ],
+        [
+          "00000023",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "00000025",
+          "f6 c4 41",
+          "test ah,41h"
+        ]
+      ],
+      "leftHex": "dc965c010000dfe0f6c441",
+      "rightHex": "dc965c010000dfe0f6c441",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2b9f3",
+    "name": "Select the uncapped Mach input",
+    "group": "Engine updates",
+    "parentEntry": "20c2b9d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateInletConditions"
+    },
+    "bytes": 8,
+    "asm": [
+      [
+        "20c2b9f3",
+        "dd d8",
+        "FSTP ST0"
+      ],
+      [
+        "20c2b9f5",
+        "dd 86 5c 01 00 00",
+        "FLD double ptr [ESI + 0x15c]"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "8 exact VC8 COFF bytes in the turbine inlet update.",
+      "evidence": "artifacts/sim1.dll/turbine-inlet-vc8/turbine-inlet-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-inlet-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateInletConditions@TurbineEngineState@sim1@@QAIXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "0000002a",
+          "dd d8",
+          "fstp st(0)"
+        ],
+        [
+          "0000002c",
+          "dd 86 5c 01 00 00",
+          "fld qword ptr [esi+15Ch]"
+        ]
+      ],
+      "leftHex": "ddd8dd865c010000",
+      "rightHex": "ddd8dd865c010000",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2ba0c",
+    "name": "Publish inlet Mach, temperature, pressure and temperature root",
+    "group": "Engine updates",
+    "parentEntry": "20c2b9d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateInletConditions"
+    },
+    "bytes": 71,
+    "asm": [
+      [
+        "20c2ba0c",
+        "dd 59 40",
+        "FSTP double ptr [ECX + 0x40]"
+      ],
+      [
+        "20c2ba0f",
+        "dd 41 40",
+        "FLD double ptr [ECX + 0x40]"
+      ],
+      [
+        "20c2ba12",
+        "dc 0d d8 f7 bb 20",
+        "FMUL double ptr [0x20bbf7d8]"
+      ],
+      [
+        "20c2ba18",
+        "dc 49 40",
+        "FMUL double ptr [ECX + 0x40]"
+      ],
+      [
+        "20c2ba1b",
+        "de c1",
+        "FADDP"
+      ],
+      [
+        "20c2ba1d",
+        "dd 86 54 02 00 00",
+        "FLD double ptr [ESI + 0x254]"
+      ],
+      [
+        "20c2ba23",
+        "d8 c9",
+        "FMUL ST1"
+      ],
+      [
+        "20c2ba25",
+        "dd 1d 80 ba c7 20",
+        "FSTP double ptr [0x20c7ba80]"
+      ],
+      [
+        "20c2ba2b",
+        "dd 05 c8 17 bb 20",
+        "FLD double ptr [0x20bb17c8]"
+      ],
+      [
+        "20c2ba31",
+        "e8 a4 b5 03 00",
+        "CALL 0x20c66fda"
+      ],
+      [
+        "20c2ba36",
+        "dc 8e 5c 02 00 00",
+        "FMUL double ptr [ESI + 0x25c]"
+      ],
+      [
+        "20c2ba3c",
+        "dd 1d 78 ba c7 20",
+        "FSTP double ptr [0x20c7ba78]"
+      ],
+      [
+        "20c2ba42",
+        "dd 05 80 ba c7 20",
+        "FLD double ptr [0x20c7ba80]"
+      ],
+      [
+        "20c2ba48",
+        "e8 75 b5 03 00",
+        "CALL 0x20c66fc2"
+      ],
+      [
+        "20c2ba4d",
+        "dd 1d 70 ba c7 20",
+        "FSTP double ptr [0x20c7ba70]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "71 normalized VC8 COFF bytes in the turbine inlet update.",
+      "evidence": "artifacts/sim1.dll/turbine-inlet-vc8/turbine-inlet-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-inlet-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateInletConditions@TurbineEngineState@sim1@@QAIXABUIntegrationHistory@2@@Z",
+      "rebuilt": [
+        [
+          "00000032",
+          "dd 59 40",
+          "fstp qword ptr [ecx+40h]"
+        ],
+        [
+          "00000035",
+          "dd 41 40",
+          "fld qword ptr [ecx+40h]"
+        ],
+        [
+          "00000038",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [__real@3fc999999999999a]"
+        ],
+        [
+          "0000003e",
+          "dc 49 40",
+          "fmul qword ptr [ecx+40h]"
+        ],
+        [
+          "00000041",
+          "de c1",
+          "faddp st(1),st"
+        ],
+        [
+          "00000043",
+          "dd 86 54 02 00 00",
+          "fld qword ptr [esi+254h]"
+        ],
+        [
+          "00000049",
+          "d8 c9",
+          "fmul st,st(1)"
+        ],
+        [
+          "0000004b",
+          "dd 1d 00 00 00 00",
+          "fstp qword ptr [?turbineInletTemperatureRatio@sim1@@3NA]"
+        ],
+        [
+          "00000051",
+          "dd 05 00 00 00 00",
+          "fld qword ptr [__real@400c000000000000]"
+        ],
+        [
+          "00000057",
+          "e8 00 00 00 00",
+          "call __CIpow"
+        ],
+        [
+          "0000005c",
+          "dc 8e 5c 02 00 00",
+          "fmul qword ptr [esi+25Ch]"
+        ],
+        [
+          "00000062",
+          "dd 1d 00 00 00 00",
+          "fstp qword ptr [?turbineInletPressureRatio@sim1@@3NA]"
+        ],
+        [
+          "00000068",
+          "dd 05 00 00 00 00",
+          "fld qword ptr [?turbineInletTemperatureRatio@sim1@@3NA]"
+        ],
+        [
+          "0000006e",
+          "e8 00 00 00 00",
+          "call __CIsqrt"
+        ],
+        [
+          "00000073",
+          "dd 1d 00 00 00 00",
+          "fstp qword ptr [?turbineInletTemperatureRoot@sim1@@3NA]"
+        ]
+      ],
+      "leftHex": "dd5940dd4140dc0dd8f7bb20dc4940dec1dd8654020000d8c9dd1d80bac720dd05c817bb20e8a4b50300dc8e5c020000dd1d78bac720dd0580bac720e875b50300dd1d70bac720",
+      "rightHex": "dd5940dd4140dc0d00000000dc4940dec1dd8654020000d8c9dd1d00000000dd0500000000e800000000dc8e5c020000dd1d00000000dd0500000000e800000000dd1d00000000",
+      "mappedOffsets": [
+        38,
+        61,
+        8,
+        33,
+        67,
+        50,
+        27,
+        56
+      ]
+    }
+  },
+  {
+    "entry": "20c2c6d0",
+    "name": "Update shaft turbine spool speed",
+    "ghidraName": "FUN_20c2c6d0",
+    "group": "Engine updates",
+    "description": "Integrates the corrected spool speed, publishes temperature-scaled turbine speed and supplies the corrected input for shaft torque.",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpoolSpeed"
+    },
+    "tags": [
+      "Turbine engines",
+      "Reconstructed"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-spool-speed.md",
+        "title": "Shaft turbine spool speed",
+        "description": "Drive schedule, starter override, rate limits and inlet temperature correction."
+      }
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "Native VC8 COFF body, 367 original and 299 rebuilt bytes. Seven scopes verify 12 exact and 50 normalized code bytes. The 68-byte schedule is exact.",
+      "evidence": "artifacts/sim1.dll/turbine-spool-vc8/turbine-spool-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-spool-vc8/worker-output/disassembly.txt",
+      "symbol": "UpdateSpoolSpeed",
+      "buildSymbol": "?UpdateSpoolSpeed@TurbineEngineState@sim1@@QAEXABUEngineForceRecord@2@NNN@Z",
+      "leftHex": "8bff558bec83ec4c837f0800d9eedd55bc56dd55c4c745b804000000dd052036bc20dd5dccdd05d83cbc20dd5dd4dd05b039bc20dd5ddcdd052012bc20dd5de4dd05d03cbc20dd5decdd05c83cbc20dd5df4dd45087442dd476cd8e2d9e1dc1d9035bc20dfe0f6c4057a0ad9c1dd055046bb20eb49ddd983ec08ddd88d75b8dd4320dd1c24e806f8f9ffdd4508d9eed9cadd055046bb20eb25d9c1dd05c03cbc20d8d2dfe0f6c4417504d9c2eb02d9c0dc0db83cbc20def1dc2db03cbc20837f2c007410ddd8dd05a83cbc20dd055836bc20eb04d9c3d9c9d9cbd8d4dfe0f6c4417504decceb02ddd8d8d1dfe0f6c4057a04d9c1eb02d9c0d8dcdfe0f6c441750fdddbd8d2dfe0f6c4417506dddaeb04ddd8ddd8d9c9dc6310dec9dd055040bb20d8d1dfe0f6c4417511dd05d038bc20d8d2dfe0f6c4057a0fddd8d8d1dfe0f6c4417406ddd9eb04dddaddd8dc4d10dc4310dd5508dd5b10dd0580bac720e88fa70300dc4d085edd1b8be55dc21000",
+      "rightHex": "8bff558bec83ec08d9ee56d9c057dd05000000008b7d08837f0800dd55f8dd450c8bf17535ddd9dd0500000000d8d1dfe0f6c4417512d9c1dc0d00000000def1dc2d00000000eb4bd9c0dc0d00000000def1dc2d00000000eb39dd476cd9e1dc1d00000000dfe0f6c4057b4edddb83ec08dddab900000000ddd9ddd8dd4620dd1c24e800000000dd45f8dd450cd9eed9cbd9ca837f2c00d9c37410ddd8ddd8dd0500000000dd0500000000d9cad8d4dfe0f6c4417508decceb06d9c9ebd5ddd8d9c9d8d2dfe0f6c4057a04ddd8eb02dddad9cad8d1dfe0f6c4057a04ddd8eb02ddd9dc6610dec9dd0500000000d8d1dfe0f6c4417511ddd8dd0500000000d8d1dfe0f6c4017504ddd9eb02ddd8dc4d14dc4610dd5e10dd451ce800000000dc4e105fdd1e5e8be55dc21c00"
+    }
+  },
+  {
+    "entry": "20c2c72c",
+    "name": "Absolute drive signal and comparison against the threshold",
+    "group": "Engine updates",
+    "parentEntry": "20c2c6d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpoolSpeed"
+    },
+    "bytes": 13,
+    "asm": [
+      [
+        "20c2c72c",
+        "d9 e1",
+        "FABS"
+      ],
+      [
+        "20c2c72e",
+        "dc 1d 90 35 bc 20",
+        "FCOMP double ptr [0x20bc3590]"
+      ],
+      [
+        "20c2c734",
+        "df e0",
+        "FNSTSW AX"
+      ],
+      [
+        "20c2c736",
+        "f6 c4 05",
+        "TEST AH,0x5"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "13 normalized VC8 COFF bytes in the turbine spool update.",
+      "evidence": "artifacts/sim1.dll/turbine-spool-vc8/turbine-spool-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-spool-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpoolSpeed@TurbineEngineState@sim1@@QAEXABUEngineForceRecord@2@NNN@Z",
+      "rebuilt": [
+        [
+          "0000005d",
+          "d9 e1",
+          "fabs"
+        ],
+        [
+          "0000005f",
+          "dc 1d 00 00 00 00",
+          "fcomp qword ptr [__real@3f1a36e2eb1c432d]"
+        ],
+        [
+          "00000065",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "00000067",
+          "f6 c4 05",
+          "test ah,5"
+        ]
+      ],
+      "leftHex": "d9e1dc1d9035bc20dfe0f6c405",
+      "rightHex": "d9e1dc1d00000000dfe0f6c405",
+      "mappedOffsets": [
+        4
+      ]
+    }
+  },
+  {
+    "entry": "20c2c755",
+    "name": "Call the shared one-axis spool schedule evaluator",
+    "group": "Engine updates",
+    "parentEntry": "20c2c6d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpoolSpeed"
+    },
+    "bytes": 5,
+    "asm": [
+      [
+        "20c2c755",
+        "e8 06 f8 f9 ff",
+        "CALL 0x20bcbf60"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "5 normalized VC8 COFF bytes in the turbine spool update.",
+      "evidence": "artifacts/sim1.dll/turbine-spool-vc8/turbine-spool-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-spool-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpoolSpeed@TurbineEngineState@sim1@@QAEXABUEngineForceRecord@2@NNN@Z",
+      "rebuilt": [
+        [
+          "00000082",
+          "e8 00 00 00 00",
+          "call ?SampleAerodynamicCurve@sim1@@YINPBUAerodynamicCurve@1@N@Z"
+        ]
+      ],
+      "leftHex": "e806f8f9ff",
+      "rightHex": "e800000000",
+      "mappedOffsets": [
+        1
+      ]
+    }
+  },
+  {
+    "entry": "20c2c780",
+    "name": "Calculate nonrunning spool response rate",
+    "group": "Engine updates",
+    "parentEntry": "20c2c6d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpoolSpeed"
+    },
+    "bytes": 14,
+    "asm": [
+      [
+        "20c2c780",
+        "dc 0d b8 3c bc 20",
+        "FMUL double ptr [0x20bc3cb8]"
+      ],
+      [
+        "20c2c786",
+        "de f1",
+        "FDIVRP"
+      ],
+      [
+        "20c2c788",
+        "dc 2d b0 3c bc 20",
+        "FSUBR double ptr [0x20bc3cb0]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "14 normalized VC8 COFF bytes in the turbine spool update.",
+      "evidence": "artifacts/sim1.dll/turbine-spool-vc8/turbine-spool-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-spool-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpoolSpeed@TurbineEngineState@sim1@@QAEXABUEngineForceRecord@2@NNN@Z",
+      "rebuilt": [
+        [
+          "00000038",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [__real@3fc1eb851eb851eb]"
+        ],
+        [
+          "0000003e",
+          "de f1",
+          "fdivrp st(1),st"
+        ],
+        [
+          "00000040",
+          "dc 2d 00 00 00 00",
+          "fsubr qword ptr [__real@3fc3333333333333]"
+        ]
+      ],
+      "leftHex": "dc0db83cbc20def1dc2db03cbc20",
+      "rightHex": "dc0d00000000def1dc2d00000000",
+      "mappedOffsets": [
+        2,
+        10
+      ]
+    }
+  },
+  {
+    "entry": "20c2c7aa",
+    "name": "Check axial airflow before applying the windmilling gain",
+    "group": "Engine updates",
+    "parentEntry": "20c2c6d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpoolSpeed"
+    },
+    "bytes": 7,
+    "asm": [
+      [
+        "20c2c7aa",
+        "d8 d4",
+        "FCOM ST4"
+      ],
+      [
+        "20c2c7ac",
+        "df e0",
+        "FNSTSW AX"
+      ],
+      [
+        "20c2c7ae",
+        "f6 c4 41",
+        "TEST AH,0x41"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "7 exact VC8 COFF bytes in the turbine spool update.",
+      "evidence": "artifacts/sim1.dll/turbine-spool-vc8/turbine-spool-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-spool-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpoolSpeed@TurbineEngineState@sim1@@QAEXABUEngineForceRecord@2@NNN@Z",
+      "rebuilt": [
+        [
+          "000000ad",
+          "d8 d4",
+          "fcom st(4)"
+        ],
+        [
+          "000000af",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "000000b1",
+          "f6 c4 41",
+          "test ah,41h"
+        ]
+      ],
+      "leftHex": "d8d4dfe0f6c441",
+      "rightHex": "d8d4dfe0f6c441",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c7eb",
+    "name": "Compare the spool rate with its upper limit",
+    "group": "Engine updates",
+    "parentEntry": "20c2c6d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpoolSpeed"
+    },
+    "bytes": 13,
+    "asm": [
+      [
+        "20c2c7eb",
+        "dd 05 50 40 bb 20",
+        "FLD double ptr [0x20bb4050]"
+      ],
+      [
+        "20c2c7f1",
+        "d8 d1",
+        "FCOM"
+      ],
+      [
+        "20c2c7f3",
+        "df e0",
+        "FNSTSW AX"
+      ],
+      [
+        "20c2c7f5",
+        "f6 c4 41",
+        "TEST AH,0x41"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "13 normalized VC8 COFF bytes in the turbine spool update.",
+      "evidence": "artifacts/sim1.dll/turbine-spool-vc8/turbine-spool-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-spool-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpoolSpeed@TurbineEngineState@sim1@@QAEXABUEngineForceRecord@2@NNN@Z",
+      "rebuilt": [
+        [
+          "000000e7",
+          "dd 05 00 00 00 00",
+          "fld qword ptr [__real@4034000000000000]"
+        ],
+        [
+          "000000ed",
+          "d8 d1",
+          "fcom st(1)"
+        ],
+        [
+          "000000ef",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "000000f1",
+          "f6 c4 41",
+          "test ah,41h"
+        ]
+      ],
+      "leftHex": "dd055040bb20d8d1dfe0f6c441",
+      "rightHex": "dd0500000000d8d1dfe0f6c441",
+      "mappedOffsets": [
+        2
+      ]
+    }
+  },
+  {
+    "entry": "20c2c82e",
+    "name": "Call the CRT square root for temperature correction",
+    "group": "Engine updates",
+    "parentEntry": "20c2c6d0",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::UpdateSpoolSpeed"
+    },
+    "bytes": 5,
+    "asm": [
+      [
+        "20c2c82e",
+        "e8 8f a7 03 00",
+        "CALL 0x20c66fc2"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "5 normalized VC8 COFF bytes in the turbine spool update.",
+      "evidence": "artifacts/sim1.dll/turbine-spool-vc8/turbine-spool-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-spool-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateSpoolSpeed@TurbineEngineState@sim1@@QAEXABUEngineForceRecord@2@NNN@Z",
+      "rebuilt": [
+        [
+          "00000119",
+          "e8 00 00 00 00",
+          "call __CIsqrt"
+        ]
+      ],
+      "leftHex": "e88fa70300",
+      "rightHex": "e800000000",
+      "mappedOffsets": [
+        1
+      ]
+    }
+  },
+  {
+    "entry": "20c2c894",
+    "name": "Running torque reduction, binary64 store and response rate",
+    "group": "Engine updates",
+    "parentEntry": "20c2c850",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "EngineForceRecord::UpdateTurbineShaftTorque"
+    },
+    "bytes": 21,
+    "asm": [
+      [
+        "20c2c894",
+        "dc 0d 08 43 bc 20",
+        "FMUL double ptr [0x20bc4308]"
+      ],
+      [
+        "20c2c89a",
+        "d9 e8",
+        "FLD1"
+      ],
+      [
+        "20c2c89c",
+        "de e1",
+        "FSUBRP"
+      ],
+      [
+        "20c2c89e",
+        "de c9",
+        "FMULP"
+      ],
+      [
+        "20c2c8a0",
+        "dd 5d f8",
+        "FSTP double ptr [EBP + -0x8]"
+      ],
+      [
+        "20c2c8a3",
+        "dd 05 a8 3c bc 20",
+        "FLD double ptr [0x20bc3ca8]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "21 normalized VC8 COFF bytes inside the turbine shaft torque update.",
+      "evidence": "artifacts/sim1.dll/turbine-shaft-torque-vc8/turbine-shaft-torque-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-shaft-torque-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateTurbineShaftTorque@EngineForceRecord@sim1@@QAEXABVFlightDynamics@2@AAUTurbineEngineState@2@N@Z",
+      "rebuilt": [
+        [
+          "00000047",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [__real@3fb47ae147ae147b]"
+        ],
+        [
+          "0000004d",
+          "d9 e8",
+          "fld1"
+        ],
+        [
+          "0000004f",
+          "de e1",
+          "fsubrp st(1),st"
+        ],
+        [
+          "00000051",
+          "de c9",
+          "fmulp st(1),st"
+        ],
+        [
+          "00000053",
+          "dd 5d f8",
+          "fstp qword ptr [ebp-8]"
+        ],
+        [
+          "00000056",
+          "dd 05 00 00 00 00",
+          "fld qword ptr [__real@4028000000000000]"
+        ]
+      ],
+      "leftHex": "dc0d0843bc20d9e8dee1dec9dd5df8dd05a83cbc20",
+      "rightHex": "dc0d00000000d9e8dee1dec9dd5df8dd0500000000",
+      "mappedOffsets": [
+        2,
+        17
+      ]
+    }
+  },
+  {
+    "entry": "20c2c8b6",
+    "name": "Stopped-engine response rate",
+    "group": "Engine updates",
+    "parentEntry": "20c2c850",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "EngineForceRecord::UpdateTurbineShaftTorque"
+    },
+    "bytes": 12,
+    "asm": [
+      [
+        "20c2c8b6",
+        "dc 0d 90 37 bc 20",
+        "FMUL double ptr [0x20bc3790]"
+      ],
+      [
+        "20c2c8bc",
+        "dc 05 00 17 bb 20",
+        "FADD double ptr [0x20bb1700]"
+      ]
+    ],
+    "comparison": {
+      "status": "Normalized",
+      "full": false,
+      "scope": "12 normalized VC8 COFF bytes inside the turbine shaft torque update.",
+      "evidence": "artifacts/sim1.dll/turbine-shaft-torque-vc8/turbine-shaft-torque-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-shaft-torque-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateTurbineShaftTorque@EngineForceRecord@sim1@@QAEXABVFlightDynamics@2@AAUTurbineEngineState@2@N@Z",
+      "rebuilt": [
+        [
+          "00000066",
+          "dc 0d 00 00 00 00",
+          "fmul qword ptr [__real@4010000000000000]"
+        ],
+        [
+          "0000006c",
+          "dc 05 00 00 00 00",
+          "fadd qword ptr [__real@3fb999999999999a]"
+        ]
+      ],
+      "leftHex": "dc0d9037bc20dc050017bb20",
+      "rightHex": "dc0d00000000dc0500000000",
+      "mappedOffsets": [
+        2,
+        8
+      ]
+    }
+  },
+  {
+    "entry": "20c2c949",
+    "name": "Ordered speed comparison and smoothing branch",
+    "group": "Engine updates",
+    "parentEntry": "20c2c850",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "EngineForceRecord::UpdateTurbineShaftTorque"
+    },
+    "bytes": 7,
+    "asm": [
+      [
+        "20c2c949",
+        "df e0",
+        "FNSTSW AX"
+      ],
+      [
+        "20c2c94b",
+        "f6 c4 05",
+        "TEST AH,0x5"
+      ],
+      [
+        "20c2c94e",
+        "7a 0c",
+        "JP 0x20c2c95c"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "7 exact VC8 COFF bytes inside the turbine shaft torque update.",
+      "evidence": "artifacts/sim1.dll/turbine-shaft-torque-vc8/turbine-shaft-torque-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-shaft-torque-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateTurbineShaftTorque@EngineForceRecord@sim1@@QAEXABVFlightDynamics@2@AAUTurbineEngineState@2@N@Z",
+      "rebuilt": [
+        [
+          "000000f5",
+          "df e0",
+          "fnstsw ax"
+        ],
+        [
+          "000000f7",
+          "f6 c4 05",
+          "test ah,5"
+        ],
+        [
+          "000000fa",
+          "7a 0c",
+          "jp 00000108"
+        ]
+      ],
+      "leftHex": "dfe0f6c4057a0c",
+      "rightHex": "dfe0f6c4057a0c",
+      "mappedOffsets": []
+    }
+  },
+  {
+    "entry": "20c2c953",
+    "name": "Torque response rate and step multiplications",
+    "group": "Engine updates",
+    "parentEntry": "20c2c850",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "EngineForceRecord::UpdateTurbineShaftTorque"
+    },
+    "bytes": 6,
+    "asm": [
+      [
+        "20c2c953",
+        "dc 4d f0",
+        "FMUL double ptr [EBP + -0x10]"
+      ],
+      [
+        "20c2c956",
+        "dc 4d 10",
+        "FMUL double ptr [EBP + 0x10]"
+      ]
+    ],
+    "comparison": {
+      "status": "Exact",
+      "full": false,
+      "scope": "6 exact VC8 COFF bytes inside the turbine shaft torque update.",
+      "evidence": "artifacts/sim1.dll/turbine-shaft-torque-vc8/turbine-shaft-torque-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-shaft-torque-vc8/worker-output/disassembly.txt",
+      "buildSymbol": "?UpdateTurbineShaftTorque@EngineForceRecord@sim1@@QAEXABVFlightDynamics@2@AAUTurbineEngineState@2@N@Z",
+      "rebuilt": [
+        [
+          "000000ff",
+          "dc 4d f0",
+          "fmul qword ptr [ebp-10h]"
+        ],
+        [
+          "00000102",
+          "dc 4d 10",
+          "fmul qword ptr [ebp+10h]"
+        ]
+      ],
+      "leftHex": "dc4df0dc4d10",
+      "rightHex": "dc4df0dc4d10",
+      "mappedOffsets": []
+    }
+  },
+  {
     "entry": "20c42d90",
     "name": "Prepare linear and angular accelerations",
     "group": "Flight-state integration",
@@ -9971,348 +13206,113 @@
   },
   {
     "entry": "20c2b6d0",
-    "name": "Run the shared turbine engine update",
-    "group": "Engine updates",
-    "description": "Runs a common engine loop for jet, turboprop and classic helicopter turbine. Jet and shaft output cases use distinct helper calls.",
+    "name": "UpdateTurbineEngines",
     "ghidraName": "FUN_20c2b6d0",
+    "group": "Turbine state",
+    "description": "Runs the complete common turbine iteration with dispatch boundaries for shared start, message and engine effects.",
+    "source": {
+      "file": "src/sim1/turbine_loop.cpp",
+      "symbol": "FlightDynamics::UpdateTurbineEngines"
+    },
     "tags": [
-      "Engine updates",
-      "Turbine engines"
+      "Turbine engines",
+      "Reconstructed"
     ],
     "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-preparation-and-state.md",
+        "title": "Turbine preparation and state",
+        "description": "Live Ghidra evidence and native VC8 body and instruction-range comparisons."
+      },
       {
         "title": "Sim1 engine branch mapping",
         "file": "notes/re/sim1.dll/sim1-engine-branches.md",
         "description": "Live Ghidra and original PE evidence for the engine and rotor paths."
       }
-    ]
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "748 original and 656 rebuilt bytes. 49 exact and 91 normalized bytes in verified instruction ranges.",
+      "evidence": "artifacts/sim1.dll/turbine-state-vc8/loop/turbine-loop-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-state-vc8/loop/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineEngines",
+      "buildSymbol": "?UpdateTurbineEngines@FlightDynamics@sim1@@QAEXNAAVTurbineStartActions@2@@Z",
+      "leftHex": "8bff558bec83ec308b45088b80700200008b085333d23991e419000056578945f80f84bc0200003991540400008955f00f86ad020000dd450c8955e8d95de08955eceb0eeb0a8da424000000008d49008bc18bb8340400008bb03c0400000375e88b45f0037dec8b4d0883c001508d5e2c897de48975f48945dce8615dffff8b4d088b45f051e865c0fcff8b5df883bb84040000007419dd450c8b55f08b450883ec08dd1c24528bce8bd7e8901c00008bcf8bf3e8470200008b75f48bc3e8fd04000083ec08dd1c248bfe8b75e45756e82b060000dd450c83ec088bd6dd1c248bc3e8f90600008b4508508bc6e87e080000dd450c8b45f883ec088bdedd1c24e83b0c0000dd450c83ec088bd7dd1c248b7df8e8680b00008bc78b088a896c04000080f9017526dd450c8b5df483ec088bfedd1c24e816090000dd450c8b45f883ec08dd1c24e8150a0000eb5c80f905740580f9037555dd450c8b7df483ec10dd5c24088bdedd8004010000dd1c24e88c0e00008bdfdd435cdc0d2036bc20dd55d4dd5e08dd0580bac720e862b70300dc7dd48b550883ec08dd5e18dd450cdd1c245652e8d70f00008b45f8dd46108b388bb7e419000083ec10dd5c240881c6200b0000dd805c010000dd1c24e88e07faff8b87e4190000dc088b4df88b75e451dc0d78bac7208bfedd1d60bac720e81c0a00008b7df48b45f8578bdee84e0d0000568bcfe846030000dd450c8b55f883ec08dd1c24528bfee892100000dd450c8b7df48b5d0883ec08dd1c24568bd7e89b110000dd450c83ec08dd1c24538bdf8bd6e838150000dd450c8b45f883ec088bcedd1c24e8b5120000dd450c8b7d0883ec088bd6dd1c248bc7e840140000d945e0518b4df0d91c248bc7e82f160000dd4608dc2683ec08dc0de800bc20dd4608dc0d1836bc20dec1dc6668dcc0dd450cdcc9d9c9dc4668dd5e688b03dd1c248b9be40000005057e8124effff8b4df88b45dc8b118145ec800000008145e8ec0000003b82540400008945f00f826dfdffff5f5e5b8be55dc20c00",
+      "rightHex": "8bff558bec83ec20538b99700200008b0333d23990e4190000894dfc0f84670200003990540400008955f80f8658020000dd450856d95dec578955f08955f4eb038b4dfc8b45f88bbb3c0400008bb334040000037df40375f083c00150518945e8e8000000008b45f88b4dfc5051e80000000083c41083bb8404000000741f8b5510dd45088b45f88b4dfc5283ec08dd1c2450565751e80000000083c41c8bd38bcee80000000057538bcee80000000083ec08dd1c2457538bcee800000000dd450883ec08dd1c2457538bcee8000000008b55108b45fc5257508bcee800000000dd450883ec08dd1c2457538bcee800000000dd450883ec08dd1c2457538bcee8000000008b0b0fb6816c04000083f8017525dd450883ec08dd1c2457538bcee800000000dd450883ec08dd1c24538bcee800000000eb6d83f803740583f8057563dd050000000083ec18dd5c24108bcedd4508dd5c2408dd8304010000dd1c2457e800000000dd475cdc0d00000000dd5de0dd45e0dd5e08dd45e0dd5de0dd0500000000e800000000dc7de08b55fc83ec088bcfdd5e18dd4508dd1c245652e800000000538bcee800000000538bcee80000000057538bcee800000000568bcfe800000000dd450883ec08dd1c24538bcee800000000dd45088b45fc83ec08dd1c2457508bcee800000000dd45088b4dfc83ec08dd1c24565751e800000000dd450883c40cdd1c24565753e800000000dd45088b55fcdd5c240c83c40c565752e800000000d945ec8b45f8d95c24108b4dfc83c4105051e800000000dd450883c4048bcedd1c24e800000000dd45088b4d108b118b45fc8b520c83ec08dd1c245750ffd28b45e88b0b8145f4ec0000008145f0800000003b81540400008945f80f82bafdffff5f5e5b8be55dc20c00",
+      "mappedOffsets": []
+    }
   },
   {
     "entry": "20c2c620",
-    "name": "Publish per-engine turbine thrust",
-    "group": "Engine force outputs",
-    "description": "Stores the thrust at engine +0x34 read by FUN_20c010f0.",
+    "name": "Publish per-engine net turbine thrust",
     "ghidraName": "FUN_20c2c620",
+    "group": "Engine force outputs",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "TurbineEngineState::PublishNetThrust"
+    },
     "tags": [
       "Engine updates",
-      "Turbine engines"
+      "Turbine engines",
+      "Reconstructed"
     ],
-    "asm": [
-      [
-        "20c2c620",
-        "",
-        "MOV EDI, EDI"
-      ],
-      [
-        "20c2c622",
-        "",
-        "PUSH EBP"
-      ],
-      [
-        "20c2c623",
-        "",
-        "MOV EBP, ESP"
-      ],
-      [
-        "20c2c625",
-        "",
-        "SUB ESP, 0x1c"
-      ],
-      [
-        "20c2c628",
-        "",
-        "PUSH ESI"
-      ],
-      [
-        "20c2c629",
-        "",
-        "PUSH EDI"
-      ],
-      [
-        "20c2c62a",
-        "",
-        "MOV EDX, EBX"
-      ],
-      [
-        "20c2c62c",
-        "",
-        "MOV ESI, EAX"
-      ],
-      [
-        "20c2c62e",
-        "",
-        "CALL 0x20c2c4e0"
-      ],
-      [
-        "20c2c633",
-        "",
-        "FSTP double ptr [EBP + -0x1c]"
-      ],
-      [
-        "20c2c636",
-        "",
-        "MOV EAX, dword ptr [ESI]"
-      ],
-      [
-        "20c2c638",
-        "",
-        "FLD double ptr [0x20c7ba60]"
-      ],
-      [
-        "20c2c63e",
-        "",
-        "MOV EDI, dword ptr [EAX + 0x19e4]"
-      ],
-      [
-        "20c2c644",
-        "",
-        "FST double ptr [EBP + -0x14]"
-      ],
-      [
-        "20c2c647",
-        "",
-        "CMP dword ptr [EDI + 0x24], 0x0"
-      ],
-      [
-        "20c2c64b",
-        "",
-        "JBE 0x20c2c6a7"
-      ],
-      [
-        "20c2c64d",
-        "",
-        "MOV EAX, ESI"
-      ],
-      [
-        "20c2c64f",
-        "",
-        "FSTP ST0"
-      ],
-      [
-        "20c2c651",
-        "",
-        "MOV EDX, EBX"
-      ],
-      [
-        "20c2c653",
-        "",
-        "CALL 0x20c2bb20"
-      ],
-      [
-        "20c2c658",
-        "",
-        "FSTP float ptr [EBP + -0x8]"
-      ],
-      [
-        "20c2c65b",
-        "",
-        "FLDZ"
-      ],
-      [
-        "20c2c65d",
-        "",
-        "FCOMP float ptr [EBP + -0x8]"
-      ],
-      [
-        "20c2c660",
-        "",
-        "FNSTSW AX"
-      ],
-      [
-        "20c2c662",
-        "",
-        "TEST AH, 0x5"
-      ],
-      [
-        "20c2c665",
-        "",
-        "JP 0x20c2c6a4"
-      ],
-      [
-        "20c2c667",
-        "",
-        "FLD double ptr [ESI + 0x15c]"
-      ],
-      [
-        "20c2c66d",
-        "",
-        "SUB ESP, 0x8"
-      ],
-      [
-        "20c2c670",
-        "",
-        "LEA ESI, [EDI + 0x19a0]"
-      ],
-      [
-        "20c2c676",
-        "",
-        "FSTP double ptr [ESP]"
-      ],
-      [
-        "20c2c679",
-        "",
-        "CALL 0x20bcbf60"
-      ],
-      [
-        "20c2c67e",
-        "",
-        "FLD1"
-      ],
-      [
-        "20c2c680",
-        "",
-        "FSUB ST1, ST0"
-      ],
-      [
-        "20c2c682",
-        "",
-        "FLD float ptr [EBP + -0x8]"
-      ],
-      [
-        "20c2c685",
-        "",
-        "FMULP ST2"
-      ],
-      [
-        "20c2c687",
-        "",
-        "FLDZ"
-      ],
-      [
-        "20c2c689",
-        "",
-        "FCOM ST2"
-      ],
-      [
-        "20c2c68b",
-        "",
-        "FNSTSW AX"
-      ],
-      [
-        "20c2c68d",
-        "",
-        "TEST AH, 0x5"
-      ],
-      [
-        "20c2c690",
-        "",
-        "JP 0x20c2c69b"
-      ],
-      [
-        "20c2c692",
-        "",
-        "FSTP ST0"
-      ],
-      [
-        "20c2c694",
-        "",
-        "FADDP"
-      ],
-      [
-        "20c2c696",
-        "",
-        "FMUL double ptr [EBP + -0x14]"
-      ],
-      [
-        "20c2c699",
-        "",
-        "JMP 0x20c2c6a7"
-      ],
-      [
-        "20c2c69b",
-        "",
-        "FSTP ST2"
-      ],
-      [
-        "20c2c69d",
-        "",
-        "FADDP"
-      ],
-      [
-        "20c2c69f",
-        "",
-        "FMUL double ptr [EBP + -0x14]"
-      ],
-      [
-        "20c2c6a2",
-        "",
-        "JMP 0x20c2c6a7"
-      ],
-      [
-        "20c2c6a4",
-        "",
-        "FLD double ptr [EBP + -0x14]"
-      ],
-      [
-        "20c2c6a7",
-        "",
-        "FMUL double ptr [EBP + -0x1c]"
-      ],
-      [
-        "20c2c6aa",
-        "",
-        "MOV ECX, dword ptr [EBP + 0x8]"
-      ],
-      [
-        "20c2c6ad",
-        "",
-        "POP EDI"
-      ],
-      [
-        "20c2c6ae",
-        "",
-        "POP ESI"
-      ],
-      [
-        "20c2c6af",
-        "",
-        "FSUB double ptr [0x20c7ba58]"
-      ],
-      [
-        "20c2c6b5",
-        "",
-        "FST double ptr [EBX + 0x48]"
-      ],
-      [
-        "20c2c6b8",
-        "",
-        "FSTP double ptr [ECX + 0x34]"
-      ],
-      [
-        "20c2c6bb",
-        "",
-        "MOV ESP, EBP"
-      ],
-      [
-        "20c2c6bd",
-        "",
-        "POP EBP"
-      ],
-      [
-        "20c2c6be",
-        "",
-        "RET 0x4"
-      ]
-    ],
-    "listing": "artifacts/sim1.dll/engine-branches-ghidra.json",
     "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-turbine-thrust-and-tail.md",
+        "title": "Turbine thrust and the engine-loop boundary",
+        "description": "Original listing, native VC8 comparison and host x86 results."
+      },
       {
         "title": "Sim1 engine branch mapping",
         "file": "notes/re/sim1.dll/sim1-engine-branches.md",
         "description": "Live Ghidra and original PE evidence for the engine and rotor paths."
       }
-    ]
+    ],
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "161 original and 164 rebuilt bytes. 18 exact and 14 normalized VC8 COFF bytes in the listed scopes.",
+      "evidence": "artifacts/sim1.dll/turbine-thrust-vc8/turbine-thrust-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-thrust-vc8/worker-output/disassembly.txt",
+      "symbol": "PublishNetThrust",
+      "buildSymbol": "?PublishNetThrust@TurbineEngineState@sim1@@QAEXABUIntegrationHistory@2@AAUEngineForceRecord@2@@Z",
+      "leftHex": "8bff558bec83ec1c56578bd38bf0e8adfeffffdd5de48b06dd0560bac7208bb8e4190000dd55ec837f2400765a8bc6ddd88bd3e8c8f4ffffd95df8d9eed85df8dfe0f6c4057a3ddd865c01000083ec088db7a0190000dd1c24e8e2f8f9ffd9e8dce9d945f8decad9eed8d2dfe0f6c4057a09ddd8dec1dc4deceb0cdddadec1dc4deceb03dd45ecdc4de48b4d085f5edc2558bac720dd5348dd59348be55dc20400",
+      "rightHex": "8bff558bec83ec1053568b750857568bf9e800000000dd5df08b06dd05000000008b98e4190000dd55f8837b2400745956ddd88bcfe800000000d95d08d9eed85d08dfe0f6c4057a3ddd865c01000083ec088d8ba0190000dd1c24e800000000d9e8dce9d94508decad9eed8d2dfe0f6c4057a09ddd8dec1dc4df8eb0cdddadec1dc4df8eb03dd45f8dc4df08b4d0cdc2500000000dd57485f5edd59345b8be55dc20800"
+    },
+    "description": "Publishes the turbine and engine net thrust after the reverser, afterburner adjustment and ram drag."
   },
   {
     "entry": "20c2c850",
-    "name": "Calculate turbine output for types 3 and 5",
+    "name": "Update turbine shaft torque",
     "group": "Engine updates",
-    "description": "Stores engine output at +0x44 on the shaft-producing turbine sub-branch.",
+    "description": "Applies drive, density and drag curves for engine types 3 and 5 and publishes absolute and normalized shaft torque.",
     "ghidraName": "FUN_20c2c850",
+    "source": {
+      "file": "src/sim1/turbine.cpp",
+      "symbol": "EngineForceRecord::UpdateTurbineShaftTorque"
+    },
+    "comparison": {
+      "status": "Different",
+      "full": true,
+      "scope": "Native VC8 COFF body, 291 original and 288 rebuilt bytes. Four child scopes verify 13 exact and 33 normalized bytes.",
+      "evidence": "artifacts/sim1.dll/turbine-shaft-torque-vc8/turbine-shaft-torque-comparison.json",
+      "listing": "artifacts/sim1.dll/turbine-shaft-torque-vc8/worker-output/disassembly.txt",
+      "symbol": "UpdateTurbineShaftTorque",
+      "buildSymbol": "?UpdateTurbineShaftTorque@EngineForceRecord@sim1@@QAEXABVFlightDynamics@2@AAUTurbineEngineState@2@N@Z",
+      "leftHex": "8bff558bec8b45088b887002000083ec10837b080056578b3974408b450cdd40108bb7e419000083ec0881c6441a0000dd1c24e8d8f6f9ffdc8fd8020000d943288b4508dc0d0843bc20d9e8dee1dec9dd5df8dd05a83cbc20eb17d9ee8b4d0cdd5df8dd4128dc0d9037bc20dc050017bb208b8870020000dd5df083b988040000007423d9ee8b430485c0dd55f8745d8b10ddd8d9ee6a0051d91c24508b4248ffd0dd45f8eb468b4818dd81340100008bb7e419000083ec0881c6781a0000dd1c24e849f6f9ffdc4df88b550c83ec08dd5df88db720060000dd4208dd1c24e82cf6f9ffdc8fd8020000dc6df8dd0548fcbb208b4d0cdc5908dfe0f6c4057a0cdc6344dc4df0dc4d10dc4344dd5b44dd4344dcb7d80200005f5edd59288be55dc21000",
+      "rightHex": "8bff558bec8b450883ec10538b5d0c568bf1837e08008b8870020000578b39743d8b8fe4190000dd431083ec0881c1441a0000dd1c24e800000000dc8fd8020000d946288b4508dc0d00000000d9e8dee1dec9dd5df8dd0500000000eb14d9eedd5df8dd4328dc0d00000000dc05000000008b9070020000dd5df083ba88040000007423d9ee8b460485c0dd55f8745c8b08ddd8d9ee8b51486a0051d91c2450ffd2dd45f8eb458b40188b8fe4190000dd803401000083ec0881c1781a0000dd1c24e800000000dc4df883ec088d8f20060000dd5df8dd4308dd1c24e800000000dd87d8020000dec9dc6df8dd0500000000dc5b08dfe0f6c4057a0cdc6644dc4df0dc4d10dc4644dd5e44dd4644dcb7d80200005f5edd5b285b8be55dc21000"
+    },
     "tags": [
-      "Turbine engines"
+      "Turbine engines",
+      "Reconstructed"
     ],
     "notes": [
+      {
+        "title": "Turbine shaft torque",
+        "file": "notes/re/sim1.dll/sim1-turbine-shaft-torque.md",
+        "description": "Drive, drag and response curves, shaft torque publication, native VC8 comparisons and host x86 results."
+      },
       {
         "title": "Sim1 engine branch mapping",
         "file": "notes/re/sim1.dll/sim1-engine-branches.md",

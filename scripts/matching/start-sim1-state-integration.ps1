@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory)][ValidatePattern('^sim1-[A-Za-z0-9_-]+$')][string]$RunId,
     [ValidateSet('Fast', 'Precise')][string]$Profile = 'Fast',
-    [ValidateSet('Integration', 'Position', 'PositionLinked', 'ForcesLinked', 'ThrustLinked', 'PropulsionLinked', 'Turbine', 'Electrical', 'AerodynamicMoment')][string]$Target = 'Integration',
+    [ValidateSet('Integration', 'Position', 'PositionLinked', 'ForcesLinked', 'ThrustLinked', 'PropulsionLinked', 'Turbine', 'TurbineShaftTorque', 'TurbineControls', 'TurbineIndications', 'TurbineStart', 'TurbineFuel', 'TurbineLoop', 'Electrical', 'AerodynamicMoment')][string]$Target = 'Integration',
     [ValidateRange(1,900)][int]$TimeoutSeconds = 180
 )
 
@@ -18,6 +18,18 @@ $commandComponent = $component
 $artifactKind = 'COFF object'
 $sourceName = 'state_integration.cpp'
 $entries = @('20c43110', '20c42d90', '20bdeec0', '20bdef30', '20bdefa0')
+$turbineStateTargets = @{
+    TurbineControls = @('turbine-controls', 'turbine_controls.cpp', @('20c205d0', '20c2bc90', '20c2bdd0', '20c2beb0', '20c2bff0', '20c2c040', '20c2c120', '20c2c230', '20c2c350', '20c2c410'))
+    TurbineIndications = @('turbine-indications', 'turbine_indications.cpp', @('20c2c980', '20c2caa0', '20c2cbe0', '20c2cd80', '20c2ce50', '20c2cf80'))
+    TurbineStart = @('turbine-start', 'engine_start.cpp', @('20c211c0', '20c214b0', '20c2a130', '20c2d410'))
+    TurbineFuel = @('turbine-fuel', 'engine_fuel.cpp', @('20bf77c0', '20bf79e0', '20bf8170'))
+    TurbineLoop = @('turbine-loop', 'turbine_loop.cpp', @('20c2b6d0'))
+}
+if ($turbineStateTargets.ContainsKey($Target)) {
+    $component, $sourceName, $entries = $turbineStateTargets[$Target]
+    $commandComponent = 'turbine-state'
+    if (!$PSBoundParameters.ContainsKey('Profile')) { $Profile = 'Precise' }
+}
 if ($Target -eq 'AerodynamicMoment') {
     $component = 'aerodynamic-moment'
     $commandComponent = $component
@@ -41,6 +53,13 @@ if ($Target -eq 'Electrical') {
     $commandComponent = $component
     $sourceName = 'electrical.cpp'
     $entries = @('20bfee30', '20bfef40')
+    if (!$PSBoundParameters.ContainsKey('Profile')) { $Profile = 'Precise' }
+}
+if ($Target -eq 'TurbineShaftTorque') {
+    $component = 'turbine-shaft-torque'
+    $commandComponent = $component
+    $sourceName = 'turbine.cpp'
+    $entries = @('20c2b879', '20c2b951', '20c2b9d0', '20c2bb20', '20c2c2e0', '20c2c4e0', '20c2c620', '20c2c6d0', '20c2c850')
     if (!$PSBoundParameters.ContainsKey('Profile')) { $Profile = 'Precise' }
 }
 if ($Target -in @('Position', 'PositionLinked')) {
@@ -95,12 +114,20 @@ try {
         $contextHash = (Get-FileHash "$job\source\$contextName").Hash
     }
     $extraHashes = [ordered]@{}
-    if ($Target -in @('Electrical', 'Turbine', 'ThrustLinked', 'PropulsionLinked')) {
+    if ($Target -in @('Electrical', 'Turbine', 'TurbineStart', 'ThrustLinked', 'PropulsionLinked')) {
         $electricalHeader = 'electrical.h'
         Copy-Item "$project\src\sim1\$electricalHeader" "$job\source"
         $extraHashes[$electricalHeader] = (Get-FileHash "$job\source\$electricalHeader").Hash
     }
-    if ($Target -in @('AerodynamicMoment', 'Turbine', 'ThrustLinked', 'PropulsionLinked')) {
+    if ($Target -in @('Turbine', 'TurbineShaftTorque', 'ThrustLinked', 'PropulsionLinked') -or $turbineStateTargets.ContainsKey($Target)) {
+        $turbineHeader = 'turbine.h'
+        Copy-Item "$project\src\sim1\$turbineHeader" "$job\source"
+        $extraHashes[$turbineHeader] = (Get-FileHash "$job\source\$turbineHeader").Hash
+        $tableHeader = 'coefficient_table.h'
+        Copy-Item "$project\src\sim1\$tableHeader" "$job\source"
+        $extraHashes[$tableHeader] = (Get-FileHash "$job\source\$tableHeader").Hash
+    }
+    if ($Target -in @('AerodynamicMoment', 'Turbine', 'TurbineShaftTorque', 'ThrustLinked', 'PropulsionLinked') -or $turbineStateTargets.ContainsKey($Target)) {
         $curveHeader = 'aerodynamic_curve.h'
         Copy-Item "$project\src\sim1\$curveHeader" "$job\source"
         $extraHashes[$curveHeader] = (Get-FileHash "$job\source\$curveHeader").Hash
@@ -129,6 +156,9 @@ try {
     }
 
     $build = [IO.File]::ReadAllText("$PSScriptRoot\guest-build-sim1-$commandComponent.cmd") -replace '\r?\n', "`r`n"
+    if ($turbineStateTargets.ContainsKey($Target)) {
+        $build = $build.Replace('SIM1_SOURCE_NAME', $sourceName)
+    }
     if ($Target -eq 'PropulsionLinked') {
         $build = $build.Replace('/DSIM1_THRUST_COMPARISON', '/DSIM1_PROPULSION_COMPARISON')
     }
@@ -186,8 +216,21 @@ try {
         Copy-Item "$run\worker-output\fsx.exe" "$run\sim1-$component.obj"
     }
     Copy-Item "$run\worker-output\fsx.pdb" "$run\sim1-$component.pdb"
-    node "$project\scripts\compare-sim1-$component.cjs" $run
-    if ($LASTEXITCODE -ne 0) { throw 'Sim1 comparison failed' }
+    if ($turbineStateTargets.ContainsKey($Target)) {
+        node "$project\scripts\compare-sim1-turbine-state.cjs" $run $component
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 turbine state comparison failed' }
+    } else {
+        node "$project\scripts\compare-sim1-$component.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 comparison failed' }
+    }
+    if ($Target -eq 'TurbineShaftTorque') {
+        node "$project\scripts\compare-sim1-turbine-spool.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 turbine spool comparison failed' }
+        node "$project\scripts\compare-sim1-turbine-inlet.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 turbine inlet comparison failed' }
+        node "$project\scripts\compare-sim1-turbine-thrust.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 turbine thrust comparison failed' }
+    }
     if ($Target -eq 'Turbine') {
         node "$project\scripts\compare-sim1-induced-airspeed.cjs" $run
         if ($LASTEXITCODE -ne 0) { throw 'Sim1 induced airspeed comparison failed' }
