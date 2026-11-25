@@ -67,6 +67,9 @@ records both return paths and the comparison scopes for `0x20c013a0`.
 component 2 composition and both return paths for `0x20c01890`.
 [Normal airplane yaw moment](sim1-yaw-moment.md) records the
 component 1 composition and both return paths for `0x20c020a0`.
+[Normal airplane aerodynamic forces](sim1-aerodynamic-forces.md)
+records the three scalar force calculations and the output rotation
+before the moment calls in `0x20c45510`.
 
 ## Mass and inertia inputs
 

@@ -1,5 +1,15 @@
 # Analysis change log
 
+2026-11-25 — Reconstructed the shared aerodynamic pressure and
+rate scales, retained VC8 comparison and dashboard listings,
+and saved scoped Ghidra tags on `sim1.dll:0x20c00530`.
+
+2026-11-25 — Reconstructed airplane lift, drag, side force and
+normal body-axis force publication in `sim1.dll`. Retained native
+comparisons and the original and rebuilt dashboard listings.
+Saved Ghidra tags and three small coefficient definitions.
+[Normal airplane aerodynamic forces](sim1.dll/sim1-aerodynamic-forces.md).
+
 2026-11-25 — Reconstructed the normal yaw callback in
 `sim1.dll:0x20c020a0`, including the external tanks, asymmetric
 propeller thrust, gyroscopic reaction and SimpleAero return.

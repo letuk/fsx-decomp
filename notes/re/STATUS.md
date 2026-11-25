@@ -1,5 +1,24 @@
 # FSX shared knowledge
 
+2026-11-25 — Reconstructed nine pressure and rate scales in
+`sim1.dll:0x20c00530`, from `0x20c0054f` through `0x20c005f2`.
+The VC8 COFF comparison verifies all output stores and contains
+19 exact bytes in five ranges. The full extracted body differs.
+Ghidra revision `1795609326019:62a95bf0:6` was saved and read back
+clean. The high-alpha reference correction and simulator
+verification remain open.
+[Pressure and rate scales](sim1.dll/sim1-aerodynamic-forces.md#pressure-and-rate-scales).
+
+2026-11-25 — Reconstructed the normal airplane lift, drag and
+side-force calculations in `sim1.dll` and their body-axis
+publication in `0x20c45510`. The lift calculation publishes four
+wing loads shared with roll. The native COFF comparison contains
+72 exact and 64 normalized bytes. The full force bodies and the
+extracted output scope differ. Ghidra revision
+`1795569949604:d6cfccaa:649` was saved and read back clean.
+Linked force matching and simulator verification remain open.
+[Normal airplane aerodynamic forces](sim1.dll/sim1-aerodynamic-forces.md).
+
 2026-11-25 — Reconstructed normal airplane yaw composition in
 `sim1.dll:0x20c020a0`, including propeller gyroscopic reaction,
 P-factor, external tanks and both return paths. Native COFF

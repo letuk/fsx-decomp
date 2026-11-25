@@ -51,7 +51,7 @@ for differences in the listings. The existing pitch, roll, state
 integration and linked propulsion comparisons were reproduced. Linked yaw matching, simulator
 verification and the alternate airplane model remain open.
 
-- [C++ yaw calculation](../../../src/sim1/aerodynamic_moment.cpp#L1020)
+- [C++ yaw calculation](../../../src/sim1/aerodynamic_moment.cpp#L1062)
 - [Original yaw listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c020a0.asm)
 - [Native COFF comparison](../../../artifacts/sim1.dll/yaw-sum-comparison.json)
 - [Ghidra bindings and save state](../../../artifacts/sim1.dll/yaw-sum-ghidra.json)

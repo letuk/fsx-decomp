@@ -1,5 +1,21 @@
 # Sources and verification limits
 
+The aerodynamic pressure and rate scales use the live
+`sim1.dll:0x20c00530` listing and input writers, the pinned PE,
+and native VC8 COFF. The comparison verifies nine stores, the
+quarter-density literal and five exact instruction ranges.
+[Pressure and rate scales](sim1.dll/sim1-aerodynamic-forces.md#pressure-and-rate-scales).
+
+The normal airplane aerodynamic force reconstruction in `sim1.dll`
+uses live Ghidra listings for the three scalar queries and their
+producer, the installed coefficient table, runtime load writers,
+and the pinned PE and native VC8 COFF. The vector rotation and
+the original sums were checked through the x87 listings. Three
+getter bodies and fifteen disjoint instruction ranges match
+exactly or after address validation. Full-body byte matching,
+linked matching and simulator verification remain open.
+[Normal airplane aerodynamic forces](sim1.dll/sim1-aerodynamic-forces.md).
+
 The normal airplane yaw reconstruction in `sim1.dll` uses the
 live `0x20c020a0` listing, coefficient slot loads and targets,
 the external tank bindings, and the pinned PE and native VC8

@@ -47,12 +47,18 @@ struct AirplaneGeometry {
     double wingArea;
     double wingSpan;
     double referenceChord;
-    char unknown18[0xb4];
+    char unknown18[0x30];
+    unsigned dragCorrectionSelector;
+    char unknown4c[0x80];
     double horizontalTailIncidence;
 };
 
 struct AirplaneAerodynamicTables {
-    char unknown00[0x54];
+    char unknown00[0x2c];
+    double spoilerLift;
+    char unknown34[0x10];
+    double flapDrag;
+    double spoilerDrag;
     double elevatorMoment;
     double elevatorTrimMoment;
     double pitchRateMoment;
@@ -94,7 +100,28 @@ struct AirplaneCoefficientModel;
 // Minimum ABI of the original coefficient table at 0x20bc2618.
 // The unreconstructed members retain their original virtual calls.
 struct AirplaneCoefficientDispatch {
-    const void* slots00To80[33];
+    const void* slot00;
+    double (__thiscall* wingLift)(const AirplaneCoefficientModel*, double alpha);
+    double (__thiscall* pitchRateLift)(const AirplaneCoefficientModel*);
+    double (__thiscall* elevatorLift)(const AirplaneCoefficientModel*);
+    double (__thiscall* alphaRateLift)(const AirplaneCoefficientModel*);
+    double (__thiscall* tailIncidenceLift)(const AirplaneCoefficientModel*);
+    const void* slot18;
+    double (__thiscall* spoilerLift)(const AirplaneCoefficientModel*);
+    double (__thiscall* spanNormalizedLiftScale)(const AirplaneCoefficientModel*);
+    double (__thiscall* liftCurveScale)(const AirplaneCoefficientModel*);
+    double (__thiscall* baseDrag)(const AirplaneCoefficientModel*);
+    double (__thiscall* inducedDrag)(const AirplaneCoefficientModel*, double slipstreamLift);
+    double (__thiscall* flapDrag)(const AirplaneCoefficientModel*);
+    const void* slot34;
+    double (__thiscall* spoilerDrag)(const AirplaneCoefficientModel*);
+    double (__thiscall* supplementaryDrag)(const AirplaneCoefficientModel*);
+    double (__thiscall* dragScale)(const AirplaneCoefficientModel*);
+    double (__thiscall* rollRateSideForce)(const AirplaneCoefficientModel*);
+    double (__thiscall* yawRateSideForce)(const AirplaneCoefficientModel*);
+    double (__thiscall* rudderSideForce)(const AirplaneCoefficientModel*);
+    double (__thiscall* sideslipSideForce)(const AirplaneCoefficientModel*);
+    const void* slots54To80[12];
     double (__thiscall* sideslipRoll)(const AirplaneCoefficientModel*);
     double (__thiscall* rudderRoll)(const AirplaneCoefficientModel*);
     double (__thiscall* aileronRoll)(const AirplaneCoefficientModel*, int surface);
@@ -115,6 +142,9 @@ struct AirplaneCoefficientDispatch {
 };
 
 struct AirplaneCoefficientModel {
+    double GetSpoilerLiftCoefficient() const;
+    double GetFlapDragCoefficient() const;
+    double GetSpoilerDragCoefficient() const;
     double CalculateBaselineMoment() const;
     double CalculateElevatorCoefficient() const;
     double CalculatePitchRateCoefficient() const;
@@ -202,6 +232,14 @@ extern double secondOuterWingLift;
 extern double secondInnerWingLift;
 extern double firstInnerWingLift;
 extern double firstOuterWingLift;
+extern double firstOuterWingLiftMultiplier;
+extern double firstInnerWingLiftMultiplier;
+extern double secondInnerWingLiftMultiplier;
+extern double secondOuterWingLiftMultiplier;
+extern double firstInnerWingSlipstreamLift;
+extern double secondInnerWingSlipstreamLift;
+extern double firstWingSlipstreamDrag;
+extern double secondWingSlipstreamDrag;
 
 class AirplaneMomentModel {
 public:
@@ -228,6 +266,10 @@ public:
     double CalculatePropellerPFactorYaw(const AirplaneDynamics& airplane) const;
     double CalculateExternalTankYaw(AirplaneDynamics& airplane) const;
     double CalculateSimpleYawMoment(double rudder, double yawRate, double rollRate, double sideslip) const;
+    double CalculateLift(AirplaneDynamics& airplane) const;
+    double CalculateDrag(AirplaneDynamics& airplane) const;
+    double CalculateSideForce(const AirplaneDynamics& airplane) const;
+    void CalculateAerodynamicForce(AirplaneDynamics& airplane, Vector3& force) const;
 
     char unknown00[4];
     const AirplaneDynamics* controlOwner;
@@ -1067,6 +1109,204 @@ double AirplaneMomentModel::CalculateYawMoment(AirplaneDynamics& airplane, const
     }
     return rudder + yawRate + trim + rollRate + sideslip + ailerons + additional + slipstream +
         gyro + pFactor + forceTransfer + externalTanks + slipstreamTail;
+}
+
+typedef char CheckForceCoefficientSlots[offsetof(AirplaneCoefficientDispatch, wingLift) == 0x4 &&
+    offsetof(AirplaneCoefficientDispatch, baseDrag) == 0x28 &&
+    offsetof(AirplaneCoefficientDispatch, sideslipSideForce) == 0x50 ? 1 : -1];
+typedef char CheckForceCoefficientFields[offsetof(AirplaneAerodynamicTables, spoilerLift) == 0x2c &&
+    offsetof(AirplaneAerodynamicTables, flapDrag) == 0x44 && offsetof(AirplaneAerodynamicTables, spoilerDrag) == 0x4c ? 1 : -1];
+typedef char CheckForceState[offsetof(IntegrationHistory, aerodynamicLift) == 0x5c &&
+    offsetof(IntegrationHistory, aerodynamicDrag) == 0x64 && offsetof(IntegrationHistory, liftAdjustment) == 0x478 &&
+    offsetof(IntegrationHistory, lateralForceRateScale) == 0x748 && offsetof(IntegrationHistory, liftRateScale) == 0x758 ? 1 : -1];
+typedef char CheckForceConfiguration[offsetof(AirplaneConfiguration, settings.cruiseLiftScalar) == 0x112c &&
+    offsetof(AirplaneGeometry, dragCorrectionSelector) == 0x48 ? 1 : -1];
+
+// Original: sim1.dll 0x20c4f640, coefficient-model slot +0x1c.
+__declspec(noinline) double AirplaneCoefficientModel::GetSpoilerLiftCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->spoilerLift;
+}
+
+// Original: sim1.dll 0x20c4fa50, coefficient-model slot +0x30.
+__declspec(noinline) double AirplaneCoefficientModel::GetFlapDragCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->flapDrag;
+}
+
+// Original: sim1.dll 0x20c4fa90, coefficient-model slot +0x38.
+__declspec(noinline) double AirplaneCoefficientModel::GetSpoilerDragCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->spoilerDrag;
+}
+
+// Original: sim1.dll 0x20c00a00, lift and wing-load publication.
+__declspec(noinline) double AirplaneMomentModel::CalculateLift(AirplaneDynamics& airplane) const
+{
+    if (coefficients == 0) {
+        return 0.0;
+    }
+    IntegrationHistory& state = *airplane.history;
+    const AirplaneConfiguration& configuration = *airplane.airframeConfiguration;
+    const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
+    const AirplaneHighAngleModel* angleModel = configuration.highAngleModel;
+    const float referenceAngle = angleModel->dispatch->referenceAngle(angleModel);
+    volatile double spanScale = coefficient.spanNormalizedLiftScale(coefficients);
+    volatile double liftScale = coefficient.liftCurveScale(coefficients);
+    const double quarterLift = coefficient.wingLift(coefficients, state.attitudeAngle) * 0.25;
+    const double outerLift = quarterLift * spanScale * liftScale * state.wingPressureForce;
+    double firstOuter = outerLift * firstOuterWingLiftMultiplier;
+    double firstInner = (quarterLift + firstInnerWingSlipstreamLift) * spanScale * liftScale *
+        state.wingPressureForce * firstInnerWingLiftMultiplier;
+    double secondInner = (quarterLift + secondInnerWingSlipstreamLift) * spanScale * liftScale *
+        state.wingPressureForce * secondInnerWingLiftMultiplier;
+    double secondOuter = outerLift * secondOuterWingLiftMultiplier;
+    firstOuterWingLift = firstOuter;
+    firstInnerWingLift = firstInner;
+    secondInnerWingLift = secondInner;
+    secondOuterWingLift = secondOuter;
+    if (state.firstWingAttenuationInput > 0.0 || state.secondWingAttenuationInput > 0.0) {
+        const AerodynamicCurveStorage<5> attenuation = {{5}, {
+            {0.0, 1.0}, {0.21, 0.15}, {0.4, 0.08}, {0.6, 0.05}, {1.0, 0.03}
+        }};
+        volatile double firstScale = SampleAerodynamicCurve(&attenuation.curve, state.firstWingAttenuationInput);
+        const double secondScale = SampleAerodynamicCurve(&attenuation.curve, state.secondWingAttenuationInput);
+        firstOuter = firstOuterWingLift * firstScale;
+        firstInner = firstInnerWingLift * firstScale;
+        secondInner = secondInnerWingLift * secondScale;
+        secondOuter = secondOuterWingLift * secondScale;
+        firstOuterWingLift = firstOuter;
+        firstInnerWingLift = firstInner;
+        secondInnerWingLift = secondInner;
+        secondOuterWingLift = secondOuter;
+    }
+
+    const double alphaRatio = fabs(state.attitudeAngle / referenceAngle);
+    const double blend = alphaRatio < 1.0 ? alphaRatio : 1.0;
+    const double cruiseScale = configuration.settings.cruiseLiftScalar;
+    volatile double wingLift = (firstOuter + firstInner + secondInner + secondOuter) *
+        ((1.0 - cruiseScale) * blend + cruiseScale);
+    volatile double pitchRate = coefficient.pitchRateLift(coefficients) * state.transformedAngularVelocity.x * state.liftRateScale;
+    const FlightPositionDispatch& controls = *controlOwner->positionDispatch;
+    const double elevator = controls.controlSurfaces(controlOwner)->elevator;
+    volatile double elevatorLift = coefficient.elevatorLift(coefficients) * elevator * state.wingPressureForce;
+    const AirplaneControlSurfaces& surfaces = *controls.controlSurfaces(controlOwner);
+    volatile double meanSpoiler = (surfaces.secondSpoilerAngle + surfaces.firstSpoilerAngle) * 0.5;
+    volatile double spoilers = coefficient.spoilerLift(coefficients) * meanSpoiler * state.wingPressureForce;
+    volatile double alphaRate = coefficient.alphaRateLift(coefficients) * state.angleOfAttackRate * state.liftRateScale;
+    const double incidence = coefficient.tailIncidenceLift(coefficients) * configuration.geometry->horizontalTailIncidence *
+        state.wingPressureForce;
+    const double lift = pitchRate + wingLift + elevatorLift + spoilers + alphaRate + incidence +
+        state.liftAdjustment * -0.6 * state.wingPressureForce;
+    state.aerodynamicLift = lift;
+    return lift;
+}
+
+// Original: sim1.dll 0x20c00d80, drag and drag-state publication.
+__declspec(noinline) double AirplaneMomentModel::CalculateDrag(AirplaneDynamics& airplane) const
+{
+    if (coefficients == 0) {
+        return 0.0;
+    }
+    IntegrationHistory& state = *airplane.history;
+    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->geometry;
+    const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
+    volatile double base = coefficient.baseDrag(coefficients);
+    if (airplane.positionDispatch->publishesPosition(&airplane) != 0) {
+        base *= coefficient.dragScale(coefficients);
+    }
+    volatile double slipstreamLift = secondInnerWingSlipstreamLift + firstInnerWingSlipstreamLift;
+    volatile double induced = coefficient.inducedDrag(coefficients, slipstreamLift);
+    volatile double supplementary = geometry.dragCorrectionSelector == 0 ? 0.0 : coefficient.supplementaryDrag(coefficients);
+    volatile double slipstreamDrag = secondWingSlipstreamDrag + firstWingSlipstreamDrag;
+    volatile double flaps = coefficient.flapDrag(coefficients) * state.flapDeflectionFactor;
+    const AirplaneControlSurfaces& surfaces = *controlOwner->positionDispatch->controlSurfaces(controlOwner);
+    volatile double meanSpoiler = (surfaces.secondSpoilerAngle + surfaces.firstSpoilerAngle) * 0.5;
+    volatile double spoilers = coefficient.spoilerDrag(coefficients) * meanSpoiler;
+    const double liftAdjustmentDrag = state.liftAdjustment * 0.0;
+    double externalTanks = 0.0;
+    if (airplane.positionDispatch->publishesPosition(&airplane) != 0) {
+        const ExternalFuelTankState& first = state.firstExternalTank;
+        const ExternalFuelTankState& second = state.secondExternalTank;
+        if (first.configuration->capacity != 0.0f && (first.flags & 2) == 0) {
+            externalTanks += 0.047 / geometry.wingArea;
+        }
+        if (second.configuration->capacity != 0.0f && (second.flags & 2) == 0) {
+            externalTanks += 0.047 / geometry.wingArea;
+        }
+    }
+
+    const double drag = (induced + base + supplementary + slipstreamDrag + flaps + spoilers + externalTanks +
+        liftAdjustmentDrag) * state.wingPressureForce;
+    state.aerodynamicDrag = drag;
+    return drag;
+}
+
+// Original: sim1.dll 0x20c00f40, aerodynamic lateral force.
+__declspec(noinline) double AirplaneMomentModel::CalculateSideForce(const AirplaneDynamics& airplane) const
+{
+    if (coefficients == 0) {
+        return 0.0;
+    }
+    const IntegrationHistory& state = *airplane.history;
+    const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
+    volatile double yawRate = coefficient.yawRateSideForce(coefficients) * state.transformedAngularVelocity.y *
+        state.lateralForceRateScale;
+    volatile double rollRate = coefficient.rollRateSideForce(coefficients) * state.transformedAngularVelocity.z *
+        state.lateralForceRateScale;
+    const double rudder = controlOwner->positionDispatch->controlSurfaces(controlOwner)->rudder;
+    volatile double rudderSideForce = coefficient.rudderSideForce(coefficients) * rudder * state.wingPressureForce;
+    const double sideslip = coefficient.sideslipSideForce(coefficients) * state.sideslipRadians * state.wingPressureForce;
+    return rollRate + yawRate + rudderSideForce + sideslip;
+}
+
+// Original: sim1.dll 0x20c45510, normal force output at 0x20c4564f–0x20c456c5.
+// Extracted from the force and moment producer after its input updates.
+void AirplaneMomentModel::CalculateAerodynamicForce(AirplaneDynamics& airplane, Vector3& force) const
+{
+    const IntegrationHistory& state = *airplane.history;
+    volatile double lift = CalculateLift(airplane);
+    volatile double drag = CalculateDrag(airplane);
+    force.x = CalculateSideForce(airplane);
+    force.y = lift * state.rateCosine + drag * state.rateSine;
+    force.z = lift * state.rateSine - drag * state.rateCosine;
+}
+
+typedef char CheckAtmosphericScaleInputs[offsetof(IntegrationHistory, airRelativeSpeed) == 0x14c &&
+    offsetof(IntegrationHistory, dynamicPressure) == 0x1dc &&
+    offsetof(IntegrationHistory, slipstreamSpeedIncrement) == 0x204 ? 1 : -1];
+
+// Original: sim1.dll 0x20c00530, pressure and rate scaling at 0x20c0054f–0x20c005f2.
+// Extracted from the setup before the high-alpha reference correction.
+void IntegrationHistory::UpdateAerodynamicLoadScales(const AirplaneGeometry& geometry, double airDensity)
+{
+    const double pressureForce = dynamicPressure * geometry.wingArea;
+    wingPressureForce = pressureForce;
+    rollMomentScale = pressureForce * geometry.wingSpan;
+    // The original reads the stored binary64 pressure force for the chord term.
+    const volatile double& storedPressureForce = wingPressureForce;
+    aerodynamicMomentScale = storedPressureForce * geometry.referenceChord;
+
+    const double quarterDensity = airDensity * 0.25;
+    const double rateScale = quarterDensity * airRelativeSpeed * geometry.wingArea;
+    lateralForceRateScale = geometry.wingSpan * rateScale;
+    rollRateMomentScale = geometry.wingSpan * rateScale * geometry.wingSpan;
+    liftRateScale = rateScale * geometry.referenceChord;
+    pitchRateMomentScale = rateScale * geometry.referenceChord * geometry.referenceChord;
+
+    const double slipstreamRateScale = (slipstreamSpeedIncrement + airRelativeSpeed) * quarterDensity *
+        geometry.wingArea * geometry.referenceChord;
+    slipstreamPitchRateMomentScale = slipstreamRateScale * geometry.referenceChord;
+    slipstreamYawRateMomentScale = slipstreamRateScale * geometry.wingSpan;
 }
 
 }

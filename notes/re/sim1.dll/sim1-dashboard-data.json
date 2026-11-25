@@ -263,11 +263,35 @@
     "originalHex": "505cc4200057c420000ac020800dc020400fc020a013c0209018c020a020c020",
     "functions": [
       "20c45510",
-      "20c45c90"
+      "20c45c90",
+      "20c00a00",
+      "20c00d80",
+      "20c00f40"
     ],
     "description": "Verified eight-pointer prefix. The three displayed moment slots have independently checked caller and target signatures. Names are reconstructed.",
     "evidence": "artifacts/sim1.dll/flight-model-entrypoints-ghidra.json",
     "slots": [
+      {
+        "offset": "0x08",
+        "name": "Airplane lift",
+        "target": "20c00a00",
+        "signature": "x87 scalar __thiscall(AirplaneMomentModel*, AirplaneDynamics*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x0c",
+        "name": "Airplane drag",
+        "target": "20c00d80",
+        "signature": "x87 scalar __thiscall(AirplaneMomentModel*, AirplaneDynamics*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x10",
+        "name": "Airplane side force",
+        "target": "20c00f40",
+        "signature": "x87 scalar __thiscall(AirplaneMomentModel*, AirplaneDynamics*)",
+        "status": "live verified"
+      },
       {
         "offset": "0x14",
         "name": "Moment component 0",
@@ -288,6 +312,13 @@
         "target": "20c020a0",
         "status": "live verified",
         "signature": "x87 scalar __thiscall(Model*, FlightDynamics*, const Vector3*)"
+      }
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-aerodynamic-forces.md",
+        "title": "Normal airplane aerodynamic forces",
+        "description": "The producer calls the same three force targets in both configuration branches."
       }
     ]
   },
@@ -631,7 +662,9 @@
     "evidence": "artifacts/sim1.dll/pitch-rate-ghidra.json",
     "functions": [
       "20c00530",
-      "20c013a0"
+      "20c013a0",
+      "20c00a00",
+      "20c01890"
     ],
     "description": "Binary64 quarter factor multiplied by density, air-relative speed and geometry."
   },
@@ -1087,7 +1120,14 @@
       "20c00a00",
       "20c01890"
     ],
-    "description": "Roll uses the second value minus the first, scaled by half the span."
+    "description": "Roll uses the second value minus the first, scaled by half the span.",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-aerodynamic-forces.md",
+        "title": "Normal airplane aerodynamic forces",
+        "description": "Written by the lift calculation before the roll calculation reads the wing load."
+      }
+    ]
   },
   {
     "entry": "20c7b9b0",
@@ -1101,7 +1141,14 @@
       "20c00a00",
       "20c01890"
     ],
-    "description": "Roll uses the second value minus the first, scaled by a quarter of the span."
+    "description": "Roll uses the second value minus the first, scaled by a quarter of the span.",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-aerodynamic-forces.md",
+        "title": "Normal airplane aerodynamic forces",
+        "description": "Written by the lift calculation before the roll calculation reads the wing load."
+      }
+    ]
   },
   {
     "entry": "20c7b9b8",
@@ -1115,7 +1162,14 @@
       "20c00a00",
       "20c01890"
     ],
-    "description": "Subtracted from the second inner wing value."
+    "description": "Subtracted from the second inner wing value.",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-aerodynamic-forces.md",
+        "title": "Normal airplane aerodynamic forces",
+        "description": "Written by the lift calculation before the roll calculation reads the wing load."
+      }
+    ]
   },
   {
     "entry": "20c7b9c0",
@@ -1129,7 +1183,14 @@
       "20c00a00",
       "20c01890"
     ],
-    "description": "Subtracted from the second outer wing value."
+    "description": "Subtracted from the second outer wing value.",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-aerodynamic-forces.md",
+        "title": "Normal airplane aerodynamic forces",
+        "description": "Written by the lift calculation before the roll calculation reads the wing load."
+      }
+    ]
   },
   {
     "entry": "20bc26bc",
@@ -1231,5 +1292,280 @@
       "20c020a0"
     ],
     "description": "Starts at zero. The yaw callback multiplies the published coefficient by dynamic pressure times wing area."
+  },
+  {
+    "entry": "20bc2618",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "Normal airplane force coefficient table prefix",
+    "kind": "VTable",
+    "bytes": 84,
+    "originalHex": "40f2c420b0f3c420e0f3c42060f4c420f0f4c42070f5c42020f6c42040f6c42060f6c420c0f6c42000f7c420e0f7c42050fac42070fac42090fac42060f7c420e0f8c420b0fbc420b0fac42030fbc42030fcc420",
+    "functions": [
+      "20c00a00",
+      "20c00d80",
+      "20c00f40",
+      "20c4f3b0",
+      "20c4f3e0",
+      "20c4f460",
+      "20c4f4f0",
+      "20c4f570",
+      "20c4f640",
+      "20c4f660",
+      "20c4f6c0",
+      "20c4f700",
+      "20c4f7e0",
+      "20c4fa50",
+      "20c4fa90",
+      "20c4f760",
+      "20c4f8e0",
+      "20c4fbb0",
+      "20c4fab0",
+      "20c4fb30",
+      "20c4fc30"
+    ],
+    "description": "The force queries use 18 slots of the table installed at 20bc2618. The table prefix is verified through slot +0x50.",
+    "slots": [
+      {
+        "offset": "0x04",
+        "name": "Raw-alpha lift",
+        "target": "20c4f3b0",
+        "signature": "x87 scalar __thiscall(CoefficientView*, double)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x08",
+        "name": "Pitch-rate lift",
+        "target": "20c4f3e0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x0c",
+        "name": "Elevator lift",
+        "target": "20c4f460",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x10",
+        "name": "Alpha-rate lift",
+        "target": "20c4f4f0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x14",
+        "name": "Tail incidence lift",
+        "target": "20c4f570",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x1c",
+        "name": "Spoiler lift",
+        "target": "20c4f640",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x20",
+        "name": "Span-normalized lift scale",
+        "target": "20c4f660",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x24",
+        "name": "Lift curve scale",
+        "target": "20c4f6c0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x28",
+        "name": "Base drag",
+        "target": "20c4f700",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x2c",
+        "name": "Induced drag",
+        "target": "20c4f7e0",
+        "signature": "x87 scalar __thiscall(CoefficientView*, double)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x30",
+        "name": "Flap drag",
+        "target": "20c4fa50",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x38",
+        "name": "Spoiler drag",
+        "target": "20c4fa90",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x3c",
+        "name": "Supplementary drag",
+        "target": "20c4f760",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x40",
+        "name": "Drag scale",
+        "target": "20c4f8e0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x44",
+        "name": "Roll-rate side force",
+        "target": "20c4fbb0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x48",
+        "name": "Yaw-rate side force",
+        "target": "20c4fab0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x4c",
+        "name": "Rudder side force",
+        "target": "20c4fb30",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x50",
+        "name": "Sideslip side force",
+        "target": "20c4fc30",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20c7b960",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "First wing slipstream drag coefficient",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "functions": [
+      "20c00840",
+      "20c00d80"
+    ],
+    "description": "Added to the second wing slipstream drag coefficient.",
+    "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20c7b968",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "Second wing slipstream drag coefficient",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "functions": [
+      "20c00840",
+      "20c00d80"
+    ],
+    "description": "Added to the first wing slipstream drag coefficient.",
+    "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20c7b970",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "First inner-wing slipstream lift coefficient",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "functions": [
+      "20c00840",
+      "20c00a00",
+      "20c00d80"
+    ],
+    "description": "Adds lift to the first inner section and contributes to induced drag.",
+    "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20c7b978",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "Second inner-wing slipstream lift coefficient",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "functions": [
+      "20c00840",
+      "20c00a00",
+      "20c00d80"
+    ],
+    "description": "Adds lift to the second inner section and contributes to induced drag.",
+    "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20c7b988",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "Second outer wing multiplier",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "functions": [
+      "20c00780",
+      "20c00a00"
+    ],
+    "description": "Scales the second outer section lift.",
+    "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20c7b990",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "Second inner wing multiplier",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "functions": [
+      "20c00780",
+      "20c00a00"
+    ],
+    "description": "Scales the second inner section lift.",
+    "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20c7b998",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "First inner wing multiplier",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "functions": [
+      "20c00780",
+      "20c00a00"
+    ],
+    "description": "Scales the first inner section lift.",
+    "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20c7b9a0",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
+    "name": "First outer wing multiplier",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "functions": [
+      "20c00780",
+      "20c00a00"
+    ],
+    "description": "Scales the first outer section lift.",
+    "originalHex": "0000000000000000"
   }
 ]

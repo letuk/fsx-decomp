@@ -66,7 +66,9 @@ struct PropulsionConfiguration {
     unsigned engineForPropeller[4];
     char unknown46c[0x10c];
     AerodynamicCurve elevatorTrimPressureCurve;
-    char unknown57c[0xbcc];
+    char unknown57c[0xbac];
+    double cruiseLiftScalar;
+    char unknown1130[0x18];
     double elevatorEffectiveness;
     char unknown1150[0x10];
     double elevatorTrimEffectiveness;
@@ -145,11 +147,14 @@ struct ExternalFuelTankState {
 // Reconstructed minimum layout of the state reached through FlightDynamics+0x270.
 struct IntegrationHistory {
     void __fastcall UpdateAngleOfAttackRate(const FlightDynamics& airplane);
+    void UpdateAerodynamicLoadScales(const AirplaneGeometry& geometry, double airDensity);
 
     PropulsionConfiguration* propulsionConfiguration;
     char unknown04[0x10];
     double thrustToWeight;
-    char unknown1c[0x50];
+    char unknown1c[0x40];
+    double aerodynamicLift;
+    double aerodynamicDrag;
     Vector3 propulsionForce;
     char unknown84[0x20];
     Vector3 propulsionMoment;
@@ -159,7 +164,8 @@ struct IntegrationHistory {
     Vector3 airRelativeVelocity;
     char unknown11c[0x18];
     Vector3 transformedAngularVelocity;
-    char unknown14c[0x40];
+    double airRelativeSpeed;
+    char unknown154[0x38];
     double attitudeAngle;
     double rawAerodynamicAngleDegrees;
     double aerodynamicAngleDegrees;
@@ -174,7 +180,8 @@ struct IntegrationHistory {
     double rollMomentScale;
     double aerodynamicMomentScale;
     double slipstreamDynamicPressure;
-    char unknown204[0x0c];
+    double slipstreamSpeedIncrement;
+    char unknown20c[4];
     int propulsionMomentBlendMode;
     char unknown214[0x3c];
     const PitchMomentModifier* pitchMomentModifier;
@@ -184,16 +191,19 @@ struct IntegrationHistory {
     char unknown42c[0xc];
     PropellerForceRecord* propellerForces;
     EngineForceRecord* engineForces;
-    char unknown440[0xb8];
+    char unknown440[0x38];
+    double liftAdjustment;
+    char unknown480[0x78];
     double inertiaScale;
     char unknown500[0x12c];
     double firstWingAttenuationInput;
     double secondWingAttenuationInput;
     char unknown63c[0xa8];
     double flapDeflectionFactor;
-    char unknown6ec[0x64];
+    char unknown6ec[0x5c];
+    double lateralForceRateScale;
     double rollRateMomentScale;
-    char unknown758[8];
+    double liftRateScale;
     double pitchRateMomentScale;
     double slipstreamPitchRateMomentScale;
     double slipstreamYawRateMomentScale;

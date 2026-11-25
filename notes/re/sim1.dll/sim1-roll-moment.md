@@ -56,7 +56,7 @@ at 748/666 and 37/39 bytes respectively. The differences include
 stack frames, register allocation and loop/call structure. Linked
 roll matching and in-simulator behavior remain open.
 
-- [C++ roll calculation](../../../src/sim1/aerodynamic_moment.cpp#L813)
+- [C++ roll calculation](../../../src/sim1/aerodynamic_moment.cpp#L855)
 - [Original roll listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c01890.asm)
 - [Ghidra evidence and save state](../../../artifacts/sim1.dll/roll-sum-ghidra.json)
 - [Native COFF comparison](../../../artifacts/sim1.dll/roll-sum-comparison.json)
