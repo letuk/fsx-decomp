@@ -21,10 +21,6 @@ struct AerodynamicSample {
     double coefficient;
 };
 
-struct AerodynamicCurve {
-    unsigned count;
-};
-
 template <unsigned Count>
 struct AerodynamicCurveStorage {
     AerodynamicCurve curve;
@@ -38,26 +34,42 @@ struct AirplaneControlSurfaces {
     double elevator;
     char unknownd4[0x28];
     double elevatorTrim;
+    char unknown104[8];
+    double firstSpoilerAngle;
+    double secondSpoilerAngle;
+};
+
+struct AirplaneGeometry {
+    double wingArea;
+    double wingSpan;
+    double referenceChord;
+    char unknown18[0xb4];
+    double horizontalTailIncidence;
 };
 
 struct AirplaneAerodynamicTables {
     char unknown00[0x54];
     double elevatorMoment;
-    char unknown5c[8];
+    double elevatorTrimMoment;
     double pitchRateMoment;
     double zeroAlphaMoment;
     double angleOfAttackRateMoment;
-    char unknown7c[0x30];
+    double horizontalTailIncidenceMoment;
+    double flapPitchMoment;
+    double spoilerPitchMoment;
+    double slipstreamElevatorMoment;
+    double slipstreamPitchRateMoment;
+    char unknowna4[8];
     double elevatorTrimCoupling;
     char unknownb4[0x47c];
     short machElevatorMoment[17];
     short machAngleOfAttackRateMoment[17];
     short machPitchRateMoment[17];
-    char unknown596[0x22];
+    short machHorizontalTailIncidenceMoment[17];
     short machPitchMoment[17];
     char unknown5da[0x536];
     AerodynamicCurveStorage<5> elevatorAlphaCurve;
-    char unknownb64[0x54];
+    AerodynamicCurveStorage<5> horizontalTailIncidenceAlphaCurve;
     AerodynamicCurveStorage<5> angleOfAttackRateAlphaCurve;
     AerodynamicCurveStorage<5> pitchRateAlphaCurve;
     char unknownc60[0x54];
@@ -71,6 +83,12 @@ struct AirplaneCoefficientModel {
     double CalculateElevatorCoefficient() const;
     double CalculatePitchRateCoefficient() const;
     double CalculateAngleOfAttackRateCoefficient() const;
+    double CalculateHorizontalTailIncidenceCoefficient() const;
+    double CalculateElevatorTrimCoefficient() const;
+    double GetFlapPitchCoefficient() const;
+    double GetSpoilerPitchCoefficient() const;
+    double GetSlipstreamElevatorCoefficient() const;
+    double GetSlipstreamPitchRateCoefficient() const;
 
     const void* dispatch;
     unsigned machIndex;
@@ -95,6 +113,12 @@ struct ZeroAlphaMomentTuning {
     double scale;
     double bias;
 };
+
+// Minimum virtual interface verified at the two supplemental aerodynamic tables.
+class SupplementalAerodynamics {
+public:
+    virtual double PitchMoment() const = 0;
+};
 #pragma pack(pop)
 
 typedef char CheckAerodynamicSample[offsetof(AerodynamicCurveStorage<47>, samples) == 4 && sizeof(AerodynamicSample) == 16 ? 1 : -1];
@@ -114,6 +138,8 @@ typedef char CheckRealismWeight[offsetof(FlightDynamics, realismWeight) == 0x38 
 // Both reference corrections are published by the same airplane model update.
 extern double highAlphaReferenceXShift;
 extern double highAlphaReferenceZShift;
+// Published by the slipstream update at sim1.dll 0x20c00840.
+extern double slipstreamPitchCoefficient;
 
 class AirplaneMomentModel {
 public:
@@ -126,6 +152,11 @@ public:
     double CalculateElevatorMoment(const AirplaneDynamics& airplane) const;
     double CalculatePitchRateMoment(const AirplaneDynamics& airplane) const;
     double CalculateAngleOfAttackRateMoment(const AirplaneDynamics& airplane) const;
+    double CalculateHorizontalTailIncidenceMoment(const AirplaneDynamics& airplane) const;
+    double CalculateElevatorTrimMoment(const AirplaneDynamics& airplane) const;
+    double CalculatePitchMoment(const AirplaneDynamics& airplane, const Vector3& force) const;
+    double CalculateSlipstreamTailPitchMoment(const AirplaneGeometry& geometry, const IntegrationHistory& state) const;
+    double CalculateSimplePitchMoment(double pitch, double elevatorMoment, double pitchRateMoment) const;
 
     char unknown00[4];
     const AirplaneDynamics* controlOwner;
@@ -226,6 +257,18 @@ __declspec(noinline) double __fastcall SampleAerodynamicCurve(const AerodynamicC
     }
 }
 
+// Reconstruction-only helper for the angle term inside sim1.dll 0x20c013a0.
+static inline double ScaleAngleCurveMoment(const AirplaneCoefficientModel& coefficients,
+    const IntegrationHistory& state, double angleDegrees)
+{
+    const double degreesToRadians = 0.017453292519943295;
+    const double angle = angleDegrees * degreesToRadians;
+    // The original stores the scaled curve contribution before adding it to the sum.
+    volatile double moment = SampleAerodynamicCurve(&coefficients.tables->angleMoment.curve, angle) *
+        state.aerodynamicMomentScale;
+    return moment;
+}
+
 // Original: sim1.dll 0x20c013a0, scaled angle term through 0x20c01437.
 // Extracted calculation of the angle-dependent contribution from slot +0x54.
 double AirplaneMomentModel::CalculateAngleCurveMoment(const AirplaneDynamics& airplane) const
@@ -234,12 +277,7 @@ double AirplaneMomentModel::CalculateAngleCurveMoment(const AirplaneDynamics& ai
         return 0.0;
     }
     const IntegrationHistory& state = *airplane.history;
-    const double degreesToRadians = 0.017453292519943295;
-    const double angle = state.aerodynamicAngleDegrees * degreesToRadians;
-    // The original stores the scaled curve contribution before adding it to the sum.
-    volatile double moment = SampleAerodynamicCurve(&coefficients->tables->angleMoment.curve, angle) *
-        state.aerodynamicMomentScale;
-    return moment;
+    return ScaleAngleCurveMoment(*coefficients, state, state.aerodynamicAngleDegrees);
 }
 
 // Original: sim1.dll 0x20c4ff30, concrete coefficient-model slot +0x58.
@@ -424,6 +462,195 @@ double AirplaneMomentModel::CalculateAngleOfAttackRateMoment(const AirplaneDynam
     volatile double moment = coefficients->CalculateAngleOfAttackRateCoefficient() * state.angleOfAttackRate *
         state.pitchRateMomentScale;
     return moment;
+}
+
+typedef char CheckAirplaneGeometry[offsetof(AirplaneConfiguration, geometry) == 0x1980 ? 1 : -1];
+typedef char CheckTailIncidence[offsetof(AirplaneGeometry, horizontalTailIncidence) == 0xcc ? 1 : -1];
+typedef char CheckTailIncidenceBase[offsetof(AirplaneAerodynamicTables, horizontalTailIncidenceMoment) == 0x7c ? 1 : -1];
+typedef char CheckTailIncidenceMach[offsetof(AirplaneAerodynamicTables, machHorizontalTailIncidenceMoment) == 0x596 ? 1 : -1];
+typedef char CheckTailIncidenceCurve[offsetof(AirplaneAerodynamicTables, horizontalTailIncidenceAlphaCurve) == 0xb64 ? 1 : -1];
+
+// Original: sim1.dll 0x20c500c0, concrete coefficient-model slot +0x64.
+__declspec(noinline) double AirplaneCoefficientModel::CalculateHorizontalTailIncidenceCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    double coefficient = tables->horizontalTailIncidenceMoment;
+    if (airplane->positionDispatch->publishesPosition(airplane) != 0) {
+        const short* samples = tables->machHorizontalTailIncidenceMoment + machIndex;
+        const int lower = samples[0];
+        const int upper = samples[1];
+        coefficient += ((upper - lower) * machFraction + lower) * 0.0004885197851;
+    }
+    // The alpha-adjusted coefficient is rounded before querying the control surfaces.
+    const double alphaAdjusted = SampleAerodynamicCurve(&tables->horizontalTailIncidenceAlphaCurve.curve,
+        state->rawAerodynamicAngleDegrees) * coefficient;
+    const PitchMomentModifier* modifier = airplane->positionDispatch->controlSurfaces(airplane)->pitchControlModifier;
+    const float loss = modifier ? static_cast<float>(1.0 - modifier->dispatch->factor(modifier)) : 1.0f;
+    return (1.0 - loss * 0.15) * alphaAdjusted;
+}
+
+// Original: sim1.dll 0x20c013a0, horizontal-tail incidence contribution at 0x20c01494–0x20c014bb.
+// Extracted calculation for the concrete coefficient model.
+double AirplaneMomentModel::CalculateHorizontalTailIncidenceMoment(const AirplaneDynamics& airplane) const
+{
+    if (coefficients == 0) {
+        return 0.0;
+    }
+    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->geometry;
+    const IntegrationHistory& state = *airplane.history;
+    volatile double moment = coefficients->CalculateHorizontalTailIncidenceCoefficient() * geometry.horizontalTailIncidence *
+        state.aerodynamicMomentScale;
+    return moment;
+}
+
+typedef char CheckElevatorTrimBase[offsetof(AirplaneAerodynamicTables, elevatorTrimMoment) == 0x5c ? 1 : -1];
+typedef char CheckElevatorTrimEffectiveness[offsetof(AirplaneConfiguration, settings.elevatorTrimEffectiveness) == 0x1164 ? 1 : -1];
+typedef char CheckElevatorTrimPressureCurve[offsetof(AirplaneConfiguration, settings.elevatorTrimPressureCurve) == 0x57c ? 1 : -1];
+typedef char CheckDynamicPressure[offsetof(IntegrationHistory, dynamicPressure) == 0x1dc ? 1 : -1];
+
+// Original: sim1.dll 0x20c501a0, concrete coefficient-model slot +0x6c.
+__declspec(noinline) double AirplaneCoefficientModel::CalculateElevatorTrimCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    const IntegrationHistory& runtime = *state;
+    const double alphaFactor = SampleAerodynamicCurve(&tables->elevatorAlphaCurve.curve, runtime.rawAerodynamicAngleDegrees);
+    const double alphaAdjusted = configuration->settings.elevatorTrimEffectiveness * tables->elevatorTrimMoment * alphaFactor;
+    const double pressureAdjusted = SampleAerodynamicCurve(&configuration->settings.elevatorTrimPressureCurve,
+        runtime.dynamicPressure) * alphaAdjusted;
+    const PitchMomentModifier* modifier = airplane->positionDispatch->controlSurfaces(airplane)->pitchControlModifier;
+    const float loss = modifier ? static_cast<float>(1.0 - modifier->dispatch->factor(modifier)) : 1.0f;
+    return (1.0 - loss) * pressureAdjusted;
+}
+
+// Original: sim1.dll 0x20c013a0, elevator trim contribution at 0x20c014bc–0x20c014e5.
+// Extracted calculation for the concrete coefficient model.
+double AirplaneMomentModel::CalculateElevatorTrimMoment(const AirplaneDynamics& airplane) const
+{
+    if (coefficients == 0) {
+        return 0.0;
+    }
+    const IntegrationHistory& state = *airplane.history;
+    const double trim = controlOwner->positionDispatch->controlSurfaces(controlOwner)->elevatorTrim;
+    volatile double moment = coefficients->CalculateElevatorTrimCoefficient() * trim * state.aerodynamicMomentScale;
+    return moment;
+}
+
+typedef char CheckFlapPitchCoefficient[offsetof(AirplaneAerodynamicTables, flapPitchMoment) == 0x84 ? 1 : -1];
+typedef char CheckSpoilerPitchCoefficient[offsetof(AirplaneAerodynamicTables, spoilerPitchMoment) == 0x8c ? 1 : -1];
+typedef char CheckSlipstreamElevatorCoefficient[offsetof(AirplaneAerodynamicTables, slipstreamElevatorMoment) == 0x94 ? 1 : -1];
+typedef char CheckSlipstreamPitchRateCoefficient[offsetof(AirplaneAerodynamicTables, slipstreamPitchRateMoment) == 0x9c ? 1 : -1];
+typedef char CheckSpoilerAngles[offsetof(AirplaneControlSurfaces, firstSpoilerAngle) == 0x10c &&
+    offsetof(AirplaneControlSurfaces, secondSpoilerAngle) == 0x114 ? 1 : -1];
+typedef char CheckFlapDeflection[offsetof(IntegrationHistory, flapDeflectionFactor) == 0x6e4 ? 1 : -1];
+typedef char CheckSlipstreamPressure[offsetof(IntegrationHistory, slipstreamDynamicPressure) == 0x1fc ? 1 : -1];
+typedef char CheckSlipstreamRateScale[offsetof(IntegrationHistory, slipstreamPitchRateMomentScale) == 0x768 ? 1 : -1];
+typedef char CheckSupplementalAerodynamics[offsetof(FlightDynamics, supplementalAerodynamics) == 0x2f0 ? 1 : -1];
+typedef char CheckSimpleAerodynamics[offsetof(PropulsionMomentControl, simpleAerodynamics) == 4 ? 1 : -1];
+typedef char CheckPitchRadians[offsetof(FlightDynamics, pitchRadians) == 0xc0 ? 1 : -1];
+
+// Original: sim1.dll 0x20c50270, concrete coefficient-model slot +0x74.
+__declspec(noinline) double AirplaneCoefficientModel::GetFlapPitchCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->flapPitchMoment;
+}
+
+// Original: sim1.dll 0x20c50290, concrete coefficient-model slot +0x78.
+__declspec(noinline) double AirplaneCoefficientModel::GetSpoilerPitchCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->spoilerPitchMoment;
+}
+
+// Original: sim1.dll 0x20c502b0, concrete coefficient-model slot +0x7c.
+__declspec(noinline) double AirplaneCoefficientModel::GetSlipstreamElevatorCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->slipstreamElevatorMoment;
+}
+
+// Original: sim1.dll 0x20c502d0, concrete coefficient-model slot +0x80.
+__declspec(noinline) double AirplaneCoefficientModel::GetSlipstreamPitchRateCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->slipstreamPitchRateMoment;
+}
+
+// Original: sim1.dll 0x20c013a0, slipstream contribution at 0x20c016ad–0x20c0172a.
+// Extracted calculation of the two tail terms in the slipstream.
+double AirplaneMomentModel::CalculateSlipstreamTailPitchMoment(const AirplaneGeometry& geometry,
+    const IntegrationHistory& state) const
+{
+    const double deflection = controlOwner->positionDispatch->controlSurfaces(controlOwner)->elevator;
+    const double elevatorCoefficient = coefficients->GetSlipstreamElevatorCoefficient();
+    volatile double elevatorMoment = (deflection - geometry.horizontalTailIncidence) * elevatorCoefficient *
+        (geometry.referenceChord * geometry.wingArea) * state.slipstreamDynamicPressure;
+    const double pitchRateMoment = coefficients->GetSlipstreamPitchRateCoefficient() *
+        state.transformedAngularVelocity.x * state.slipstreamPitchRateMomentScale;
+    volatile double moment = (pitchRateMoment + elevatorMoment) * state.rateCosine * state.rateCosine;
+    return moment;
+}
+
+// Original: sim1.dll 0x20c013a0, SimpleAero return path at 0x20c0177b–0x20c01847.
+// Extracted calculation using the original local two-sample curve.
+double AirplaneMomentModel::CalculateSimplePitchMoment(double pitch, double elevatorMoment, double pitchRateMoment) const
+{
+    const double pitchMagnitude = fabs(pitch);
+    const double lowPitch = 0.3490658503988659;
+    if (pitchMagnitude > lowPitch) {
+        const double elevator = controlOwner->positionDispatch->controlSurfaces(controlOwner)->elevator;
+        if (elevator * pitch < 1.0) {
+            const AerodynamicCurveStorage<2> pitchScale = {{2}, {{lowPitch, 1.0}, {0.7853981633974483, 0.2}}};
+            elevatorMoment *= SampleAerodynamicCurve(&pitchScale.curve, pitchMagnitude);
+            pitchRateMoment += pitchRateMoment;
+        }
+    }
+    return pitchRateMoment * 3.0 + elevatorMoment * 0.4;
+}
+
+// Original: sim1.dll 0x20c013a0, pitch component of the normal airplane aerodynamic model.
+double AirplaneMomentModel::CalculatePitchMoment(const AirplaneDynamics& airplane, const Vector3& force) const
+{
+    if (coefficients == 0) {
+        return 0.0;
+    }
+    const IntegrationHistory& state = *airplane.history;
+    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->geometry;
+    const double angleDegrees = state.aerodynamicAngleDegrees;
+    const double baseline = CalculateScaledBaselineMoment(airplane);
+    const double angle = ScaleAngleCurveMoment(*coefficients, state, angleDegrees);
+    const double elevator = CalculateElevatorMoment(airplane);
+    const double pitchRate = CalculatePitchRateMoment(airplane);
+    const double alphaRate = CalculateAngleOfAttackRateMoment(airplane);
+    const double incidence = CalculateHorizontalTailIncidenceMoment(airplane);
+    const double trim = CalculateElevatorTrimMoment(airplane);
+    volatile double slipstream = state.aerodynamicMomentScale * slipstreamPitchCoefficient;
+    volatile double flaps = coefficients->GetFlapPitchCoefficient() * state.flapDeflectionFactor * state.aerodynamicMomentScale;
+
+    const AirplaneControlSurfaces& surfaces = *controlOwner->positionDispatch->controlSurfaces(controlOwner);
+    volatile double meanSpoilerAngle = (surfaces.secondSpoilerAngle + surfaces.firstSpoilerAngle) * 0.5;
+    volatile double spoilers = coefficients->GetSpoilerPitchCoefficient() * meanSpoilerAngle * state.aerodynamicMomentScale;
+    const double gyro = CalculatePropellerGyroscopicMoment(airplane);
+    const double slipstreamTail = CalculateSlipstreamTailPitchMoment(geometry, state);
+    volatile double supplemental = airplane.supplementalAerodynamics->PitchMoment() * state.aerodynamicMomentScale;
+    const double forceTransfer = CalculateForceMomentX(airplane, force);
+    if (airplane.propulsionMomentControl->simpleAerodynamics != 0) {
+        return CalculateSimplePitchMoment(airplane.pitchRadians, elevator, pitchRate);
+    }
+    return angle + baseline + elevator + pitchRate + alphaRate + incidence + trim + slipstream + flaps + spoilers +
+        gyro + forceTransfer + supplemental + slipstreamTail;
 }
 
 }

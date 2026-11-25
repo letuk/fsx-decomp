@@ -143,7 +143,7 @@ void FlightDynamics::CollectPropulsionForces(double, Vector3* forceOutput, Vecto
         AccumulateEngineThrust(&mount.orientation, propeller.thrust, force, moment, leverArm);
     }
 
-    if (state->propulsionConfiguration->suppressFirstMoment || propulsionMomentControl->suppressFirstMoment) {
+    if (state->propulsionConfiguration->suppressFirstMoment || propulsionMomentControl->simpleAerodynamics) {
         moment.x = 0.0;
     }
     state->thrustToWeight = force.z / (massProperties->mass * gravityAcceleration);

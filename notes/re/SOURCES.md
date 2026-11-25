@@ -1,5 +1,30 @@
 # Sources and verification limits
 
+The normal airplane pitch moment in `sim1.dll` uses the live
+coefficient and supplemental dispatch tables, term producers,
+and the pinned PE and native VC8 COFF. The original return
+sequence was checked against the stack slots where the terms
+are stored. Four complete accessor bodies and eleven additional
+ranges match exactly or after individually verifying references.
+Full-body byte matching, linked pitch comparison and simulator
+verification remain open.
+[Complete pitch moment calculation](sim1.dll/sim1-aerodynamic-moment.md#complete-pitch-moment-calculation).
+
+The `sim1.dll` elevator trim contribution uses Ghidra listings
+and memory, geometry and AIR readers, the provider registration,
+and VC8 RTM native COFF against the pinned PE. The arguments,
+curve offsets and destinations of both curve calls were checked
+individually. The dynamic-pressure curve writer and sample
+capacity remain open, along with simulator verification.
+[Elevator trim contribution](sim1.dll/sim1-aerodynamic-moment.md#elevator-trim-contribution).
+
+The `sim1.dll` horizontal-tail incidence contribution uses live
+Ghidra listings, geometry and AIR loaders, and VC8 RTM native
+COFF against the pinned PE. The comparison checks the coefficient
+slot, curve call target and both binary64 constants. Simulator
+verification remains open.
+[Horizontal-tail incidence contribution](sim1.dll/sim1-aerodynamic-moment.md#horizontal-tail-incidence-contribution).
+
 The `sim1.dll` angle-of-attack rate contribution uses live Ghidra
 listings and memory, airflow and acceleration field reads, AIR
 loaders and VC8 RTM native COFF against the pinned PE. The Mach

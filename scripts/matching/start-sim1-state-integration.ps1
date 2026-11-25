@@ -22,7 +22,7 @@ if ($Target -eq 'AerodynamicMoment') {
     $component = 'aerodynamic-moment'
     $commandComponent = $component
     $sourceName = 'aerodynamic_moment.cpp'
-    $entries = @('20c013a0', '20c013e6', '20c0140b', '20c01438', '20c01462', '20c0147b', '20c0155d', '20c01733', '20c01890', '20c02025', '20c020a0', '20c02645', '20c4fcb0', '20c4ff30', '20c4fce0', '20c4fe00', '20c50020', '20bfb840', '20bcbf60')
+    $entries = @('20c013a0', '20c013e6', '20c0140b', '20c01438', '20c01462', '20c0147b', '20c01494', '20c014bc', '20c0155d', '20c016ad', '20c01733', '20c0177b', '20c01890', '20c02025', '20c020a0', '20c02645', '20c4fcb0', '20c4ff30', '20c4fce0', '20c4fe00', '20c50020', '20c500c0', '20c501a0', '20c50270', '20c50290', '20c502b0', '20c502d0', '20bfb840', '20bcbf60')
     if (!$PSBoundParameters.ContainsKey('Profile')) { $Profile = 'Precise' }
 }
 if ($Target -eq 'Turbine') {
@@ -167,6 +167,12 @@ try {
         if ($LASTEXITCODE -ne 0) { throw 'Sim1 pitch-rate comparison failed' }
         node "$project\scripts\compare-sim1-alpha-rate.cjs" $run
         if ($LASTEXITCODE -ne 0) { throw 'Sim1 angle-of-attack rate comparison failed' }
+        node "$project\scripts\compare-sim1-tail-incidence.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 tail-incidence moment comparison failed' }
+        node "$project\scripts\compare-sim1-elevator-trim.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 elevator trim moment comparison failed' }
+        node "$project\scripts\compare-sim1-pitch-sum.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 pitch sum comparison failed' }
     }
 } finally {
     $lock.Dispose()

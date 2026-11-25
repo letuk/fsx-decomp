@@ -1,5 +1,35 @@
 # FSX shared knowledge
 
+2026-11-25 — Completed the C++ reconstruction of the normal
+airplane pitch moment in `sim1.dll:0x20c013a0`, including the
+original summation order and the `SimpleAero` path. Four
+coefficient accessors match all 68 bytes in native VC8 COFF.
+The new comparisons total 120 exact and 49 normalized bytes.
+The complete pitch body still differs and runtime verification
+remains open. The normal-model roll and yaw bodies retain
+their scoped force-transfer reconstructions. Ghidra revision
+`1795566771278:d6cfccaa:205` was saved and read back clean.
+[Complete pitch moment calculation](sim1.dll/sim1-aerodynamic-moment.md#complete-pitch-moment-calculation).
+
+2026-11-25 — Reconstructed the `sim1.dll` elevator trim
+coefficient at `0x20c501a0` and its contribution to `0x20c013a0`.
+The native VC8 comparison contains 35 exact bytes and 16
+normalized bytes across seven disjoint ranges. The complete
+bodies still differ. The dynamic-pressure curve writer and
+simulator verification remain open. Ghidra revision
+`1795565874672:d6cfccaa:11` was saved and read back clean.
+[Elevator trim contribution](sim1.dll/sim1-aerodynamic-moment.md#elevator-trim-contribution).
+
+2026-11-25 — Reconstructed the `sim1.dll` horizontal-tail
+incidence coefficient at `0x20c500c0` and its contribution to
+`0x20c013a0`. The native VC8 comparison gives 49 exact bytes
+and 16 normalized bytes across seven disjoint ranges. Both
+complete comparisons differ. The elevator trim term was reviewed
+in the subsequent entry. Simulator verification remains open.
+Ghidra revision
+`1795565103483:d6cfccaa:7` was saved and read back clean.
+[Horizontal-tail incidence contribution](sim1.dll/sim1-aerodynamic-moment.md#horizontal-tail-incidence-contribution).
+
 2026-11-25 — The `fsx.exe` build now stages source from `src/fsx/`.
 The broad `api.dll` source pass has been retired from active source.
 The opt-in `-SourcePass` profile stages the archived snapshot for the

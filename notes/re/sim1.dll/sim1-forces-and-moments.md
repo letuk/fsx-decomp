@@ -61,8 +61,8 @@ model also supplies moment results on a separate configuration path.
 Its full layout and equations remain open. Ghidra was read-only,
 with revision `1795543912564:962445d7:153` read back clean.
 [Model entry evidence](../../../artifacts/sim1.dll/flight-model-entrypoints-ghidra.json).
-[Airplane aerodynamic moment](sim1-aerodynamic-moment.md) records the
-first reconstructed term inside `0x20c013a0`.
+[Complete pitch moment calculation](sim1-aerodynamic-moment.md#complete-pitch-moment-calculation)
+records both return paths and the comparison scopes for `0x20c013a0`.
 
 ## Mass and inertia inputs
 

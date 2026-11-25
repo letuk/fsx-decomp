@@ -46,14 +46,19 @@ shared turbine output helper. Replay with
 Pass `-Target AerodynamicMoment` for the native VC8 COFF comparisons
 of the propeller gyroscopic contribution, force-vector terms,
 angle-dependent coefficient curve, zero-alpha coefficient, elevator
-moment, pitch-rate contribution and angle-of-attack rate term. Replay with
+moment, pitch-rate, angle-of-attack rate, horizontal-tail
+incidence and elevator trim contributions, plus the complete normal
+airplane pitch callback and its remaining terms. Replay with
 `node scripts/compare-sim1-aerodynamic-moment.cjs <run-directory>`,
 `node scripts/compare-sim1-moment-arm.cjs <run-directory>`,
 `node scripts/compare-sim1-angle-curve.cjs <run-directory>`,
 `node scripts/compare-sim1-baseline-moment.cjs <run-directory>`,
 `node scripts/compare-sim1-elevator-moment.cjs <run-directory>`,
-`node scripts/compare-sim1-pitch-rate.cjs <run-directory>` and
-`node scripts/compare-sim1-alpha-rate.cjs <run-directory>`.
+`node scripts/compare-sim1-pitch-rate.cjs <run-directory>`,
+`node scripts/compare-sim1-alpha-rate.cjs <run-directory>`,
+`node scripts/compare-sim1-tail-incidence.cjs <run-directory>`,
+`node scripts/compare-sim1-elevator-trim.cjs <run-directory>` and
+`node scripts/compare-sim1-pitch-sum.cjs <run-directory>`.
 [Airplane aerodynamic moment](../../notes/re/sim1.dll/sim1-aerodynamic-moment.md).
 
 For the `fe.dll` magnetic-variation functions, run

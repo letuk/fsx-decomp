@@ -1,5 +1,26 @@
 # Analysis change log
 
+2026-11-25 — Assembled the full normal-airplane pitch moment in
+the `sim1.dll` reconstruction, including flap, spoiler, slipstream,
+supplemental and `SimpleAero` terms. Corrected the original gyro
+addition address and identified the `REALISM/SimpleAero` selector.
+Matched four complete coefficient accessors, retained the comparisons
+and dashboard listings, and saved the Ghidra definitions and tags.
+[Complete pitch moment calculation](sim1.dll/sim1-aerodynamic-moment.md#complete-pitch-moment-calculation).
+
+2026-11-25 — Reconstructed the `sim1.dll` elevator trim
+coefficient and scaled caller contribution. Retained both
+listings, VC8 trials, seven comparison scopes, dashboard
+mappings and saved Ghidra tags. Recorded the control-surface
+provider registration and its GUID.
+[Elevator trim contribution](sim1.dll/sim1-aerodynamic-moment.md#elevator-trim-contribution).
+
+2026-11-25 — Reconstructed the `sim1.dll` horizontal-tail
+incidence coefficient and scaled caller contribution. Retained
+the original and rebuilt listings, both VC8 trials, comparisons
+and dashboard mappings. Saved and verified the Ghidra tags.
+[Horizontal-tail incidence contribution](sim1.dll/sim1-aerodynamic-moment.md#horizontal-tail-incidence-contribution).
+
 2026-11-25 — Initialized Git and added a root README covering the
 verified FSX Acceleration reference version, matching workflow,
 local dashboard, and contribution conventions.

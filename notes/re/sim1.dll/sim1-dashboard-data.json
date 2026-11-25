@@ -178,7 +178,8 @@
     "description": "The propulsion callback divides FlightDynamics+0x1f4 by this double before clamping the moment gain.",
     "evidence": "artifacts/sim1.dll/propulsion-collector-comparison.json",
     "functions": [
-      "20c010f0"
+      "20c010f0",
+      "20c013a0"
     ]
   },
   {
@@ -192,7 +193,8 @@
     "description": "Threshold used by the turbine output helper.",
     "evidence": "artifacts/sim1.dll/turbine-speed-output-comparison.json",
     "functions": [
-      "20c2bc20"
+      "20c2bc20",
+      "20c013a0"
     ]
   },
   {
@@ -220,7 +222,8 @@
     "description": "Threshold used by the turbine output helper.",
     "evidence": "artifacts/sim1.dll/turbine-speed-output-comparison.json",
     "functions": [
-      "20c2bc20"
+      "20c2bc20",
+      "20c013a0"
     ]
   },
   {
@@ -486,9 +489,10 @@
       "20c4ff30",
       "20c4fce0",
       "20c4fe00",
-      "20c50020"
+      "20c50020",
+      "20c500c0"
     ],
-    "description": "Binary64 scale for the signed 16-bit corrections from AIR records 0x420, 0x421, 0x422 and 0x433."
+    "description": "Binary64 scale for signed 16-bit corrections from AIR records 0x420, 0x421, 0x422, 0x423 and 0x433."
   },
   {
     "entry": "20bc3658",
@@ -603,7 +607,7 @@
   },
   {
     "entry": "20bc3cb0",
-    "name": "Pitch-rate realism and control modifier weight",
+    "name": "Pitch realism and control modifier weight",
     "kind": "Double literal",
     "bytes": 8,
     "status": "live verified",
@@ -611,9 +615,10 @@
     "initialValue": "0.15",
     "evidence": "artifacts/sim1.dll/pitch-rate-ghidra.json",
     "functions": [
-      "20c4fe00"
+      "20c4fe00",
+      "20c500c0"
     ],
-    "description": "Binary64 factor used for both the realism gain and the control modifier loss."
+    "description": "Binary64 factor for pitch-rate realism and for the control modifier loss in the pitch-rate and tail incidence coefficients."
   },
   {
     "entry": "20bc3388",
@@ -680,5 +685,214 @@
       "20bfb840"
     ],
     "description": "Binary64 positive limit equivalent to 25 degrees per second."
+  },
+  {
+    "entry": "20bc267c",
+    "name": "Airplane horizontal-tail incidence coefficient slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/tail-incidence-ghidra.json",
+    "originalHex": "c000c520",
+    "description": "Slot +0x64 of the coefficient model VTable at 20bc2618.",
+    "functions": [
+      "20c013a0",
+      "20c500c0"
+    ],
+    "slots": [
+      {
+        "offset": "0x64",
+        "name": "Horizontal-tail incidence coefficient",
+        "target": "20c500c0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bc2684",
+    "name": "Airplane elevator trim coefficient slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/elevator-trim-ghidra.json",
+    "originalHex": "a001c520",
+    "description": "Slot +0x6c of the coefficient model VTable at 20bc2618.",
+    "functions": [
+      "20c013a0",
+      "20c501a0"
+    ],
+    "slots": [
+      {
+        "offset": "0x6c",
+        "name": "Elevator trim coefficient",
+        "target": "20c501a0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bbe6a8",
+    "name": "Control-surface modifier identifier",
+    "kind": "GUID",
+    "bytes": 16,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/elevator-trim-ghidra.json",
+    "originalHex": "30ddfe695cbb8040a58489b8954f7c17",
+    "initialValue": "69fedd30-bb5c-4080-a584-89b8954f7c17",
+    "functions": [
+      "20c06bd0",
+      "20c501a0",
+      "20c4fe00",
+      "20c500c0"
+    ],
+    "description": "Identifier queried with registration value 0xd098 when populating the control-surface modifier at +0x0c."
+  },
+  {
+    "entry": "20bc2688",
+    "name": "Flap, spoiler and slipstream pitch coefficient slots",
+    "kind": "VTable",
+    "bytes": 16,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
+    "originalHex": "7002c5209002c520b002c520d002c520",
+    "description": "Four slots of the coefficient model at 20bc2618. Each target is an independently checked 17-byte accessor.",
+    "functions": [
+      "20c013a0",
+      "20c50270",
+      "20c50290",
+      "20c502b0",
+      "20c502d0"
+    ],
+    "slots": [
+      {
+        "offset": "0x74",
+        "name": "Flap pitch coefficient",
+        "target": "20c50270",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x78",
+        "name": "Spoiler pitch coefficient",
+        "target": "20c50290",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x7c",
+        "name": "Slipstream elevator coefficient",
+        "target": "20c502b0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x80",
+        "name": "Slipstream pitch-rate coefficient",
+        "target": "20c502d0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bbefd8",
+    "name": "Default supplemental pitch slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
+    "originalHex": "d0d7c020",
+    "description": "The default target returns zero in ST0.",
+    "functions": [
+      "20c013a0",
+      "20c0d7d0"
+    ],
+    "slots": [
+      {
+        "offset": "0x00",
+        "name": "Default supplemental pitch slot",
+        "target": "20c0d7d0",
+        "signature": "x87 scalar __thiscall(SupplementalAerodynamics*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bbefe8",
+    "name": "Alternate supplemental pitch slot",
+    "kind": "VTable",
+    "bytes": 4,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
+    "originalHex": "f0dac220",
+    "description": "The target scales the provider state at +0x2c with its curve and a 0.002 factor.",
+    "functions": [
+      "20c013a0",
+      "20c2daf0"
+    ],
+    "slots": [
+      {
+        "offset": "0x00",
+        "name": "Alternate supplemental pitch slot",
+        "target": "20c2daf0",
+        "signature": "x87 scalar __thiscall(SupplementalAerodynamics*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20c7b958",
+    "name": "Published slipstream pitch coefficient",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00840",
+      "20c013a0"
+    ],
+    "description": "Starts at zero and is published by the slipstream pass before the airplane moment callback."
+  },
+  {
+    "entry": "20bc2f50",
+    "name": "SimpleAero lower pitch breakpoint",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
+    "originalHex": "8744e74a1857d63f",
+    "initialValue": "0.3490658503988659",
+    "functions": [
+      "20c013a0"
+    ]
+  },
+  {
+    "entry": "20bc4290",
+    "name": "SimpleAero upper pitch breakpoint",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
+    "originalHex": "182d4454fb21e93f",
+    "initialValue": "0.7853981633974483",
+    "functions": [
+      "20c013a0"
+    ]
+  },
+  {
+    "entry": "20bc3628",
+    "name": "SimpleAero elevator moment weight",
+    "kind": "Double literal",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
+    "originalHex": "9a9999999999d93f",
+    "initialValue": "0.4",
+    "functions": [
+      "20c013a0"
+    ]
   }
 ]

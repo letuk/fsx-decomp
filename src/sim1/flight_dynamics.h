@@ -13,6 +13,11 @@ struct Vector3 {
     double z;
 };
 
+// Common header of the original variable-length aerodynamic curves.
+struct AerodynamicCurve {
+    unsigned count;
+};
+
 class FlightDynamics;
 struct GroundReference;
 struct ForceContributors;
@@ -20,6 +25,8 @@ struct EngineForceRecord;
 struct PitchMomentModifier;
 struct ZeroAlphaMomentTuning;
 struct AirplaneControlSurfaces;
+struct AirplaneGeometry;
+class SupplementalAerodynamics;
 class AirplaneDynamics;
 
 // Minimum propulsion layouts shared by the thrust and aerodynamic calculations.
@@ -39,9 +46,13 @@ struct PropulsionConfiguration {
     unsigned engineCount;
     unsigned propellerCount;
     unsigned engineForPropeller[4];
-    char unknown46c[0xcdc];
+    char unknown46c[0x10c];
+    AerodynamicCurve elevatorTrimPressureCurve;
+    char unknown57c[0xbcc];
     double elevatorEffectiveness;
-    char unknown1150[0x28];
+    char unknown1150[0x10];
+    double elevatorTrimEffectiveness;
+    char unknown1168[0x10];
     double pitchStability;
     char unknown1180[0x2c];
     float gyroPrecessionOnPitch;
@@ -51,7 +62,7 @@ struct PropulsionConfiguration {
 
 struct PropulsionMomentControl {
     const FlightDynamics* owner;
-    int suppressFirstMoment;
+    int simpleAerodynamics;
     char unknown08[8];
     float propellerGyroGain;
     char unknown14[0x0c];
@@ -119,9 +130,12 @@ struct IntegrationHistory {
     double rateSine;
     char unknown1bc[0x10];
     double angleOfAttackRate;
-    char unknown1d4[0x20];
+    char unknown1d4[8];
+    double dynamicPressure;
+    char unknown1e4[0x10];
     double aerodynamicMomentScale;
-    char unknown1fc[0x14];
+    double slipstreamDynamicPressure;
+    char unknown204[0x0c];
     int propulsionMomentBlendMode;
     char unknown214[0x3c];
     const PitchMomentModifier* pitchMomentModifier;
@@ -130,8 +144,11 @@ struct IntegrationHistory {
     EngineForceRecord* engineForces;
     char unknown440[0xb8];
     double inertiaScale;
-    char unknown500[0x260];
+    char unknown500[0x1e4];
+    double flapDeflectionFactor;
+    char unknown6ec[0x74];
     double pitchRateMomentScale;
+    double slipstreamPitchRateMomentScale;
 };
 
 struct ModelPoint {
@@ -196,7 +213,7 @@ public:
     float realismWeight;
     char unknown3c[0x80];
     int resetAccelerationHistory;
-    char unknownc0[0x08];
+    double pitchRadians;
     double longitudinalGravityFactor;
     double verticalGravityFactor;
     char unknownd8[0x08];
@@ -227,7 +244,8 @@ public:
     IntegrationHistory* history;
     char unknown274[0x64];
     const PropulsionMomentControl* propulsionMomentControl;
-    char unknown2dc[0x18];
+    char unknown2dc[0x14];
+    const SupplementalAerodynamics* supplementalAerodynamics;
     ForceContributors* forceContributors;
     MassProperties* massProperties;
     char unknown2fc[4];
@@ -239,7 +257,9 @@ public:
 struct AirplaneConfiguration {
     char ownerPrefix[4];
     PropulsionConfiguration settings;
-    char unknown144c[0x578];
+    char unknown144c[0x534];
+    const AirplaneGeometry* geometry;
+    char unknown1984[0x40];
     const ZeroAlphaMomentTuning* zeroAlphaMomentTuning;
 };
 
