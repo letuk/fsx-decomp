@@ -64,7 +64,7 @@ const getters = [
 });
 
 const globals = new Map([
-    [0x20c7b950, 'slipstreamRollCoefficient'], [0x20c7b980, 'wingLiftMultiplierSum'],
+    [0x20c7b950, coff.byName.has('?flapGroupRollCoefficient@sim1@@3NA') ? 'flapGroupRollCoefficient' : 'slipstreamRollCoefficient'], [0x20c7b980, 'wingLiftMultiplierSum'],
     [0x20c7b9a8, 'secondOuterWingLift'], [0x20c7b9c0, 'firstOuterWingLift'],
     [0x20c7b9b0, 'secondInnerWingLift'], [0x20c7b9b8, 'firstInnerWingLift'],
     [0x20c7b92c, 'highAlphaReferenceXShift']
@@ -163,7 +163,7 @@ originalSumOrder.push({ name: 'force reference transfer', add: '20c02082', sourc
     { name: 'outer wing lift difference', add: '20c02084' }, { name: 'inner wing lift difference', add: '20c02086' });
 
 const slices = [
-    [0x20c018e9, 0x20c018ef, 'Multiply by the published slipstream roll coefficient'],
+    [0x20c018e9, 0x20c018ef, 'Multiply by the published flap-group roll coefficient'],
     [0x20c01920, 0x20c01926, 'Read the rudder deflection'],
     [0x20c01957, 0x20c0195d, 'Read the first spoiler deflection'],
     [0x20c0196b, 0x20c01971, 'Read the second spoiler deflection'],

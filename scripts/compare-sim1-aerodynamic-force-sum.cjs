@@ -81,8 +81,8 @@ const getters = [
 });
 
 const globals = new Map([
-    [0x20c7b960, 'firstWingSlipstreamDrag'], [0x20c7b968, 'secondWingSlipstreamDrag'],
-    [0x20c7b970, 'firstInnerWingSlipstreamLift'], [0x20c7b978, 'secondInnerWingSlipstreamLift'],
+    [0x20c7b960, coff.byName.has('?firstWingFlapDrag@sim1@@3NA') ? 'firstWingFlapDrag' : 'firstWingSlipstreamDrag'], [0x20c7b968, coff.byName.has('?secondWingFlapDrag@sim1@@3NA') ? 'secondWingFlapDrag' : 'secondWingSlipstreamDrag'],
+    [0x20c7b970, coff.byName.has('?firstInnerWingFlapLift@sim1@@3NA') ? 'firstInnerWingFlapLift' : 'firstInnerWingSlipstreamLift'], [0x20c7b978, coff.byName.has('?secondInnerWingFlapLift@sim1@@3NA') ? 'secondInnerWingFlapLift' : 'secondInnerWingSlipstreamLift'],
     [0x20c7b988, 'secondOuterWingLiftMultiplier'], [0x20c7b990, 'secondInnerWingLiftMultiplier'],
     [0x20c7b998, 'firstInnerWingLiftMultiplier'], [0x20c7b9a0, 'firstOuterWingLiftMultiplier'],
     [0x20c7b9a8, 'secondOuterWingLift'], [0x20c7b9b0, 'secondInnerWingLift'],

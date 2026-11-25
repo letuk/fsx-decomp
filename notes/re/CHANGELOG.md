@@ -72,6 +72,26 @@ in `sim1.dll:0x20c480b0`. Retained the VC8 trials, both dashboard
 listings and Ghidra tags. Replayed the linked propulsion comparisons.
 [Propeller induced airspeed](sim1.dll/sim1-engine-branches.md#propeller-induced-airspeed).
 
+2026-11-25 — Reconstructed the flap-group coefficient writer,
+verified its configuration and runtime flap bindings, and corrected
+the earlier slipstream labels in source and dashboard records.
+Preserved prior build evidence and saved Ghidra tags.
+
+2026-11-25 — Reconstructed the tail slipstream velocity and
+pressure update in `sim1.dll`, compared two VC8 loop forms,
+and retained the original and rebuilt listings and Ghidra tags.
+
+2026-11-25 — Renamed the shared airplane aerodynamics translation
+unit to `src/sim1/aerodynamics.cpp` and updated the VC8 build input,
+source mappings and documentation links. The VC8 replay reproduced
+all 50 COFF `.text` sections with their relocations and all 15
+comparison results.
+[Rename verification run](../../vm-share/modules/sim1/runs/sim1-aerodynamics-tu-rename-20261125-001).
+
+2026-11-25 — Reconstructed the high-alpha reference shift block
+in `sim1.dll`, including both curves and the disabled branch.
+Saved Ghidra tags and retained COFF comparisons and listings.
+
 2026-11-25 — Reconstructed the shared aerodynamic pressure and
 rate scales, retained VC8 comparison and dashboard listings,
 and saved scoped Ghidra tags on `sim1.dll:0x20c00530`.

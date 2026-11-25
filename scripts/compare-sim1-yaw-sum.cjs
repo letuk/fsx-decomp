@@ -69,7 +69,7 @@ const getters = [
 });
 
 const globals = new Map([
-    [0x20c7b948, '?slipstreamYawCoefficient@sim1@@3NA'],
+    [0x20c7b948, coff.byName.has('?flapGroupYawCoefficient@sim1@@3NA') ? '?flapGroupYawCoefficient@sim1@@3NA' : '?slipstreamYawCoefficient@sim1@@3NA'],
     [0x20c7b92c, '?highAlphaReferenceXShift@sim1@@3NA'],
     [0x20c7b93c, '?highAlphaReferenceZShift@sim1@@3NA']
 ]);
@@ -148,7 +148,7 @@ assert.equal(instructions.get('20c02750'), 'FADDP');
 terms.splice(11, 0, { name: 'external fuel tanks', add: '20c02750', source: 'ST1' });
 const sections = [
     ['moment', yaw, 0x20c020a0, 0x20c0275c, [
-        [0x20c020ef, 0x20c020f5, 'Multiply by the published slipstream yaw coefficient'],
+        [0x20c020ef, 0x20c020f5, 'Multiply by the published flap-group yaw coefficient'],
         [0x20c0215a, 0x20c02162, 'Pass relative alpha and call the high-angle damping curve'],
         [0x20c0217f, 0x20c02185, 'Read the rudder deflection'],
         [0x20c021b4, 0x20c021ba, 'Read the binary32 rudder trim setting'],

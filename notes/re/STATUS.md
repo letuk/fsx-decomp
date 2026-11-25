@@ -108,13 +108,37 @@ Ghidra revision `1795613240321:62a95bf0:207` was saved and read
 back clean. The enclosing propeller step remains open.
 [Propeller induced airspeed](sim1.dll/sim1-engine-branches.md#propeller-induced-airspeed).
 
+2026-11-25 — Reconstructed the seven flap-group coefficients
+at `sim1.dll:0x20c00840`. The flap parser and runtime list
+supersede the earlier slipstream attribution. Three coefficient
+getters give 45 exact bytes and ten further ranges give 96
+normalized bytes. The complete body differs. Ghidra revision
+`1795612398258:62a95bf0:203` was saved and read back clean.
+[Flap-group aerodynamic coefficients](sim1.dll/sim1-flap-groups.md).
+
+2026-11-25 — Reconstructed the tail slipstream speed and pressure
+update at `sim1.dll:0x20c45760`. The native VC8 comparison gives
+48 exact and 12 normalized bytes. The full body differs. Ghidra
+revision `1795611579878:62a95bf0:13` was saved and read back clean.
+Simulator verification remains open. The separately analyzed
+`0x20c00840` was identified as the flap-group coefficient producer.
+[Tail slipstream speed and pressure](sim1.dll/sim1-aerodynamic-forces.md#tail-slipstream-speed-and-pressure).
+
+2026-11-25 — Reconstructed the high-alpha reference correction
+in `sim1.dll:0x20c00530`, including both curves, rudder scaling
+and the zeroing path. Native COFF comparison gives 5 exact and
+70 normalized bytes. Ghidra revision `1795610815925:62a95bf0:9`
+was saved and read back clean. Both blocks of the function are
+reconstructed, with full-body matching and simulator verification open.
+[High-alpha reference correction](sim1.dll/sim1-aerodynamic-moment.md#high-alpha-reference-correction).
+
 2026-11-25 — Reconstructed nine pressure and rate scales in
 `sim1.dll:0x20c00530`, from `0x20c0054f` through `0x20c005f2`.
 The VC8 COFF comparison verifies all output stores and contains
 19 exact bytes in five ranges. The full extracted body differs.
 Ghidra revision `1795609326019:62a95bf0:6` was saved and read back
-clean. The high-alpha reference correction and simulator
-verification remain open.
+clean. Simulator verification remains open. The high-alpha
+reference correction was reconstructed next.
 [Pressure and rate scales](sim1.dll/sim1-aerodynamic-forces.md#pressure-and-rate-scales).
 
 2026-11-25 — Reconstructed the normal airplane lift, drag and

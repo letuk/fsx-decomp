@@ -76,7 +76,7 @@ const literals = new Map([
 // The pre-existing gyro comparator validates this conversion against the same pinned PE.
 literals.set(0x20bc35a8, image.codeAt(0x20bc35a8, 8, false).toString('hex'));
 const globals = new Map([
-    [0x20c7b958, '?slipstreamPitchCoefficient@sim1@@3NA'],
+    [0x20c7b958, coff.byName.has('?flapGroupPitchCoefficient@sim1@@3NA') ? '?flapGroupPitchCoefficient@sim1@@3NA' : '?slipstreamPitchCoefficient@sim1@@3NA'],
     [0x20c7b93c, '?highAlphaReferenceZShift@sim1@@3NA']
 ]);
 assert.equal(image.codeAt(0x20c009e5, 6).toString('hex'), 'dd1d58b9c720');
@@ -163,7 +163,7 @@ const report = {
     getters: getters.map(item => item.record),
     moment: { ...compareNativeRanges(parent, moment, parent.va, parent.va + parent.bytes.length,
         originalRefs, mainDataRefs, [
-            [0x20c014ec, 0x20c014f2, 'Multiply by the published slipstream pitch coefficient'],
+            [0x20c014ec, 0x20c014f2, 'Multiply by the published flap-group pitch coefficient'],
             [0x20c01519, 0x20c0151f, 'Read the second spoiler angle'],
             [0x20c0151f, 0x20c01525, 'Add the first spoiler angle'],
             [0x20c0152c, 0x20c01532, 'Scale the combined spoiler angle by one half']

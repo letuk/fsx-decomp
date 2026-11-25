@@ -63,7 +63,10 @@ Pass `-Target Electrical` to build `src/sim1/electrical.cpp` as
 The linked propulsion build compiles the two translation units
 separately and includes both objects.
 
-Pass `-Target AerodynamicMoment` for the native VC8 COFF comparisons
+Pass `-Target AerodynamicMoment` to build `src/sim1/aerodynamics.cpp`
+and run its native VC8 COFF comparisons. The controller retains the
+result as `sim1-aerodynamic-moment.obj` for comparison with earlier runs.
+This target covers the comparisons
 of the propeller gyroscopic contribution, force-vector terms,
 angle-dependent coefficient curve, zero-alpha coefficient, elevator
 moment, pitch-rate, angle-of-attack rate, horizontal-tail
@@ -82,8 +85,11 @@ calculations and their output rotation. Replay with
 `node scripts/compare-sim1-pitch-sum.cjs <run-directory>`,
 `node scripts/compare-sim1-roll-sum.cjs <run-directory>`,
 `node scripts/compare-sim1-yaw-sum.cjs <run-directory>`,
-`node scripts/compare-sim1-aerodynamic-force-sum.cjs <run-directory>` and
-`node scripts/compare-sim1-load-scales.cjs <run-directory>`.
+`node scripts/compare-sim1-aerodynamic-force-sum.cjs <run-directory>`,
+`node scripts/compare-sim1-load-scales.cjs <run-directory>`,
+`node scripts/compare-sim1-high-alpha-reference.cjs <run-directory>`,
+`node scripts/compare-sim1-tail-slipstream.cjs <run-directory>` and
+`node scripts/compare-sim1-flap-groups.cjs <run-directory>`.
 [Airplane aerodynamic moment](../../notes/re/sim1.dll/sim1-aerodynamic-moment.md).
 [Normal airplane roll moment](../../notes/re/sim1.dll/sim1-roll-moment.md).
 [Normal airplane yaw moment](../../notes/re/sim1.dll/sim1-yaw-moment.md).

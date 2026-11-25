@@ -1,5 +1,5 @@
-#include "flight_dynamics.h"
 #include "aerodynamic_curve.h"
+#include "flight_dynamics.h"
 #include <math.h>
 
 namespace sim1 {
@@ -18,7 +18,9 @@ typedef char CheckSecondMomentReference[offsetof(FlightPositionDispatch, secondM
 // Reconstructed layout of the AIR record read by the airplane moment model.
 #pragma pack(push, 4)
 struct AirplaneControlSurfaces {
-    char unknown00[0xc];
+    char unknown00[4];
+    const AirplaneDynamics* owner;
+    char unknown08[4];
     const PitchMomentModifier* pitchControlModifier;
     char unknown10[0xbc];
     double elevator;
@@ -41,12 +43,16 @@ struct AirplaneGeometry {
     unsigned dragCorrectionSelector;
     char unknown4c[0x80];
     double horizontalTailIncidence;
+    char unknownd4[0x70];
+    double rudderLimit;
 };
 
 struct AirplaneAerodynamicTables {
-    char unknown00[0x2c];
+    char unknown00[0x24];
+    double flapGroupLift;
     double spoilerLift;
-    char unknown34[0x10];
+    char unknown34[8];
+    double flapGroupDrag;
     double flapDrag;
     double spoilerDrag;
     double elevatorMoment;
@@ -96,14 +102,14 @@ struct AirplaneCoefficientDispatch {
     double (__thiscall* elevatorLift)(const AirplaneCoefficientModel*);
     double (__thiscall* alphaRateLift)(const AirplaneCoefficientModel*);
     double (__thiscall* tailIncidenceLift)(const AirplaneCoefficientModel*);
-    const void* slot18;
+    double (__thiscall* flapGroupLift)(const AirplaneCoefficientModel*);
     double (__thiscall* spoilerLift)(const AirplaneCoefficientModel*);
     double (__thiscall* spanNormalizedLiftScale)(const AirplaneCoefficientModel*);
     double (__thiscall* liftCurveScale)(const AirplaneCoefficientModel*);
     double (__thiscall* baseDrag)(const AirplaneCoefficientModel*);
-    double (__thiscall* inducedDrag)(const AirplaneCoefficientModel*, double slipstreamLift);
+    double (__thiscall* inducedDrag)(const AirplaneCoefficientModel*, double flapGroupLift);
     double (__thiscall* flapDrag)(const AirplaneCoefficientModel*);
-    const void* slot34;
+    double (__thiscall* flapGroupDrag)(const AirplaneCoefficientModel*);
     double (__thiscall* spoilerDrag)(const AirplaneCoefficientModel*);
     double (__thiscall* supplementaryDrag)(const AirplaneCoefficientModel*);
     double (__thiscall* dragScale)(const AirplaneCoefficientModel*);
@@ -111,7 +117,9 @@ struct AirplaneCoefficientDispatch {
     double (__thiscall* yawRateSideForce)(const AirplaneCoefficientModel*);
     double (__thiscall* rudderSideForce)(const AirplaneCoefficientModel*);
     double (__thiscall* sideslipSideForce)(const AirplaneCoefficientModel*);
-    const void* slots54To80[12];
+    const void* slots54To6c[7];
+    double (__thiscall* flapGroupPitch)(const AirplaneCoefficientModel*);
+    const void* slots74To80[4];
     double (__thiscall* sideslipRoll)(const AirplaneCoefficientModel*);
     double (__thiscall* rudderRoll)(const AirplaneCoefficientModel*);
     double (__thiscall* aileronRoll)(const AirplaneCoefficientModel*, int surface);
@@ -132,6 +140,8 @@ struct AirplaneCoefficientDispatch {
 };
 
 struct AirplaneCoefficientModel {
+    double GetFlapGroupLiftCoefficient() const;
+    double GetFlapGroupDragCoefficient() const;
     double GetSpoilerLiftCoefficient() const;
     double GetFlapDragCoefficient() const;
     double GetSpoilerDragCoefficient() const;
@@ -211,12 +221,13 @@ typedef char CheckRealismWeight[offsetof(FlightDynamics, realismWeight) == 0x38 
 
 // Both reference corrections are published by the same airplane model update.
 extern double highAlphaReferenceXShift;
+extern double highAlphaReferenceMiddleShift;
 extern double highAlphaReferenceZShift;
-// Published by the slipstream update at sim1.dll 0x20c00840.
-extern double slipstreamPitchCoefficient;
-extern double slipstreamYawCoefficient;
+// Published from flap groups at sim1.dll 0x20c00840.
+extern double flapGroupPitchCoefficient;
+extern double flapGroupYawCoefficient;
 // Roll inputs published before the moment callback at sim1.dll 0x20c45510.
-extern double slipstreamRollCoefficient;
+extern double flapGroupRollCoefficient;
 extern double wingLiftMultiplierSum;
 extern double secondOuterWingLift;
 extern double secondInnerWingLift;
@@ -226,10 +237,10 @@ extern double firstOuterWingLiftMultiplier;
 extern double firstInnerWingLiftMultiplier;
 extern double secondInnerWingLiftMultiplier;
 extern double secondOuterWingLiftMultiplier;
-extern double firstInnerWingSlipstreamLift;
-extern double secondInnerWingSlipstreamLift;
-extern double firstWingSlipstreamDrag;
-extern double secondWingSlipstreamDrag;
+extern double firstInnerWingFlapLift;
+extern double secondInnerWingFlapLift;
+extern double firstWingFlapDrag;
+extern double secondWingFlapDrag;
 
 class AirplaneMomentModel {
 public:
@@ -260,6 +271,7 @@ public:
     double CalculateDrag(AirplaneDynamics& airplane) const;
     double CalculateSideForce(const AirplaneDynamics& airplane) const;
     void CalculateAerodynamicForce(AirplaneDynamics& airplane, Vector3& force) const;
+    void UpdateFlapGroupCoefficients(const AirplaneDynamics& airplane) const;
 
     char unknown00[4];
     const AirplaneDynamics* controlOwner;
@@ -731,7 +743,7 @@ double AirplaneMomentModel::CalculatePitchMoment(const AirplaneDynamics& airplan
     const double alphaRate = CalculateAngleOfAttackRateMoment(airplane);
     const double incidence = CalculateHorizontalTailIncidenceMoment(airplane);
     const double trim = CalculateElevatorTrimMoment(airplane);
-    volatile double slipstream = state.aerodynamicMomentScale * slipstreamPitchCoefficient;
+    volatile double flapGroupMoment = state.aerodynamicMomentScale * flapGroupPitchCoefficient;
     volatile double flaps = coefficients->GetFlapPitchCoefficient() * state.flapDeflectionFactor * state.aerodynamicMomentScale;
 
     const AirplaneControlSurfaces& surfaces = *controlOwner->positionDispatch->controlSurfaces(controlOwner);
@@ -744,7 +756,7 @@ double AirplaneMomentModel::CalculatePitchMoment(const AirplaneDynamics& airplan
     if (airplane.propulsionMomentControl->simpleAerodynamics != 0) {
         return CalculateSimplePitchMoment(airplane.pitchRadians, elevator, pitchRate);
     }
-    return angle + baseline + elevator + pitchRate + alphaRate + incidence + trim + slipstream + flaps + spoilers +
+    return angle + baseline + elevator + pitchRate + alphaRate + incidence + trim + flapGroupMoment + flaps + spoilers +
         gyro + forceTransfer + supplemental + slipstreamTail;
 }
 
@@ -815,7 +827,7 @@ double AirplaneMomentModel::CalculateRollMoment(AirplaneDynamics& airplane, cons
     const AirplaneConfiguration& configuration = *airplane.airframeConfiguration;
     const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
     const FlightPositionDispatch& controls = *controlOwner->positionDispatch;
-    volatile double slipstream = state.wingPressureForce * slipstreamRollCoefficient;
+    volatile double flapGroupMoment = state.wingPressureForce * flapGroupRollCoefficient;
     volatile double sideslip = coefficient.sideslipRoll(coefficients) * state.sideslipRadians * state.rollMomentScale;
     const double rudderAngle = controls.controlSurfaces(controlOwner)->rudder;
     volatile double rudder = coefficient.rudderRoll(coefficients) * rudderAngle * state.rollMomentScale;
@@ -882,7 +894,7 @@ double AirplaneMomentModel::CalculateRollMoment(AirplaneDynamics& airplane, cons
         return CalculateSimpleRollMoment(firstAileron, secondAileron, spoilers, yawRate);
     }
     const double forceTransfer = CalculateForceMomentZ(airplane.massProperties->centerOfGravity, force);
-    const double aerodynamic = firstAileron + secondAileron + trim + spoilers + yawRate + rollRate + rudder + sideslip + slipstream;
+    const double aerodynamic = firstAileron + secondAileron + trim + spoilers + yawRate + rollRate + rudder + sideslip + flapGroupMoment;
     return ((aerodynamic + propellerTorque + additional + supplemental) + forceTransfer) + outerWing + innerWing;
 }
 
@@ -1024,7 +1036,7 @@ double AirplaneMomentModel::CalculateYawMoment(AirplaneDynamics& airplane, const
     const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
     const FlightPositionDispatch& controls = *controlOwner->positionDispatch;
 
-    volatile double slipstream = state.wingPressureForce * slipstreamYawCoefficient;
+    volatile double flapGroupMoment = state.wingPressureForce * flapGroupYawCoefficient;
     volatile double additional = coefficient.additionalYaw(coefficients) * state.rollMomentScale;
     volatile double yawRate = coefficient.yawRate(coefficients) * state.transformedAngularVelocity.y * state.rollRateMomentScale;
     if (airplane.positionDispatch->publishesPosition(&airplane) != 0) {
@@ -1061,7 +1073,7 @@ double AirplaneMomentModel::CalculateYawMoment(AirplaneDynamics& airplane, const
     if (airplane.propulsionMomentControl->simpleAerodynamics != 0) {
         return CalculateSimpleYawMoment(rudder, yawRate, rollRate, sideslip);
     }
-    return rudder + yawRate + trim + rollRate + sideslip + ailerons + additional + slipstream +
+    return rudder + yawRate + trim + rollRate + sideslip + ailerons + additional + flapGroupMoment +
         gyro + pFactor + forceTransfer + externalTanks + slipstreamTail;
 }
 
@@ -1119,9 +1131,9 @@ __declspec(noinline) double AirplaneMomentModel::CalculateLift(AirplaneDynamics&
     const double quarterLift = coefficient.wingLift(coefficients, state.attitudeAngle) * 0.25;
     const double outerLift = quarterLift * spanScale * liftScale * state.wingPressureForce;
     double firstOuter = outerLift * firstOuterWingLiftMultiplier;
-    double firstInner = (quarterLift + firstInnerWingSlipstreamLift) * spanScale * liftScale *
+    double firstInner = (quarterLift + firstInnerWingFlapLift) * spanScale * liftScale *
         state.wingPressureForce * firstInnerWingLiftMultiplier;
-    double secondInner = (quarterLift + secondInnerWingSlipstreamLift) * spanScale * liftScale *
+    double secondInner = (quarterLift + secondInnerWingFlapLift) * spanScale * liftScale *
         state.wingPressureForce * secondInnerWingLiftMultiplier;
     double secondOuter = outerLift * secondOuterWingLiftMultiplier;
     firstOuterWingLift = firstOuter;
@@ -1178,10 +1190,10 @@ __declspec(noinline) double AirplaneMomentModel::CalculateDrag(AirplaneDynamics&
     if (airplane.positionDispatch->publishesPosition(&airplane) != 0) {
         base *= coefficient.dragScale(coefficients);
     }
-    volatile double slipstreamLift = secondInnerWingSlipstreamLift + firstInnerWingSlipstreamLift;
-    volatile double induced = coefficient.inducedDrag(coefficients, slipstreamLift);
+    volatile double flapGroupLift = secondInnerWingFlapLift + firstInnerWingFlapLift;
+    volatile double induced = coefficient.inducedDrag(coefficients, flapGroupLift);
     volatile double supplementary = geometry.dragCorrectionSelector == 0 ? 0.0 : coefficient.supplementaryDrag(coefficients);
-    volatile double slipstreamDrag = secondWingSlipstreamDrag + firstWingSlipstreamDrag;
+    volatile double flapGroupDrag = secondWingFlapDrag + firstWingFlapDrag;
     volatile double flaps = coefficient.flapDrag(coefficients) * state.flapDeflectionFactor;
     const AirplaneControlSurfaces& surfaces = *controlOwner->positionDispatch->controlSurfaces(controlOwner);
     volatile double meanSpoiler = (surfaces.secondSpoilerAngle + surfaces.firstSpoilerAngle) * 0.5;
@@ -1199,7 +1211,7 @@ __declspec(noinline) double AirplaneMomentModel::CalculateDrag(AirplaneDynamics&
         }
     }
 
-    const double drag = (induced + base + supplementary + slipstreamDrag + flaps + spoilers + externalTanks +
+    const double drag = (induced + base + supplementary + flapGroupDrag + flaps + spoilers + externalTanks +
         liftAdjustmentDrag) * state.wingPressureForce;
     state.aerodynamicDrag = drag;
     return drag;
@@ -1261,6 +1273,175 @@ void IntegrationHistory::UpdateAerodynamicLoadScales(const AirplaneGeometry& geo
         geometry.wingArea * geometry.referenceChord;
     slipstreamPitchRateMomentScale = slipstreamRateScale * geometry.referenceChord;
     slipstreamYawRateMomentScale = slipstreamRateScale * geometry.wingSpan;
+}
+
+typedef char CheckHighAlphaSettings[offsetof(AirplaneConfiguration, settings.highAlphaOnRoll) == 0x1194 &&
+    offsetof(AirplaneConfiguration, settings.highAlphaOnYaw) == 0x119c &&
+    offsetof(AirplaneControlSurfaces, owner) == 4 && offsetof(AirplaneGeometry, rudderLimit) == 0x144 ? 1 : -1];
+
+// Original: sim1.dll 0x20c00530, reference correction at 0x20c005f3–0x20c00774.
+void AirplaneDynamics::UpdateHighAlphaReferenceShifts()
+{
+    if (positionDispatch->publishesPosition(this) == 0) {
+        highAlphaReferenceXShift = 0.0;
+        highAlphaReferenceMiddleShift = 0.0;
+        highAlphaReferenceZShift = 0.0;
+        return;
+    }
+
+    const AirplaneConfiguration& configuration = *airframeConfiguration;
+    volatile double alphaRadians = history->aerodynamicAngleDegrees * 0.017453292519943295;
+    const AirplaneHighAngleModel* model = configuration.highAngleModel;
+    volatile double relativeAlpha = alphaRadians / model->dispatch->referenceAngle(model);
+    const AerodynamicCurveStorage<5> longitudinal = {{5}, {{0.0, 0.0}, {0.5, 0.0}, {0.83, 0.5}, {1.0, 0.73}, {1.25, 1.4}}};
+    highAlphaReferenceXShift = SampleAerodynamicCurve(&longitudinal.curve, relativeAlpha);
+    const AerodynamicCurveStorage<5> vertical = {{5}, {{0.0, 0.0}, {0.5, 0.0}, {0.83, -0.08}, {1.0, -0.26}, {1.25, -1.0}}};
+    highAlphaReferenceZShift = SampleAerodynamicCurve(&vertical.curve, relativeAlpha);
+    highAlphaReferenceMiddleShift = 0.0;
+
+    const AirplaneControlSurfaces& surfaces = *positionDispatch->controlSurfaces(this);
+    const double rudderLimit = surfaces.owner->airframeConfiguration->settings.geometry->rudderLimit;
+    const double rudderFraction = rudderLimit == 0.0 ? 0.0 : surfaces.rudder / rudderLimit;
+    const double correction = -(rudderFraction * configuration.settings.highAlphaOnRoll *
+        configuration.settings.highAlphaOnYaw * propulsionMomentControl->owner->realismWeight);
+    highAlphaReferenceXShift *= correction;
+    highAlphaReferenceZShift *= correction;
+}
+
+typedef char CheckSlipstreamInputs[offsetof(FlightDynamics, environment) == 0x18 &&
+    offsetof(FlightEnvironment, airDensity) == 0x134 && offsetof(EngineForceRecord, inducedAirSpeed) == 0x3c &&
+    offsetof(IntegrationHistory, engineForces) == 0x43c && offsetof(PropulsionConfiguration, engineCount) == 0x454 ? 1 : -1];
+
+// Original: sim1.dll 0x20c45760. Publish the centerline propeller slipstream inputs for the tail.
+void AirplaneDynamics::UpdatePropellerSlipstream()
+{
+    IntegrationHistory& state = *history;
+    if (positionDispatch->publishesPosition(this) == 0) {
+        return;
+    }
+
+    unsigned selectedEngines = 0;
+    double totalInducedSpeed = 0.0;
+    const EngineForceRecord* engine = state.engineForces;
+    for (unsigned index = 0; index < state.propulsionConfiguration->engineCount && engine != 0; ++index, ++engine) {
+        if (engine->mount->position.x == 0.0 && engine->mount->position.z > 0.0) {
+            ++selectedEngines;
+            totalInducedSpeed += engine->inducedAirSpeed;
+        }
+    }
+
+    if (selectedEngines == 0) {
+        state.slipstreamSpeedIncrement = 0.0;
+        state.slipstreamDynamicPressure = 0.0;
+        return;
+    }
+
+    const double speedIncrement = totalInducedSpeed / selectedEngines;
+    state.slipstreamSpeedIncrement = speedIncrement;
+    const double speedSquaredIncrement = (state.airRelativeSpeed + state.airRelativeSpeed) * speedIncrement +
+        speedIncrement * speedIncrement;
+    // The original publishes both the squared-speed difference and the final pressure.
+    volatile double& pressure = state.slipstreamDynamicPressure;
+    pressure = speedSquaredIncrement;
+    pressure = environment->airDensity * 0.5 * speedSquaredIncrement;
+}
+
+#pragma pack(push, 4)
+struct FlapGroupConfiguration {
+    char unknown00[0xc8];
+    double spanOutboard;
+    char unknownd0[0xb8];
+    double liftScalar;
+    double dragScalar;
+    double pitchScalar;
+};
+
+struct FlapGroupState {
+    const FlapGroupConfiguration* configuration;
+    double firstDeflection;
+    double secondDeflection;
+    char unknown14[0x10];
+    const FlapGroupState* next;
+};
+
+struct FlapGroupList {
+    const FlapGroupState* first;
+};
+#pragma pack(pop)
+
+typedef char CheckFlapGroupLayout[offsetof(IntegrationHistory, flapGroups) == 0x22c &&
+    offsetof(FlapGroupState, firstDeflection) == 0x4 && offsetof(FlapGroupState, secondDeflection) == 0xc &&
+    offsetof(FlapGroupState, next) == 0x24 && offsetof(FlapGroupConfiguration, spanOutboard) == 0xc8 &&
+    offsetof(FlapGroupConfiguration, liftScalar) == 0x188 && offsetof(FlapGroupConfiguration, pitchScalar) == 0x198 ? 1 : -1];
+typedef char CheckFlapGroupSlots[offsetof(AirplaneCoefficientDispatch, flapGroupLift) == 0x18 &&
+    offsetof(AirplaneCoefficientDispatch, flapGroupDrag) == 0x34 && offsetof(AirplaneCoefficientDispatch, flapGroupPitch) == 0x70 ? 1 : -1];
+
+// Original: sim1.dll 0x20c4f620, coefficient-model slot +0x18.
+__declspec(noinline) double AirplaneCoefficientModel::GetFlapGroupLiftCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->flapGroupLift;
+}
+
+// Original: sim1.dll 0x20c4fa70, coefficient-model slot +0x34.
+__declspec(noinline) double AirplaneCoefficientModel::GetFlapGroupDragCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->flapGroupDrag;
+}
+
+// Original: sim1.dll 0x20c00840, coefficient update from the runtime flap-group list.
+void AirplaneMomentModel::UpdateFlapGroupCoefficients(const AirplaneDynamics& airplane) const
+{
+    const IntegrationHistory& state = *airplane.history;
+    const AirplaneCoefficientDispatch& dispatch = *coefficients->dispatch;
+    volatile double liftScale = dispatch.flapGroupLift(coefficients) * 0.5;
+    volatile double dragScale = dispatch.flapGroupDrag(coefficients) * 0.5;
+    volatile double pitchScale = dispatch.flapGroupPitch(coefficients) * 0.5;
+
+    volatile double& firstLift = firstInnerWingFlapLift;
+    volatile double& secondLift = secondInnerWingFlapLift;
+    volatile double& firstDrag = firstWingFlapDrag;
+    firstLift = 0.0;
+    secondLift = 0.0;
+    firstDrag = 0.0;
+    secondWingFlapDrag = 0.0;
+    flapGroupPitchCoefficient = 0.0;
+    flapGroupRollCoefficient = 0.0;
+    flapGroupYawCoefficient = 0.0;
+    const FlapGroupList* groups = state.flapGroups;
+    if (groups == 0 || groups->first == 0) {
+        return;
+    }
+
+    double pitch = 0.0;
+    double roll = 0.0;
+    double yaw = 0.0;
+    double secondDrag = 0.0;
+    for (const FlapGroupState* group = groups->first; group != 0; group = group->next) {
+        const FlapGroupConfiguration& configuration = *group->configuration;
+        const double first = group->firstDeflection;
+        const double second = group->secondDeflection;
+        firstLift += first * liftScale * configuration.liftScalar;
+        secondLift += second * liftScale * configuration.liftScalar;
+        firstDrag += (first > 0.0 ? first : 0.0) * dragScale * configuration.dragScalar;
+        secondDrag += (second > 0.0 ? second : 0.0) * dragScale * configuration.dragScalar;
+        secondWingFlapDrag = secondDrag;
+
+        pitch += first * pitchScale * configuration.pitchScalar;
+        pitch += pitchScale * second * configuration.pitchScalar;
+        // The original weights the running side differences once per group.
+        const double span = state.propulsionConfiguration->geometry->wingSpan;
+        roll += (secondLift - firstLift) * configuration.spanOutboard * span * 0.5;
+        yaw += (secondDrag - firstDrag) * configuration.spanOutboard * span * 0.5;
+    }
+    flapGroupYawCoefficient = yaw;
+    flapGroupRollCoefficient = roll;
+    flapGroupPitchCoefficient = pitch;
 }
 
 }

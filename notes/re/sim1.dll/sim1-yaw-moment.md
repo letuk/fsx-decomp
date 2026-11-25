@@ -10,7 +10,7 @@ scalar in ST0. It returns zero if the coefficient view is absent.
 
 | Original address | Finding | Status |
 | --- | --- | --- |
-| `0x20c020e7`–`0x20c02113`, `0x20c00840`, `0x20c50e20` | Scales the published slipstream yaw coefficient at `0x20c7b948` by runtime `q*S` and the additional `+0xc4` coefficient by `q*S*b`. The latter samples filtered alpha and applies a model float at `+0x08`, realism weight, and the `hi_alpha_on_yaw` setting. | live verified |
+| `0x20c020e7`–`0x20c02113`, `0x20c00840`, `0x20c50e20` | Scales the published flap-group yaw coefficient at `0x20c7b948` by runtime `q*S` and the additional `+0xc4` coefficient by `q*S*b`. The latter samples filtered alpha and applies a model float at `+0x08`, realism weight, and the `hi_alpha_on_yaw` setting. | live verified |
 | `0x20c02117`–`0x20c0216a`, `0x20c00530` | Yaw rate uses transformed rate `+0x13c` and `ρ*V*S*b²/4` at `+0x750`. Airplane slot `+0x50` enables the shared six-sample high-angle curve at `0x20c71d10`, evaluated at raw alpha divided by the configuration reference angle. The force-scale writer supplies the same rate scale for the roll-rate contribution. | live verified |
 | `0x20c0217d`–`0x20c02261`, `0x20bfb330` | Rudder deflection, rudder trim, sideslip, and the mean of both aileron deflections use `q*S*b`. The binary32 trim at control `+0x108` uses `rudder_trim_effectiveness` at configuration owner `+0x1174`. Slot `+0xa4` supplies the separate coupling with the transformed roll rate at `+0x144`. | live verified |
 | `0x20c02265`–`0x20c023ce`, `0x20bfb330`, `0x20c47ba0` | The gyroscopic reaction accumulates `-(signedRPM * 0.1047197551 * inertia * pitchAngularVelocity) * gyro_precession_on_yaw * gyroGain`. It uses pitch rate at airplane `+0x1a0`, yaw setting at owner `+0x11ac`, and the common propeller count, suppression flag and ordered-positive gyro gain checks. | live verified |
@@ -19,7 +19,7 @@ scalar in ST0. It returns zero if the coefficient view is absent.
 | `0x20c02645`–`0x20c0267f` | Force reference transfer reuses `a*Fz - b1*Fx`, where `a = CG.x - highAlphaReferenceXShift` and `b1 = CG.z - referenceZ - highAlphaReferenceZShift`. The first product is stored before the reference query. | live verified |
 | `0x20c02680`–`0x20c026f3`, `0x20bf97e0`, `0x20bfa8b0`, `0x20bf92c0` | With airplane slot `+0x50` enabled, each installed `fuel/External1` or `fuel/External2` tank contributes `q * 0.047 * lateralPosition` if capacity is nonzero and flag `0x02` is clear. The runtime records start at `+0x3ec` and `+0x40c`. The original jettison transition sets the tested flag. | live verified |
 | `0x20c026f4`–`0x20c02720` | `SimpleAero` returns `0.75*rudder + yawRate + rollRate + sideslip` using the previously scaled contributions. | live verified |
-| `0x20c02721`–`0x20c0275b` | The normal path sums rudder, yaw rate, rudder trim, roll rate, sideslip, ailerons, additional yaw, slipstream, propeller gyro, P-factor, force transfer, external tanks, and tail slipstream in that order. The comparator follows the stack stores, adjusts the loads for the pops, and verifies the external tank addition from ST1. | live verified |
+| `0x20c02721`–`0x20c0275b` | The normal path sums rudder, yaw rate, rudder trim, roll rate, sideslip, ailerons, additional yaw, flap-group yaw, propeller gyro, P-factor, force transfer, external tanks, and tail slipstream in that order. The comparator follows the stack stores, adjusts the loads for the pops, and verifies the external tank addition from ST1. | live verified |
 
 The coefficient table at `0x20bc2618` supplies slots `+0xa4`
 through `+0xc4`. The original slot loads were checked against
@@ -51,7 +51,7 @@ for differences in the listings. The existing pitch, roll, state
 integration and linked propulsion comparisons were reproduced. Linked yaw matching, simulator
 verification and the alternate airplane model remain open.
 
-- [C++ yaw calculation](../../../src/sim1/aerodynamic_moment.cpp#L1062)
+- [C++ yaw calculation](../../../src/sim1/aerodynamics.cpp#L1062)
 - [Original yaw listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c020a0.asm)
 - [Native COFF comparison](../../../artifacts/sim1.dll/yaw-sum-comparison.json)
 - [Ghidra bindings and save state](../../../artifacts/sim1.dll/yaw-sum-ghidra.json)

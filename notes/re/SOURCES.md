@@ -98,6 +98,25 @@ listing supersedes the decompiler's omission of the thrust clamp.
 Comparison validates both relocated literals and the `_CIsqrt` import.
 [Propeller induced airspeed](sim1.dll/sim1-engine-branches.md#propeller-induced-airspeed).
 
+The flap-group coefficients in `sim1.dll:0x20c00840` use the live
+original listing, flap parser and node-update evidence, verified
+coefficient slots and the pinned PE and native VC8 COFF. The
+earlier identification as slipstream coefficients is superseded.
+[Flap-group aerodynamic coefficients](sim1.dll/sim1-flap-groups.md).
+
+The tail slipstream reconstruction uses the live `0x20c45760`
+listing, engine and pressure field evidence, the pinned original
+PE and two native VC8 builds. The selected comparison verifies
+ten instruction ranges. Whole-body and runtime verification remain open.
+[Tail slipstream speed and pressure](sim1.dll/sim1-aerodynamic-forces.md#tail-slipstream-speed-and-pressure).
+
+The high-alpha correction in `sim1.dll:0x20c00530` uses the
+live listing, the verified configuration bindings and nine
+binary64 literals. The VC8 comparison verifies both relocated
+curve calls and the associated global stores. Whole-body and
+simulator verification remain open.
+[High-alpha reference correction](sim1.dll/sim1-aerodynamic-moment.md#high-alpha-reference-correction).
+
 The aerodynamic pressure and rate scales use the live
 `sim1.dll:0x20c00530` listing and input writers, the pinned PE,
 and native VC8 COFF. The comparison verifies nine stores, the

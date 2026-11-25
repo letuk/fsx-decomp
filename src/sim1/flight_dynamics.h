@@ -31,6 +31,7 @@ struct PitchMomentModifier;
 struct ZeroAlphaMomentTuning;
 struct AirplaneControlSurfaces;
 struct AirplaneGeometry;
+struct FlapGroupList;
 class SupplementalAerodynamics;
 class AirplaneDynamics;
 
@@ -168,7 +169,9 @@ struct PropulsionConfiguration {
     double aileronTrimEffectiveness;
     double rudderTrimEffectiveness;
     double pitchStability;
-    char unknown1180[0x20];
+    char unknown1180[0x10];
+    double highAlphaOnRoll;
+    double highAlphaOnYaw;
     float pFactorOnYaw;
     float torqueOnRoll;
     float gyroPrecessionOnYaw;
@@ -284,7 +287,9 @@ struct IntegrationHistory {
     char unknown20c[4];
     int propulsionMomentBlendMode;
     unsigned qualifiedGroundContactCount;
-    char unknown218[0x38];
+    char unknown218[0x14];
+    const FlapGroupList* flapGroups;
+    char unknown230[0x20];
     const PitchMomentModifier* pitchMomentModifier;
     char unknown254[0x198];
     ExternalFuelTankState firstExternalTank;
@@ -450,6 +455,8 @@ struct AirplaneConfiguration {
 
 class AirplaneDynamics : public FlightDynamics {
 public:
+    void UpdatePropellerSlipstream();
+    void UpdateHighAlphaReferenceShifts();
     const AirplaneConfiguration* airframeConfiguration;
 };
 

@@ -21,10 +21,12 @@ $entries = @('20c43110', '20c42d90', '20bdeec0', '20bdef30', '20bdefa0')
 if ($Target -eq 'AerodynamicMoment') {
     $component = 'aerodynamic-moment'
     $commandComponent = $component
-    $sourceName = 'aerodynamic_moment.cpp'
+    $sourceName = 'aerodynamics.cpp'
     $entries = @('20c013a0', '20c013e6', '20c0140b', '20c01438', '20c01462', '20c0147b', '20c01494', '20c014bc', '20c0155d', '20c016ad', '20c01733', '20c0177b', '20c01890', '20c01c55', '20c01fde', '20c02025', '20c020a0', '20c02265', '20c023cf', '20c02645', '20c02680', '20c02702', '20c4fcb0', '20c4ff30', '20c4fce0', '20c4fe00', '20c50020', '20c500c0', '20c501a0', '20c50270', '20c50290', '20c502b0', '20c502d0', '20c502f0', '20c50870', '20c50890', '20c50dc0', '20c50de0', '20c50e00', '20bfb840', '20bcbf60')
     $entries += @('20c00a00', '20c00d80', '20c00f40', '20c45510', '20c4564f', '20c4f640', '20c4fa50', '20c4fa90')
-    $entries += @('20c00530', '20c0054f')
+    $entries += @('20c00530', '20c0054f', '20c005f3')
+    $entries += @('20c45760')
+    $entries += @('20c00840', '20c4f620', '20c4fa70')
     if (!$PSBoundParameters.ContainsKey('Profile')) { $Profile = 'Precise' }
 }
 if ($Target -eq 'Turbine') {
@@ -237,6 +239,12 @@ try {
         if ($LASTEXITCODE -ne 0) { throw 'Sim1 aerodynamic force sum comparison failed' }
         node "$project\scripts\compare-sim1-load-scales.cjs" $run
         if ($LASTEXITCODE -ne 0) { throw 'Sim1 aerodynamic load scales comparison failed' }
+        node "$project\scripts\compare-sim1-high-alpha-reference.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 high-alpha reference comparison failed' }
+        node "$project\scripts\compare-sim1-tail-slipstream.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 tail slipstream comparison failed' }
+        node "$project\scripts\compare-sim1-flap-groups.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 flap group comparison failed' }
     }
 } finally {
     $lock.Dispose()

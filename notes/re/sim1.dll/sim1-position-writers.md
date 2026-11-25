@@ -36,7 +36,10 @@ object's table, passes the object in ECX and tests its EAX return.
 The altitude writer loads another object from flight offset `+0x14`,
 calls that object's slot `+0x08` with the object in ECX and uses the
 x87 return. These slot positions and call-site ABIs are verified
-independently of the dynamic target identities, which remain open.
+independently of the dynamic target identities. A later constructor
+trace resolves the altitude call to `0x20bceec0` through `0x20bbd940`
+for the installed ground-reference object. The flight object's
+position-publishing target identities remain open.
 The source uses minimum table projections for these two calls so it
 can preserve the slots without assigning signatures to unreviewed
 virtual methods. The established C++ heading-transform interface

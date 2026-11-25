@@ -338,31 +338,47 @@
   },
   {
     "entry": "20c7b92c",
-    "name": "High-angle longitudinal reference shift",
-    "kind": "Global",
+    "name": "High-alpha longitudinal reference shift",
+    "kind": "Double runtime storage",
     "bytes": 8,
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/moment-arm-ghidra.json",
+    "evidence": "artifacts/sim1.dll/high-alpha-reference-ghidra.json",
     "functions": [
       "20c00530",
       "20c01890",
       "20c020a0"
     ],
-    "description": "Written by the airplane model input update and used in the force-transfer moment terms."
+    "description": "Written by the airplane model input update and used in the force-transfer moment terms.",
+    "originalHex": "0000000000000000",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-aerodynamic-moment.md",
+        "title": "High-alpha reference correction",
+        "description": "Filtered alpha drives two curves. Rudder, both high-alpha settings and realism scale the shifts."
+      }
+    ]
   },
   {
     "entry": "20c7b93c",
-    "name": "High-angle vertical reference shift",
-    "kind": "Global",
+    "name": "High-alpha vertical reference shift",
+    "kind": "Double runtime storage",
     "bytes": 8,
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/moment-arm-ghidra.json",
+    "evidence": "artifacts/sim1.dll/high-alpha-reference-ghidra.json",
     "functions": [
       "20c00530",
       "20c013a0",
       "20c020a0"
     ],
-    "description": "Written by the airplane model input update and used in the force-transfer moment terms."
+    "description": "Written by the airplane model input update and used in the force-transfer moment terms.",
+    "originalHex": "0000000000000000",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-aerodynamic-moment.md",
+        "title": "High-alpha reference correction",
+        "description": "Filtered alpha drives two curves. Rudder, both high-alpha settings and realism scale the shifts."
+      }
+    ]
   },
   {
     "entry": "20bbedec",
@@ -797,12 +813,13 @@
       "20c50290",
       "20c502b0",
       "20c502d0",
-      "20c502f0"
+      "20c502f0",
+      "20c00840"
     ],
     "slots": [
       {
         "offset": "0x70",
-        "name": "Pitch coefficient at slot +0x70",
+        "name": "Flap-group pitch coefficient",
         "target": "20c50270",
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
@@ -834,6 +851,13 @@
         "target": "20c502f0",
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
+      }
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
       }
     ]
   },
@@ -902,17 +926,24 @@
   },
   {
     "entry": "20c7b958",
-    "name": "Published slipstream pitch coefficient",
+    "name": "Published flap-group pitch coefficient",
     "kind": "Double runtime storage",
     "bytes": 8,
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
+    "evidence": "artifacts/sim1.dll/flap-groups-ghidra.json",
     "originalHex": "0000000000000000",
     "functions": [
       "20c00840",
       "20c013a0"
     ],
-    "description": "Starts at zero and is published by the slipstream pass before the airplane moment callback."
+    "description": "Sum of the two signed flap pitch terms per group.",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
+      }
+    ]
   },
   {
     "entry": "20bc2f50",
@@ -1083,8 +1114,8 @@
   {
     "entry": "20c7b950",
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
-    "name": "Published slipstream roll coefficient",
+    "evidence": "artifacts/sim1.dll/flap-groups-ghidra.json",
+    "name": "Published flap-group roll coefficient",
     "kind": "Double runtime storage",
     "bytes": 8,
     "originalHex": "0000000000000000",
@@ -1092,7 +1123,14 @@
       "20c00840",
       "20c01890"
     ],
-    "description": "Multiplied by dynamic pressure times wing area."
+    "description": "Weighted difference of the running side lift sums.",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
+      }
+    ]
   },
   {
     "entry": "20c7b980",
@@ -1281,17 +1319,24 @@
   },
   {
     "entry": "20c7b948",
-    "name": "Published slipstream yaw coefficient",
+    "name": "Published flap-group yaw coefficient",
     "kind": "Double runtime storage",
     "bytes": 8,
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/yaw-sum-ghidra.json",
+    "evidence": "artifacts/sim1.dll/flap-groups-ghidra.json",
     "originalHex": "0000000000000000",
     "functions": [
       "20c00840",
       "20c020a0"
     ],
-    "description": "Starts at zero. The yaw callback multiplies the published coefficient by dynamic pressure times wing area."
+    "description": "Weighted difference of the running side drag sums.",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
+      }
+    ]
   },
   {
     "entry": "20bc2618",
@@ -1322,9 +1367,12 @@
       "20c4fbb0",
       "20c4fab0",
       "20c4fb30",
-      "20c4fc30"
+      "20c4fc30",
+      "20c4f620",
+      "20c00840",
+      "20c4fa70"
     ],
-    "description": "The force queries use 18 slots of the table installed at 20bc2618. The table prefix is verified through slot +0x50.",
+    "description": "Verified coefficient table prefix through +0x50, including the flap-group lift and drag accessors.",
     "slots": [
       {
         "offset": "0x04",
@@ -1358,6 +1406,13 @@
         "offset": "0x14",
         "name": "Tail incidence lift",
         "target": "20c4f570",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x18",
+        "name": "Flap-group lift coefficient",
+        "target": "20c4f620",
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
       },
@@ -1400,6 +1455,13 @@
         "offset": "0x30",
         "name": "Flap drag",
         "target": "20c4fa50",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x34",
+        "name": "Flap-group drag coefficient",
+        "target": "20c4fa70",
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
       },
@@ -1452,41 +1514,62 @@
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
       }
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
+      }
     ]
   },
   {
     "entry": "20c7b960",
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
-    "name": "First wing slipstream drag coefficient",
+    "evidence": "artifacts/sim1.dll/flap-groups-ghidra.json",
+    "name": "First-side flap-group drag coefficient",
     "kind": "Double runtime storage",
     "bytes": 8,
     "functions": [
       "20c00840",
       "20c00d80"
     ],
-    "description": "Added to the second wing slipstream drag coefficient.",
-    "originalHex": "0000000000000000"
+    "description": "Added to the second-side flap-group drag coefficient.",
+    "originalHex": "0000000000000000",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
+      }
+    ]
   },
   {
     "entry": "20c7b968",
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
-    "name": "Second wing slipstream drag coefficient",
+    "evidence": "artifacts/sim1.dll/flap-groups-ghidra.json",
+    "name": "Second-side flap-group drag coefficient",
     "kind": "Double runtime storage",
     "bytes": 8,
     "functions": [
       "20c00840",
       "20c00d80"
     ],
-    "description": "Added to the first wing slipstream drag coefficient.",
-    "originalHex": "0000000000000000"
+    "description": "Added to the first-side flap-group drag coefficient.",
+    "originalHex": "0000000000000000",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
+      }
+    ]
   },
   {
     "entry": "20c7b970",
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
-    "name": "First inner-wing slipstream lift coefficient",
+    "evidence": "artifacts/sim1.dll/flap-groups-ghidra.json",
+    "name": "First inner-wing flap-group lift coefficient",
     "kind": "Double runtime storage",
     "bytes": 8,
     "functions": [
@@ -1494,14 +1577,21 @@
       "20c00a00",
       "20c00d80"
     ],
-    "description": "Adds lift to the first inner section and contributes to induced drag.",
-    "originalHex": "0000000000000000"
+    "description": "Feeds first-side lift and the induced-drag input.",
+    "originalHex": "0000000000000000",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
+      }
+    ]
   },
   {
     "entry": "20c7b978",
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/aerodynamic-force-sum-ghidra.json",
-    "name": "Second inner-wing slipstream lift coefficient",
+    "evidence": "artifacts/sim1.dll/flap-groups-ghidra.json",
+    "name": "Second inner-wing flap-group lift coefficient",
     "kind": "Double runtime storage",
     "bytes": 8,
     "functions": [
@@ -1509,8 +1599,15 @@
       "20c00a00",
       "20c00d80"
     ],
-    "description": "Adds lift to the second inner section and contributes to induced drag.",
-    "originalHex": "0000000000000000"
+    "description": "Feeds second-side lift and the induced-drag input.",
+    "originalHex": "0000000000000000",
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-flap-groups.md",
+        "title": "Flap-group aerodynamic coefficients",
+        "description": "Summarizes runtime flap groups. The earlier slipstream interpretation is superseded."
+      }
+    ]
   },
   {
     "entry": "20c7b988",
@@ -1567,6 +1664,25 @@
     ],
     "description": "Scales the first outer section lift.",
     "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20c7b934",
+    "name": "High-alpha middle reference component",
+    "kind": "Double runtime storage",
+    "status": "live verified",
+    "bytes": 8,
+    "evidence": "artifacts/sim1.dll/high-alpha-reference-ghidra.json",
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00530"
+    ],
+    "notes": [
+      {
+        "file": "notes/re/sim1.dll/sim1-aerodynamic-moment.md",
+        "title": "High-alpha reference correction",
+        "description": "Filtered alpha drives two curves. Rudder, both high-alpha settings and realism scale the shifts."
+      }
+    ]
   },
   {
     "entry": "20bbd938",

@@ -13,7 +13,7 @@ calls through their original table offsets.
 
 | Original address | Finding | Status |
 | --- | --- | --- |
-| `0x20c00530`, `0x20c018e1`–`0x20c01917` | The writer stores `q*S` at runtime `+0x1e4`, `q*S*b` at `+0x1ec`, and `ρ*V*S*b²/4` at `+0x750`. The callback scales the published slipstream coefficient at `0x20c7b950` by `q*S` and the sideslip coefficient by `q*S*b` and the signed sideslip in radians. The angle update at `0x20c2e0b0` writes sideslip at `+0x1a4`. | live verified |
+| `0x20c00530`, `0x20c018e1`–`0x20c01917` | The writer stores `q*S` at runtime `+0x1e4`, `q*S*b` at `+0x1ec`, and `ρ*V*S*b²/4` at `+0x750`. The callback scales the published flap-group coefficient at `0x20c7b950` by `q*S` and the sideslip coefficient by `q*S*b` and the signed sideslip in radians. The angle update at `0x20c2e0b0` writes sideslip at `+0x1a4`. | live verified |
 | `0x20c0191e`–`0x20c019e4`, `0x20bfb330` | Adds rudder deflection, first spoiler minus second spoiler, and aileron trim contributions. The trim path reads binary32 at control `+0x104` and applies `aileron_trim_effectiveness` at configuration owner `+0x116c`. These three terms use `q*S*b`. | live verified |
 | `0x20c019e4`–`0x20c01a93` | Airplane slot `+0x50` selects one common aileron coefficient for the mean deflection, replicated into both contributions, or separate coefficient calls using selectors 2 and 3 for control offsets `+0xd4` and `+0xdc`. All paths apply `q*S*b`. The combined path sends selector 1. | live verified |
 | `0x20c01a97`–`0x20c01b26`, `0x20c71d10`, `0x20c454c0` | Roll and yaw rate terms use transformed rates at `+0x144` and `+0x13c` and scale `+0x750`. With airplane slot `+0x50` enabled, roll damping is multiplied by the six-sample curve at `0x20c71d10`, indexed by raw alpha divided by the binary32 reference returned through configuration slot `+0x10`. The curve ranges from `(0, 1)` to `(3.71, 0.45)` and peaks at `(1.4, 1.08)`. | live verified |
@@ -22,7 +22,7 @@ calls through their original table offsets.
 | `0x20c01c55`–`0x20c01f43`, `0x20bfb330`, `0x20c2c850`, `0x20c488a0` | Positive reaction-torque gain uses `(1 - Vx/(1.5*referenceSpeed)) * controlGain * torque_on_roll`. The count and suppression flag can bypass the contribution. For every propeller, read the mapped engine torque at record `+0x44` with stride `0xec`. Reverse its sign if the propeller's rotation factor at `+0x44` is negative. Divide each signed term by the number of propellers on its engine and accumulate in propeller order. The settings reader binds `torque_on_roll` to owner `+0x11a8`. | live verified |
 | `0x20c00780`, `0x20c00a00`, `0x20c01f44`–`0x20c01fc1` | When the four wing multipliers sum to less than four, compute the outer lift difference times half span and the inner lift difference times quarter span. The combined control path halves both products again. The globals are produced before the roll callback. The source uses first and second wing identifiers in encounter order. | live verified |
 | `0x20c01fd2`–`0x20c02009` | `SimpleAero` returns `0.75*firstAileron + 0.75*secondAileron + spoilers + 1.3*yawRate`. These are the already-scaled terms, including any aileron attenuation. | live verified |
-| `0x20c02025`–`0x20c0208d` | The normal return sums first aileron, second aileron, trim, spoilers, yaw rate, roll rate, rudder, sideslip, slipstream, propeller torque, additional roll, supplemental roll, force transfer, outer wing, and inner wing. Force transfer is `CG.y*Fx - (CG.x - highAlphaReferenceXShift)*Fy`. The comparator checks the original stack stores, the adjustment for three pops, and the final x87 adds. | live verified |
+| `0x20c02025`–`0x20c0208d` | The normal return sums first aileron, second aileron, trim, spoilers, yaw rate, roll rate, rudder, sideslip, flap-group roll, propeller torque, additional roll, supplemental roll, force transfer, outer wing, and inner wing. Force transfer is `CG.y*Fx - (CG.x - highAlphaReferenceXShift)*Fy`. The comparator checks the original stack stores, the adjustment for three pops, and the final x87 adds. | live verified |
 
 The coefficient table base is `0x20bc2618`, installed at
 `0x20c4f356`. Its roll offsets `+0x84` through `+0xa0` resolve to
@@ -56,7 +56,7 @@ at 748/666 and 37/39 bytes respectively. The differences include
 stack frames, register allocation and loop/call structure. Linked
 roll matching and in-simulator behavior remain open.
 
-- [C++ roll calculation](../../../src/sim1/aerodynamic_moment.cpp#L855)
+- [C++ roll calculation](../../../src/sim1/aerodynamics.cpp#L855)
 - [Original roll listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c01890.asm)
 - [Ghidra evidence and save state](../../../artifacts/sim1.dll/roll-sum-ghidra.json)
 - [Native COFF comparison](../../../artifacts/sim1.dll/roll-sum-comparison.json)
