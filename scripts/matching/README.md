@@ -38,10 +38,30 @@ target, gravity storage, the gain divisor and exact callback scopes.
 Replay with `node scripts/compare-sim1-propulsion.cjs <run-directory>`.
 [Propulsion force collector](../../notes/re/sim1.dll/sim1-propulsion-collector.md).
 
-Pass `-Target Turbine` for the native VC8 COFF comparison of the
-shared turbine output helper. Replay with
-`node scripts/compare-sim1-turbine.cjs <run-directory>`.
+Pass `-Target Turbine` for the native VC8 COFF comparisons from
+`engine_forces.cpp`. Replay with
+`node scripts/compare-sim1-turbine.cjs <run-directory>`,
+`node scripts/compare-sim1-induced-airspeed.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-sync.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-speed.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-load.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-thrust.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-pitch.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-feather.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-ground-selector.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-mapped-pass.cjs <run-directory>`,
+`node scripts/compare-sim1-propeller-load-factor.cjs <run-directory>` and
+`node scripts/compare-sim1-automatic-feather.cjs <run-directory>`
+for builds containing the automatic-feather stage.
 [Turbine speed-scaled output](../../notes/re/sim1.dll/sim1-engine-branches.md#turbine-speed-scaled-output).
+[Propeller induced airspeed](../../notes/re/sim1.dll/sim1-engine-branches.md#propeller-induced-airspeed).
+[Mapped propeller step and speed synchronization](../../notes/re/sim1.dll/sim1-propeller-step.md).
+
+Pass `-Target Electrical` to build `src/sim1/electrical.cpp` as
+`sim1-electrical-circuit.obj`. Replay with
+`node scripts/compare-sim1-electrical-circuit.cjs <run-directory>`.
+The linked propulsion build compiles the two translation units
+separately and includes both objects.
 
 Pass `-Target AerodynamicMoment` for the native VC8 COFF comparisons
 of the propeller gyroscopic contribution, force-vector terms,

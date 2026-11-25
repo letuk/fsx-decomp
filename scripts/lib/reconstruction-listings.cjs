@@ -16,7 +16,7 @@ function originalListing(program, entry, image) {
             return match.slice(1);
         });
     const va = Number.parseInt(entry, 16);
-    const bytes = image.codeAt(va, item.bodyBytes);
+    const bytes = image.codeAt(va, item.spanBytes ?? item.bodyBytes);
     verifyRows(rows, va, bytes);
     return { rows, va, bytes };
 }

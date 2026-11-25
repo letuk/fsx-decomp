@@ -19,10 +19,14 @@ struct AerodynamicCurve {
 };
 
 class FlightDynamics;
+struct EngineForceRecord;
+struct IntegrationHistory;
 struct GroundReference;
+struct ElectricalRuntime;
+struct ElectricalOwner;
 struct ForceContributors;
-struct EngineMount;
 struct TurbineEngineState;
+struct PropellerStepInputs;
 struct PitchMomentModifier;
 struct ZeroAlphaMomentTuning;
 struct AirplaneControlSurfaces;
@@ -30,43 +34,132 @@ struct AirplaneGeometry;
 class SupplementalAerodynamics;
 class AirplaneDynamics;
 
+// Reconstructed engine mount record in the configuration array at +0x199c.
+struct ThrustOrientation {
+    float elevation;
+    float lateralAngle;
+};
+
+struct EngineMount {
+    Vector3 position;
+    ThrustOrientation orientation;
+};
+
+// Minimum environment layout for the air-density input.
+struct FlightEnvironment {
+    char unknown00[0x40];
+    double ambientTemperatureCelsius;
+    char unknown48[8];
+    int icingEnvironmentActive;
+    unsigned icingSeverity;
+    char unknown58[0xdc];
+    double airDensity;
+};
+
 // Minimum propulsion layouts shared by the thrust and aerodynamic calculations.
 struct PropellerForceRecord {
+    void UpdateFixedPitch(const FlightDynamics& airplane);
+    int UpdateGovernorFeatherState(const IntegrationHistory& state, unsigned engineIndex,
+                                   const PropellerStepInputs& inputs, double step);
+    int UpdateFeatherState(const IntegrationHistory& state, unsigned engineIndex, double step);
+    void ApplyGovernorPitch(const FlightDynamics& airplane, const EngineForceRecord& engine,
+                            const PropellerStepInputs& inputs, double step, bool featherActive);
+    double __fastcall CalculateAerodynamicTorque(const FlightDynamics& airplane, const PropellerStepInputs& inputs) const;
+    void UpdateThrust(const IntegrationHistory& state, const PropellerStepInputs& inputs, double engineTorque);
+    void __fastcall IntegrateSpeed(const IntegrationHistory& state, PropellerStepInputs& inputs,
+                                    double engineTorque, double step);
+    void __fastcall UpdateSynchronization(const IntegrationHistory& state, const EngineForceRecord& engine, double step);
+
     double signedRpm;
-    char unknown08[0x0c];
+    double normalizedSpeed;
+    float rotationPhase;
     double thrust;
-    char unknown1c[0x28];
+    double bladePitch;
+    int governorLowSpeedLatch;
+    char unknown28[4];
+    double synchronizationCorrection;
+    int automaticFeatherArmed;
+    int featherActive;
+    double aerodynamicLoadFactor;
     double signedRotationFactor;
     const Vector3* mountOffset;
-    char unknown50[4];
+    float featherRequestTime;
 };
 
 struct EngineForceRecord {
     void UpdateTurbineSpeedOutput(TurbineEngineState* turbine) const;
+    void UpdateInducedAirSpeed(const FlightDynamics& airplane, const PropellerForceRecord& propeller,
+                               const PropellerStepInputs& step);
 
     const EngineMount* mount;
-    char unknown04[0x30];
+    char unknown04[8];
+    double reverseControlInput;
+    char unknown14[8];
+    double governorCommand;
+    char unknown24[0x10];
     double thrust;
-    char unknown3c[8];
+    double inducedAirSpeed;
     double propellerTorque;
-    char unknown4c[0x10];
+    double propellerDerivedRpm;
+    char unknown54[8];
     double speedFraction;
     char unknown64[0x88];
+};
+
+// Reconstructed layout of AIR record 0x512 with axis headers in the first row and column.
+struct PropellerCoefficientTable {
+    double Evaluate(double advanceRatio, double bladePitchDegrees) const;
+
+    unsigned rows;
+    unsigned columns;
+    double values[168];
+};
+
+// Optional fixed-pitch cruise setting allocated by the propeller parser.
+struct FixedPitchCruiseSetting {
+    double bladePitch;
+    float activationSpeed;
 };
 
 struct PropulsionConfiguration {
     char unknown00[0xc8];
     double rollTorqueReferenceSpeed;
-    char unknownd0[0x13c];
+    char unknownd0[0x138];
+    int propellerType;
     double propellerDiameter;
     double propellerMomentOfInertia;
-    char unknown21c[0x238];
+    char unknown21c[4];
+    double maximumBladePitch;
+    double minimumBladePitch;
+    double minimumGovernorRpm;
+    double governorGain;
+    double gearReductionRatio;
+    char unknown248[0x10];
+    double fixedBladePitch;
+    double lowSpeedTheoryLimit;
+    int propellerSyncAvailable;
+    char unknown26c[0x10];
+    double minimumRpmForFeather;
+    double featherBladePitch;
+    double featherPowerCoefficient;
+    int defeatheringAccumulatorAvailable;
+    int featheringSwitches;
+    float reverseThrustFactor;
+    double minimumGroundBladePitch;
+    double minimumReverseBladePitch;
+    char unknown2b0[0x1a4];
     unsigned engineCount;
     unsigned propellerCount;
     unsigned engineForPropeller[4];
-    char unknown46c[0x10c];
+    unsigned char engineType;
+    char unknown46d[7];
+    float reverseControlScale;
+    char unknown478[0x100];
     AerodynamicCurve elevatorTrimPressureCurve;
-    char unknown57c[0xbac];
+    char unknown57c[0xe8];
+    PropellerCoefficientTable thrustEfficiencyTable;
+    PropellerCoefficientTable powerCoefficientTable;
+    char unknown10f4[0x34];
     double cruiseLiftScalar;
     char unknown1130[0x18];
     double elevatorEffectiveness;
@@ -80,8 +173,14 @@ struct PropulsionConfiguration {
     float torqueOnRoll;
     float gyroPrecessionOnYaw;
     float gyroPrecessionOnPitch;
-    char unknown11b0[0x294];
+    char unknown11b0[0x18];
+    double propellerThrustScalar;
+    char unknown11d0[0x274];
     int suppressFirstMoment;
+    char unknown1448[0x534];
+    const AirplaneGeometry* geometry;
+    char unknown1980[4];
+    const FixedPitchCruiseSetting* fixedPitchCruise;
 };
 
 struct PropulsionMomentControl {
@@ -110,6 +209,7 @@ struct FlightPositionDispatch {
 struct GroundReferenceDispatch {
     void* interveningSlots[2];
     double (__thiscall* height)(GroundReference*);
+    int (__thiscall* surfaceMode)(GroundReference*);
 };
 
 struct GroundReference {
@@ -183,19 +283,34 @@ struct IntegrationHistory {
     double slipstreamSpeedIncrement;
     char unknown20c[4];
     int propulsionMomentBlendMode;
-    char unknown214[0x3c];
+    unsigned qualifiedGroundContactCount;
+    char unknown218[0x38];
     const PitchMomentModifier* pitchMomentModifier;
     char unknown254[0x198];
     ExternalFuelTankState firstExternalTank;
     ExternalFuelTankState secondExternalTank;
-    char unknown42c[0xc];
+    char unknown42c[8];
+    TurbineEngineState* turbineEngines;
     PropellerForceRecord* propellerForces;
     EngineForceRecord* engineForces;
     char unknown440[0x38];
     double liftAdjustment;
-    char unknown480[0x78];
+    char unknown480[8];
+    int propellerStopRequested;
+    char unknown48c[0x6c];
     double inertiaScale;
-    char unknown500[0x12c];
+    char unknown500[0x1c];
+    int propellerSynchronizationEnabled;
+    int automaticFeatherSwitch;
+    char unknown524[0x10];
+    const ElectricalRuntime* electrical;
+    char unknown538[0x18];
+    double propellerDiameterToFifth;
+    char unknown558[0xb8];
+    int propellerDeiceSwitch;
+    char unknown614[8];
+    double propellerRpmReference;
+    char unknown624[8];
     double firstWingAttenuationInput;
     double secondWingAttenuationInput;
     char unknown63c[0xa8];
@@ -252,6 +367,13 @@ struct MassProperties {
 // Reconstructed minimum layout. Axis and frame names reflect the observed equations.
 class FlightDynamics {
 public:
+    int UsesGroundContactLimits() const;
+    void UpdatePropellerBladePitch(unsigned propellerIndex, unsigned engineIndex, PropellerStepInputs& inputs,
+                                   double step) const;
+    void UpdateAutomaticFeatherArming() const;
+    void UpdateMappedPropellers(double step) const;
+    void UpdateMappedPropellersAfterPreparation(double step) const;
+    void UpdatePropellerLoadFactor(double step) const;
     void PrepareAccelerations();
     void IntegrateVelocities(double step);
     void StoreWorldVelocity(Vector3 velocity);
@@ -265,11 +387,16 @@ public:
     const FlightPositionDispatch* positionDispatch;
     char unknown04[0x10];
     GroundReference* groundReference;
-    char unknown18[0x0c];
+    const FlightEnvironment* environment;
+    char unknown1c[8];
     HeadingTransform* heading;
     char unknown28[0x10];
     float realismWeight;
-    char unknown3c[0x80];
+    char unknown3c[0x28];
+    ElectricalOwner* electricalOwner;
+    char unknown68[0x4c];
+    int electricalOwnerBypass;
+    char unknownb8[4];
     int resetAccelerationHistory;
     double pitchRadians;
     double longitudinalGravityFactor;
@@ -315,9 +442,7 @@ public:
 struct AirplaneConfiguration {
     char ownerPrefix[4];
     PropulsionConfiguration settings;
-    char unknown144c[0x534];
-    const AirplaneGeometry* geometry;
-    char unknown1984[0x40];
+    char unknown198c[0x38];
     const ZeroAlphaMomentTuning* zeroAlphaMomentTuning;
     char unknown19c8[0x34];
     const class AirplaneHighAngleModel* highAngleModel;

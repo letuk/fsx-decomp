@@ -78,6 +78,10 @@ lever arm and that vector to the moment sum.
 | `0x20c047e0` | Uses the same pointer test as type 3 of the engine dispatch. Registers `0x20c176f0` when it is null and `0x20c4c360` when it is non-null. This registration tests the pointer directly. | live verified |
 | `0x20c176f0`, `0x20c4c360` | The null-pointer callback forwards to `0x20c17720`. The non-null callback runs a separate rotor calculation and publishes both force and moment through its output arguments. | live verified |
 
+The propeller loop's initialization, speed integration, engine speed
+publication and final outputs are mapped in [Mapped propeller step and
+speed synchronization](sim1-propeller-step.md).
+
 ## Scope and follow-up
 
 The prior inventory listed the engine-type mapping as a hypothesis.
@@ -195,3 +199,52 @@ types. The linked and simulator comparisons for this helper remain open.
 - [Selected source snapshot, command, and receipt](../../../vm-share/modules/sim1/runs/sim1-turbine-20261124-005)
 - [Propulsion collector regression](../../../vm-share/modules/sim1/runs/sim1-turbine-regression-propulsion-20261124/propulsion-comparison.json)
 - [Thrust projection regression](../../../vm-share/modules/sim1/runs/sim1-turbine-regression-projection-20261124/thrust-comparison.json)
+## Propeller induced airspeed
+
+`sim1.dll:0x20c480b0` calculates the additional axial airspeed at
+the propeller disk and publishes it in the mapped engine record.
+Its reconstructed symbol is `EngineForceRecord::UpdateInducedAirSpeed`.
+
+| Address or field | Evidence | Status |
+| --- | --- | --- |
+| `0x20c476e1` | The propeller loop at `0x20c47420` calls the writer with the engine in ESI, the propeller in EDI, the airplane in EDX and a step-record pointer on the stack. The callee returns with `ret 4`. | live verified |
+| `0x20c480bd`, `0x20c480dc` | The original compares `IntegrationHistory+0x104` and `PropellerForceRecord+0x14` with zero and uses zero for nonpositive or unordered inputs. The decompiler omits the thrust clamp. | live verified |
+| `0x20c480f2`, `0x20c4810c` | The density comes from `FlightEnvironment+0x134`. The step record provides disk area at `+0x20`. The caller computes that slot from `propeller_diameter` at configuration payload `+0x20c` as `diameter × (π/4) × diameter`. | live verified |
+| `0x20c4811d`, `0x20c4812d`, `0x20c4813a` | The positive-density path calls `msvcr80.dll!_CIsqrt` and stores the result after subtraction at `EngineForceRecord+0x3c`. Nonpositive or unordered density stores zero. | live verified |
+| `0x20c45760` | The tail slipstream update reads the engine induced-speed field. | live verified |
+| `0x20c47bd1` | The earlier induced-speed attribution is superseded. The caller sets ESI to the propeller record and this instruction reads its distinct `+0x3c` field. | superseded |
+
+With clamped axial speed `V`, clamped thrust `T`, density `ρ` and
+disk area `A`, the positive-density result is
+`sqrt(T / (2 × ρ × A) + V² / 4) − V / 2`. The callee does not
+test disk area separately. `PropellerStepInputs` is a reconstructed
+minimum C++ layout with the verified disk-area field.
+
+The selected VC8 RTM `/fp:precise` COFF replay verifies 72 exact
+bytes and 33 normalized bytes across nine nonoverlapping ranges.
+The normalization validates both binary64 literals and the CRT
+callee individually. The whole function differs (147 original,
+158 rebuilt bytes). The C++ member uses the normal `__thiscall`
+ABI for its reconstructed interface. The remaining differences
+include original interprocedural register assignments, frame
+layout, the encoding of density doubling and the epilogues.
+The local-speed and `__fastcall` trials are retained for comparison.
+The linked projection and vector-publication regressions reproduced
+their 215 normalized and 83 exact bytes, respectively. This writer
+has no linked match or simulator test. The full propeller step at
+`0x20c47420` remains open.
+
+Suggested Ghidra names `dVar1` → `forwardSpeed` for the clamped
+local and `unaff_ESI` → `engine` for the verified destination.
+These are provisional suggestions. The save at
+`1795613240321:62a95bf0:207` contains the three tags and was read
+back clean.
+
+- [Original listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c480b0.asm)
+- [Live Ghidra evidence](../../../artifacts/sim1.dll/induced-airspeed-ghidra.json)
+- [Native COFF comparison](../../../artifacts/sim1.dll/induced-airspeed-comparison.json)
+- [Selected build, logs and receipt](../../../vm-share/modules/sim1/runs/sim1-induced-airspeed-20261125-004)
+- [Local-speed trial](../../../vm-share/modules/sim1/runs/sim1-induced-airspeed-20261125-001)
+- [Direct-field trial](../../../vm-share/modules/sim1/runs/sim1-induced-airspeed-20261125-002)
+- [Fastcall trial](../../../vm-share/modules/sim1/runs/sim1-induced-airspeed-20261125-003)
+- [Linked propulsion regression](../../../vm-share/modules/sim1/runs/sim1-induced-airspeed-propulsion-20261125-001/propulsion-comparison.json)

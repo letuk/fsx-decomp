@@ -1567,5 +1567,88 @@
     ],
     "description": "Scales the first outer section lift.",
     "originalHex": "0000000000000000"
+  },
+  {
+    "entry": "20bbd938",
+    "name": "Ground reference VTable prefix",
+    "kind": "VTable",
+    "bytes": 16,
+    "status": "live verified",
+    "description": "Verified constructor-installed table through slot +0x0c. The altitude and surface mode targets and their return ABIs are verified independently. Other slots remain untyped.",
+    "evidence": "artifacts/sim1.dll/propeller-ground-selector-ghidra.json",
+    "functions": [
+      "20c1cbf0",
+      "20bd1c90"
+    ],
+    "slots": [
+      {
+        "offset": "0x08",
+        "name": "Reference height",
+        "signature": "double __thiscall(GroundReference*)",
+        "target": "20bceec0",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x0c",
+        "name": "Surface mode",
+        "signature": "int __thiscall(GroundReference*)",
+        "target": "20bceed0",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20c7c008",
+    "name": "electric_always_available",
+    "kind": "Global option",
+    "status": "live verified",
+    "bytes": 4,
+    "initialValue": "0",
+    "originalHex": "00000000",
+    "description": "Electrical configuration option parsed at 0x20c000ca and read at 0x20bfee9e. An absent circuit descriptor still returns zero.",
+    "evidence": "artifacts/sim1.dll/electrical-circuit-ghidra.json",
+    "functions": [
+      "20bfefa0",
+      "20bfee30"
+    ]
+  },
+  {
+    "entry": "20bc35a0",
+    "name": "Automatic feather shaft torque threshold",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "0.17",
+    "originalHex": "c3f5285c8fc2c53f",
+    "functions": [
+      "20c48250"
+    ],
+    "evidence": "artifacts/sim1.dll/automatic-feather-comparison.json"
+  },
+  {
+    "entry": "20bc4270",
+    "name": "Automatic feather turbine speed threshold",
+    "kind": "Double literal",
+    "status": "live verified",
+    "bytes": 8,
+    "initialValue": "88",
+    "originalHex": "0000000000005640",
+    "functions": [
+      "20c48270"
+    ],
+    "evidence": "artifacts/sim1.dll/automatic-feather-comparison.json"
+  },
+  {
+    "entry": "20c485a0",
+    "name": "Automatic feather count dispatch table",
+    "kind": "Jump table",
+    "status": "live verified",
+    "bytes": 16,
+    "originalHex": "cb82c4201083c4207683c4205e84c420",
+    "evidence": "artifacts/sim1.dll/automatic-feather-comparison.json",
+    "description": "Four relocated original case addresses in propeller count order from one through four.",
+    "functions": [
+      "20c48270"
+    ]
   }
 ]

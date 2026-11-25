@@ -1,5 +1,103 @@
 # Sources and verification limits
 
+The electrical and propeller VC8 runs now retain separate object
+files. The electrical run verifies the circuit body and bus
+lookup. The propeller run verifies both electrical call relocations.
+The linked propulsion build combines the two translation units.
+[Electrical circuit availability](sim1.dll/sim1-propeller-step.md#electrical-circuit-availability).
+
+Automatic feather arming uses the live `sim1.dll` listings at
+`0x20c48270`, `0x20c48250`, the switch handler and configuration
+bindings, and native VC8 COFF. The comparator verifies the
+threshold literals, static calls and four switch targets in each
+artifact. The exact spool designation of turbine record `+0x00`
+and simulator runtime verification remain open.
+[Automatic feather arming](sim1.dll/sim1-propeller-step.md#automatic-feather-arming).
+
+The `sim1.dll` electrical query uses the live listings at
+`0x20bfee30` and `0x20bfef40`, the two propeller call sites,
+the configuration reader at `0x20bfefa0`, its cross-reference
+to `0x20c7c008`, and native VC8 COFF. The original jump table
+and the original call targets were verified against the PE image.
+The concrete owner dispatch target at slot `+0x114` remains open.
+[Electrical circuit availability](sim1.dll/sim1-propeller-step.md#electrical-circuit-availability).
+
+The propeller icing calculation uses the original listing at
+`sim1.dll:0x20c48710`, the caller, the environment temperature
+writer, the deice configuration and switch bindings, and native
+VC8 COFF. The earlier host x86 fixture supplied an electrical
+result. The current fixture exercises the reconstructed query.
+The original weather producers for the two icing fields remain
+open.
+[Propeller icing load factor](sim1.dll/sim1-propeller-step.md#propeller-icing-load-factor).
+
+The integrated mapped propeller passes use the live `sim1.dll`
+`0x20c47420` listing and configuration mapping, the pinned PE and
+native VC8 COFF. The comparator checks the six called bodies by
+their original targets and rebuilt symbols. Host x86 execution
+uses a local phase utility fixture. The two original preparation
+calls remain outside the reconstructed scope.
+[Integrated mapped propeller passes](sim1.dll/sim1-propeller-step.md#integrated-mapped-propeller-passes).
+
+The ground selector and integrated blade-pitch reconstruction use
+the original call sites, the ground-contact writer, the installed
+reference object's constructor, the VTable bytes, and raw target
+instructions. The native COFF and host x86 checks cover the
+reconstructed invocation and pitch stages. The original surface
+mode values remain unnamed.
+[Ground contact selector and integrated blade-pitch update](sim1.dll/sim1-propeller-step.md#ground-contact-selector-and-integrated-blade-pitch-update).
+
+The feather-state and low-speed latch reconstruction uses the live
+`sim1.dll:0x20c485c0` and `0x20c47720` listings, the turbine torque
+writer and parser bindings. VC8 covers explicit ranges, including
+the feather call relocation. Independent host x86 checks exercise
+the reconstructed state transitions and timer rounding.
+[Feather state and low-speed latch](sim1.dll/sim1-propeller-step.md#feather-state-and-low-speed-latch).
+
+The scoped propeller pitch reconstruction uses live `sim1.dll`
+listings and the parser's pitch, cruise and governor bindings.
+VC8 object evidence covers three extracted ranges. The host x86
+tests verify calculated values for the reconstructed source.
+[Blade pitch and advance ratio](sim1.dll/sim1-propeller-step.md#blade-pitch-and-advance-ratio).
+
+The propeller thrust reconstruction uses live `sim1.dll:0x20c47c90`
+and caller listings, the AIR `0x511` binding, configuration parser
+evidence, and x87 literal-store replay for the three low-speed
+curves. The pinned PE and native VC8 COFF validate call and data
+identities. Host x86 tests and linked propulsion checks cover the
+reconstructed source and the existing comparison gates separately.
+[Propeller thrust publication](sim1.dll/sim1-propeller-step.md#propeller-thrust-publication).
+
+The aerodynamic propeller torque and table lookup use live Sim1
+listings at `0x20c47ae0` and `0x20bcc030`, the feather setting
+bindings, AIR record `0x512`, the `D⁵` writer, the pinned original
+PE and VC8 object evidence. The lookup scope verifies finite
+coefficient table behavior by static analysis. The comparison
+covers specified instruction ranges.
+[Aerodynamic propeller torque](sim1.dll/sim1-propeller-step.md#aerodynamic-propeller-torque).
+
+The propeller speed integration at `sim1.dll:0x20c47ba0` uses the
+live caller and callee listings, verified configuration bindings,
+the pinned Sim1 and Util PE files and native VC8 COFF. Original
+`util.dll` export and disassembly evidence verifies the phase wrap.
+The import library and existing linked propulsion scopes were
+verified separately from the integrator's native COFF comparison.
+[Propeller speed integration](sim1.dll/sim1-propeller-step.md#propeller-speed-integration).
+
+The mapped propeller step and synchronization correction use the
+live `sim1.dll:0x20c47420` and `0x20c48150` listings, the
+`prop_sync_available` parser, the blade-pitch reader, and native
+VC8 COFF. The call-site register assignment resolves the two
+distinct `+0x3c` fields. Full-body and simulator verification remain open.
+[Mapped propeller step and speed synchronization](sim1.dll/sim1-propeller-step.md).
+
+The propeller induced-airspeed writer in `sim1.dll:0x20c480b0`
+uses the live writer and caller listings, the `propeller_diameter`
+parser binding, native VC8 COFF, and the pinned PE. The original
+listing supersedes the decompiler's omission of the thrust clamp.
+Comparison validates both relocated literals and the `_CIsqrt` import.
+[Propeller induced airspeed](sim1.dll/sim1-engine-branches.md#propeller-induced-airspeed).
+
 The aerodynamic pressure and rate scales use the live
 `sim1.dll:0x20c00530` listing and input writers, the pinned PE,
 and native VC8 COFF. The comparison verifies nine stores, the

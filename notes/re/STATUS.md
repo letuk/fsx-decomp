@@ -1,5 +1,113 @@
 # FSX shared knowledge
 
+2026-11-25 — Moved the `sim1.dll` electrical circuit query and
+bus lookup to their own translation unit. The independent VC8
+objects, linked propulsion comparison and x86 fixtures preserve
+the existing verification scopes. Ghidra remains saved at
+`1795634906543:62a95bf0:520`.
+[Electrical circuit availability](sim1.dll/sim1-propeller-step.md#electrical-circuit-availability).
+
+2026-11-25 — Reconstructed `sim1.dll` automatic-feather arming
+(`0x20c48270`) and its torque predicate (`0x20c48250`). Connected
+arming and icing to the mapped propeller step. VC8 verifies 15 exact
+and 27 normalized arming bytes. The x86 fixture passed 3,072
+arming scenarios plus boundary and integration checks. Simulator
+verification remains open. Ghidra revision
+`1795634906543:62a95bf0:520` was saved and read back clean.
+[Automatic feather arming](sim1.dll/sim1-propeller-step.md#automatic-feather-arming).
+
+2026-11-25 — Reconstructed the electrical circuit query
+(`0x20bfee30`) and bus lookup (`0x20bfef40`) in `sim1.dll`.
+Propeller deice now calls the shared query. VC8 verifies 22 exact
+and 12 normalized bytes in the query. Automatic-feather preparation
+at `0x20c48270` was reconstructed subsequently. Ghidra revision
+`1795634311730:62a95bf0:512` was saved and read back clean.
+[Electrical circuit availability](sim1.dll/sim1-propeller-step.md#electrical-circuit-availability).
+
+2026-11-25 — Reconstructed the propeller icing load arithmetic
+at `sim1.dll:0x20c48710`. VC8 verifies 32 exact and 35 normalized
+instruction bytes and 40 exact rate-table bytes. Eighteen host x86
+checks passed. That build used a Boolean result supplied by the
+caller. The current circuit-integrated build supersedes it.
+Ghidra revision `1795633100703:62a95bf0:354` was saved and read
+back clean.
+[Propeller icing load factor](sim1.dll/sim1-propeller-step.md#propeller-icing-load-factor).
+
+2026-11-25 — Integrated the mapped propeller passes at
+`sim1.dll:0x20c47456`–`0x20c47713`. VC8 verifies 21 exact and
+42 normalized bytes, including all six downstream calls. Twelve
+host x86 checks passed. That build omits both preparation calls,
+which were connected in the later mapped-step reconstruction.
+Simulator verification remains open. Ghidra
+revision `1795632255946:62a95bf0:349` was saved and read back clean.
+[Integrated mapped propeller passes](sim1.dll/sim1-propeller-step.md#integrated-mapped-propeller-passes).
+
+2026-11-25 — Reconstructed the ground selector at
+`sim1.dll:0x20c1cbf0`, resolved its concrete virtual slot, and
+integrated the pitch stages into `0x20c47720`. Native VC8 verifies
+44 exact selector bytes, 14 exact dispatcher bytes, and a five-byte
+normalized ground-selector call in the governor. The enclosing
+propeller step `0x20c47420` and simulator verification remain open.
+Ghidra revision `1795631628753:62a95bf0:346` was saved and read
+back clean.
+[Ground contact selector and integrated blade-pitch update](sim1.dll/sim1-propeller-step.md#ground-contact-selector-and-integrated-blade-pitch-update).
+
+2026-11-25 — Reconstructed feather-state transitions at
+`sim1.dll:0x20c485c0` and its low-speed latch caller range at
+`0x20c47818`. VC8 confirms 93 exact and 44 normalized bytes across
+the two scopes. The ground-limit decision and complete blade-pitch
+dispatcher remain open. Ghidra revision `1795630948540:62a95bf0:239`
+was saved and read back clean.
+[Feather state and low-speed latch](sim1.dll/sim1-propeller-step.md#feather-state-and-low-speed-latch).
+
+2026-11-25 — Reconstructed advance ratio, the governor calculation,
+and fixed-pitch cruise selection from `sim1.dll:0x20c47720`. Native
+VC8 verifies 43 exact and 89 normalized bytes. The feather-state
+helper, latch update and ground-limit query remain open. The 17
+host x86 checks passed. Ghidra revision `1795629219460:62a95bf0:234`
+was saved and read back clean.
+[Blade pitch and advance ratio](sim1.dll/sim1-propeller-step.md#blade-pitch-and-advance-ratio).
+
+2026-11-25 — Reconstructed propeller thrust publication at
+`sim1.dll:0x20c47c90`. Native VC8 COFF verifies 14 exact and
+108 normalized instruction bytes plus 380 exact curve-data bytes.
+Host x86 tests and the propulsion and aerodynamics comparisons pass.
+The full body and simulator verification remain open. Ghidra
+revision `1795615726054:62a95bf0:230` was saved and read back clean.
+[Propeller thrust publication](sim1.dll/sim1-propeller-step.md#propeller-thrust-publication).
+
+2026-11-25 — Reconstructed the propeller aerodynamic torque
+at `sim1.dll:0x20c47ae0` and its AIR coefficient lookup at
+`0x20bcc030`. Native VC8 COFF verifies 26 exact and 39 normalized
+bytes for the torque and 29 exact bytes for the lookup. Full-body
+and simulator verification remain open. Ghidra revision
+`1795615039980:62a95bf0:227` was saved and read back clean.
+[Aerodynamic propeller torque](sim1.dll/sim1-propeller-step.md#aerodynamic-propeller-torque).
+
+2026-11-25 — Reconstructed propeller angular-speed integration at
+`sim1.dll:0x20c47ba0` and verified the phase wrap through `util.dll`
+ordinal 199. Native VC8 COFF confirms 37 exact and 161 normalized
+bytes. Full-body and simulator verification remain open. Ghidra
+revision `1795614553364:62a95bf0:219` was saved and read back clean.
+[Propeller speed integration](sim1.dll/sim1-propeller-step.md#propeller-speed-integration).
+
+2026-11-25 — Mapped the complete original propeller step at
+`sim1.dll:0x20c47420` and reconstructed its synchronization
+helper at `0x20c48150`. Native VC8 COFF verifies 36 exact and
+21 normalized bytes. The full helper differs. The step phase map
+also corrects the attribution of the integrator's `+0x3c` read.
+Ghidra revision `1795613966931:62a95bf0:214` was saved and read
+back clean. The full step and simulator verification remain open.
+[Mapped propeller step and speed synchronization](sim1.dll/sim1-propeller-step.md).
+
+2026-11-25 — Reconstructed the propeller induced-airspeed writer
+at `sim1.dll:0x20c480b0`, which feeds the tail slipstream update.
+Native VC8 COFF provides 72 exact and 33 normalized bytes.
+The full body differs and simulator verification remains open.
+Ghidra revision `1795613240321:62a95bf0:207` was saved and read
+back clean. The enclosing propeller step remains open.
+[Propeller induced airspeed](sim1.dll/sim1-engine-branches.md#propeller-induced-airspeed).
+
 2026-11-25 — Reconstructed nine pressure and rate scales in
 `sim1.dll:0x20c00530`, from `0x20c0054f` through `0x20c005f2`.
 The VC8 COFF comparison verifies all output stores and contains

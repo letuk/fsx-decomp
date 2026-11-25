@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory)][ValidatePattern('^sim1-[A-Za-z0-9_-]+$')][string]$RunId,
     [ValidateSet('Fast', 'Precise')][string]$Profile = 'Fast',
-    [ValidateSet('Integration', 'Position', 'PositionLinked', 'ForcesLinked', 'ThrustLinked', 'PropulsionLinked', 'Turbine', 'AerodynamicMoment')][string]$Target = 'Integration',
+    [ValidateSet('Integration', 'Position', 'PositionLinked', 'ForcesLinked', 'ThrustLinked', 'PropulsionLinked', 'Turbine', 'Electrical', 'AerodynamicMoment')][string]$Target = 'Integration',
     [ValidateRange(1,900)][int]$TimeoutSeconds = 180
 )
 
@@ -31,7 +31,14 @@ if ($Target -eq 'Turbine') {
     $component = 'turbine'
     $commandComponent = $component
     $sourceName = 'engine_forces.cpp'
-    $entries = @('20c2bc20')
+    $entries = @('20c2bc20', '20c47420', '20c47720', '20c1cbf0', '20c48250', '20c48270', '20c485c0', '20c48710', '20c47ae0', '20bcc030', '20c47ba0', '20c47c90', '20c480b0', '20c48150')
+    if (!$PSBoundParameters.ContainsKey('Profile')) { $Profile = 'Precise' }
+}
+if ($Target -eq 'Electrical') {
+    $component = 'electrical-circuit'
+    $commandComponent = $component
+    $sourceName = 'electrical.cpp'
+    $entries = @('20bfee30', '20bfef40')
     if (!$PSBoundParameters.ContainsKey('Profile')) { $Profile = 'Precise' }
 }
 if ($Target -in @('Position', 'PositionLinked')) {
@@ -86,6 +93,29 @@ try {
         $contextHash = (Get-FileHash "$job\source\$contextName").Hash
     }
     $extraHashes = [ordered]@{}
+    if ($Target -in @('Electrical', 'Turbine', 'ThrustLinked', 'PropulsionLinked')) {
+        $electricalHeader = 'electrical.h'
+        Copy-Item "$project\src\sim1\$electricalHeader" "$job\source"
+        $extraHashes[$electricalHeader] = (Get-FileHash "$job\source\$electricalHeader").Hash
+    }
+    if ($Target -in @('AerodynamicMoment', 'Turbine', 'ThrustLinked', 'PropulsionLinked')) {
+        $curveHeader = 'aerodynamic_curve.h'
+        Copy-Item "$project\src\sim1\$curveHeader" "$job\source"
+        $extraHashes[$curveHeader] = (Get-FileHash "$job\source\$curveHeader").Hash
+    }
+    if ($Target -in @('AerodynamicMoment', 'ThrustLinked', 'PropulsionLinked')) {
+        $curveDefinition = 'aerodynamic_curve_body.h'
+        Copy-Item "$project\src\sim1\$curveDefinition" "$job\source"
+        $extraHashes[$curveDefinition] = (Get-FileHash "$job\source\$curveDefinition").Hash
+    }
+    if ($Target -in @('ThrustLinked', 'PropulsionLinked')) {
+        $electricalSource = 'electrical.cpp'
+        Copy-Item "$project\src\sim1\$electricalSource" "$job\source"
+        $extraHashes[$electricalSource] = (Get-FileHash "$job\source\$electricalSource").Hash
+        $curveContext = 'sim1-curve-call-context.cpp'
+        Copy-Item "$PSScriptRoot\$curveContext" "$job\source"
+        $extraHashes[$curveContext] = (Get-FileHash "$job\source\$curveContext").Hash
+    }
     if ($Target -eq 'ForcesLinked') {
         foreach ($extraPath in "$project\src\sim1\flight_forces.h",
                                "$project\src\sim1\state_integration.cpp",
@@ -156,6 +186,30 @@ try {
     Copy-Item "$run\worker-output\fsx.pdb" "$run\sim1-$component.pdb"
     node "$project\scripts\compare-sim1-$component.cjs" $run
     if ($LASTEXITCODE -ne 0) { throw 'Sim1 comparison failed' }
+    if ($Target -eq 'Turbine') {
+        node "$project\scripts\compare-sim1-induced-airspeed.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 induced airspeed comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-sync.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 propeller synchronization comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-speed.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 propeller speed comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-load.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 propeller load comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-thrust.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 propeller thrust comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-pitch.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 propeller pitch comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-feather.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 propeller feather comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-ground-selector.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 propeller ground selector comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-mapped-pass.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 mapped propeller pass comparison failed' }
+        node "$project\scripts\compare-sim1-propeller-load-factor.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 propeller load factor comparison failed' }
+        node "$project\scripts\compare-sim1-automatic-feather.cjs" $run
+        if ($LASTEXITCODE -ne 0) { throw 'Sim1 automatic feather comparison failed' }
+    }
     if ($Target -eq 'AerodynamicMoment') {
         node "$project\scripts\compare-sim1-moment-arm.cjs" $run
         if ($LASTEXITCODE -ne 0) { throw 'Sim1 moment arm comparison failed' }

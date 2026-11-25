@@ -1,5 +1,77 @@
 # Analysis change log
 
+2026-11-25 — Moved the electrical runtime and circuit checks into
+a separate translation unit. Updated the native and linked build
+workflows and the dashboard source and disassembly links.
+[Electrical circuit availability](sim1.dll/sim1-propeller-step.md#electrical-circuit-availability).
+
+2026-11-25 — Reconstructed automatic feather arming and its
+turbine torque predicate, linked both preparation calls to the
+mapped propeller entry, and preserved the original four-propeller
+write destinations. Saved Ghidra tags and retained VC8 and x86
+comparison evidence and dashboard listings.
+[Automatic feather arming](sim1.dll/sim1-propeller-step.md#automatic-feather-arming).
+
+2026-11-25 — Reconstructed the shared electrical circuit query
+and bus lookup in `sim1.dll`, wired the propeller deice caller,
+and identified the automatic-feather circuit selector. Saved
+Ghidra tags and retained native VC8 comparisons, both listings
+and host x86 checks.
+[Electrical circuit availability](sim1.dll/sim1-propeller-step.md#electrical-circuit-availability).
+
+2026-11-25 — Reconstructed the propeller icing load calculation,
+verified the rate table, and retained VC8 listings and host x86
+checks. Preserved the electrical query as an explicit input.
+[Propeller icing load factor](sim1.dll/sim1-propeller-step.md#propeller-icing-load-factor).
+
+2026-11-25 — Integrated the mapped propeller calculations following
+preparation, including torque division, engine speed feedback and
+per-propeller outputs. Kept VC8 evidence and saved scoped Ghidra tags.
+[Integrated mapped propeller passes](sim1.dll/sim1-propeller-step.md#integrated-mapped-propeller-passes).
+
+2026-11-25 — Reconstructed the ground contact selector, verified
+its installed virtual dispatch target and wired the complete
+blade-pitch entry to the extracted stages. Saved Ghidra tags and
+retained VC8 comparisons and original and rebuilt listings.
+[Ground contact selector and integrated blade-pitch update](sim1.dll/sim1-propeller-step.md#ground-contact-selector-and-integrated-blade-pitch-update).
+
+2026-11-25 — Reconstructed propeller feather state and the
+governor latch update with its call. Saved Ghidra tags and preserved
+both listings, field evidence and VC8 comparisons.
+[Feather state and low-speed latch](sim1.dll/sim1-propeller-step.md#feather-state-and-low-speed-latch).
+
+2026-11-25 — Reconstructed the advance ratio and pitch calculation
+ranges in the propeller update. Saved scoped Ghidra tags and preserved
+native VC8 comparisons, original and rebuilt listings, and x86 tests.
+[Blade pitch and advance ratio](sim1.dll/sim1-propeller-step.md#blade-pitch-and-advance-ratio).
+
+2026-11-25 — Reconstructed propeller thrust publication and verified
+all 23 low-speed curve points. Reused the shared coefficient lookup
+and replayed the propulsion and aerodynamic comparisons. Saved Ghidra
+tags and retained the original and rebuilt listings.
+[Propeller thrust publication](sim1.dll/sim1-propeller-step.md#propeller-thrust-publication).
+
+2026-11-25 — Reconstructed the propeller aerodynamic torque and
+its coefficient table lookup. Saved Ghidra tags and preserved both
+original and rebuilt listings, AIR record bindings and VC8 trials.
+[Aerodynamic propeller torque](sim1.dll/sim1-propeller-step.md#aerodynamic-propeller-torque).
+
+2026-11-25 — Reconstructed the propeller speed integrator and kept
+its original and rebuilt listings. Verified and bound the phase-wrap
+import by ordinal for the linked propulsion regression. Saved Ghidra tags.
+[Propeller speed integration](sim1.dll/sim1-propeller-step.md#propeller-speed-integration).
+
+2026-11-25 — Mapped the propeller step and reconstructed its
+speed synchronization helper. Saved Ghidra tags and preserved the
+listings and VC8 comparison trials. Corrected the earlier attribution
+of the propeller load factor read in `0x20c47ba0`.
+[Mapped propeller step and speed synchronization](sim1.dll/sim1-propeller-step.md).
+
+2026-11-25 — Reconstructed the propeller induced-airspeed writer
+in `sim1.dll:0x20c480b0`. Retained the VC8 trials, both dashboard
+listings and Ghidra tags. Replayed the linked propulsion comparisons.
+[Propeller induced airspeed](sim1.dll/sim1-engine-branches.md#propeller-induced-airspeed).
+
 2026-11-25 — Reconstructed the shared aerodynamic pressure and
 rate scales, retained VC8 comparison and dashboard listings,
 and saved scoped Ghidra tags on `sim1.dll:0x20c00530`.

@@ -1,4 +1,5 @@
 #include "flight_dynamics.h"
+#include "aerodynamic_curve.h"
 #include <math.h>
 
 namespace sim1 {
@@ -16,17 +17,6 @@ typedef char CheckSecondMomentReference[offsetof(FlightPositionDispatch, secondM
 
 // Reconstructed layout of the AIR record read by the airplane moment model.
 #pragma pack(push, 4)
-struct AerodynamicSample {
-    double angle;
-    double coefficient;
-};
-
-template <unsigned Count>
-struct AerodynamicCurveStorage {
-    AerodynamicCurve curve;
-    AerodynamicSample samples[Count];
-};
-
 struct AirplaneControlSurfaces {
     char unknown00[0xc];
     const PitchMomentModifier* pitchControlModifier;
@@ -332,43 +322,7 @@ double AirplaneMomentModel::CalculateForceMomentZ(const ModelPoint& center, cons
     return center.y * force.x - (center.x - highAlphaReferenceXShift) * force.y;
 }
 
-// Original: sim1.dll 0x20bcbf60. The original lookup receives the curve in ESI.
-__declspec(noinline) double __fastcall SampleAerodynamicCurve(const AerodynamicCurve* curve, double angle)
-{
-    if (curve == 0 || curve->count == 0) {
-        return 0.0;
-    }
-    // Every loader stores the samples immediately after the common count.
-    const AerodynamicSample* samples =
-        reinterpret_cast<const AerodynamicSample*>(reinterpret_cast<const char*>(curve) + sizeof(*curve));
-    if (angle <= samples[0].angle) {
-        return samples[0].coefficient;
-    }
-    unsigned last = curve->count - 1;
-    if (angle > samples[last].angle) {
-        return samples[last].coefficient;
-    }
-
-    unsigned first = 0;
-    for (;;) {
-        const unsigned middle = (first + last) / 2;
-        if (middle == first || middle == last) {
-            const AerodynamicSample& lower = samples[middle];
-            const AerodynamicSample& upper = samples[middle + 1];
-            const double lowerAngle = lower.angle;
-            const double lowerCoefficient = lower.coefficient;
-            const double fraction = (angle - lowerAngle) / (upper.angle - lowerAngle);
-            return (upper.coefficient - lowerCoefficient) * fraction + lowerCoefficient;
-        }
-        if (angle > samples[middle].angle) {
-            first = middle;
-        } else if (angle < samples[middle].angle) {
-            last = middle;
-        } else {
-            return samples[middle].coefficient;
-        }
-    }
-}
+#include "aerodynamic_curve_body.h"
 
 // Reconstruction-only helper for the angle term inside sim1.dll 0x20c013a0.
 static inline double ScaleAngleCurveMoment(const AirplaneCoefficientModel& coefficients,
@@ -577,7 +531,7 @@ double AirplaneMomentModel::CalculateAngleOfAttackRateMoment(const AirplaneDynam
     return moment;
 }
 
-typedef char CheckAirplaneGeometry[offsetof(AirplaneConfiguration, geometry) == 0x1980 ? 1 : -1];
+typedef char CheckAirplaneGeometry[offsetof(AirplaneConfiguration, settings.geometry) == 0x1980 ? 1 : -1];
 typedef char CheckTailIncidence[offsetof(AirplaneGeometry, horizontalTailIncidence) == 0xcc ? 1 : -1];
 typedef char CheckTailIncidenceBase[offsetof(AirplaneAerodynamicTables, horizontalTailIncidenceMoment) == 0x7c ? 1 : -1];
 typedef char CheckTailIncidenceMach[offsetof(AirplaneAerodynamicTables, machHorizontalTailIncidenceMoment) == 0x596 ? 1 : -1];
@@ -611,7 +565,7 @@ double AirplaneMomentModel::CalculateHorizontalTailIncidenceMoment(const Airplan
     if (coefficients == 0) {
         return 0.0;
     }
-    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->geometry;
+    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->settings.geometry;
     const IntegrationHistory& state = *airplane.history;
     volatile double moment = coefficients->CalculateHorizontalTailIncidenceCoefficient() * geometry.horizontalTailIncidence *
         state.aerodynamicMomentScale;
@@ -768,7 +722,7 @@ double AirplaneMomentModel::CalculatePitchMoment(const AirplaneDynamics& airplan
         return 0.0;
     }
     const IntegrationHistory& state = *airplane.history;
-    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->geometry;
+    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->settings.geometry;
     const double angleDegrees = state.aerodynamicAngleDegrees;
     const double baseline = CalculateScaledBaselineMoment(airplane);
     const double angle = ScaleAngleCurveMoment(*coefficients, state, angleDegrees);
@@ -913,7 +867,7 @@ double AirplaneMomentModel::CalculateRollMoment(AirplaneDynamics& airplane, cons
     double outerWing = 0.0;
     double innerWing = 0.0;
     if (wingLiftMultiplierSum < 4.0) {
-        const double span = configuration.geometry->wingSpan;
+        const double span = configuration.settings.geometry->wingSpan;
         volatile double outerDifference = (secondOuterWingLift - firstOuterWingLift) * 0.5 * span;
         volatile double innerDifference = (secondInnerWingLift - firstInnerWingLift) * 0.25 * span;
         outerWing = outerDifference;
@@ -1066,7 +1020,7 @@ double AirplaneMomentModel::CalculateYawMoment(AirplaneDynamics& airplane, const
     }
     const IntegrationHistory& state = *airplane.history;
     const AirplaneConfiguration& configuration = *airplane.airframeConfiguration;
-    const AirplaneGeometry& geometry = *configuration.geometry;
+    const AirplaneGeometry& geometry = *configuration.settings.geometry;
     const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
     const FlightPositionDispatch& controls = *controlOwner->positionDispatch;
 
@@ -1203,7 +1157,7 @@ __declspec(noinline) double AirplaneMomentModel::CalculateLift(AirplaneDynamics&
     volatile double meanSpoiler = (surfaces.secondSpoilerAngle + surfaces.firstSpoilerAngle) * 0.5;
     volatile double spoilers = coefficient.spoilerLift(coefficients) * meanSpoiler * state.wingPressureForce;
     volatile double alphaRate = coefficient.alphaRateLift(coefficients) * state.angleOfAttackRate * state.liftRateScale;
-    const double incidence = coefficient.tailIncidenceLift(coefficients) * configuration.geometry->horizontalTailIncidence *
+    const double incidence = coefficient.tailIncidenceLift(coefficients) * configuration.settings.geometry->horizontalTailIncidence *
         state.wingPressureForce;
     const double lift = pitchRate + wingLift + elevatorLift + spoilers + alphaRate + incidence +
         state.liftAdjustment * -0.6 * state.wingPressureForce;
@@ -1218,7 +1172,7 @@ __declspec(noinline) double AirplaneMomentModel::CalculateDrag(AirplaneDynamics&
         return 0.0;
     }
     IntegrationHistory& state = *airplane.history;
-    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->geometry;
+    const AirplaneGeometry& geometry = *airplane.airframeConfiguration->settings.geometry;
     const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
     volatile double base = coefficient.baseDrag(coefficients);
     if (airplane.positionDispatch->publishesPosition(&airplane) != 0) {
