@@ -32,9 +32,13 @@ struct AirplaneControlSurfaces {
     const PitchMomentModifier* pitchControlModifier;
     char unknown10[0xbc];
     double elevator;
-    char unknownd4[0x28];
+    double firstAileron;
+    double secondAileron;
+    double rudder;
+    char unknownec[0x10];
     double elevatorTrim;
-    char unknown104[8];
+    float aileronTrim;
+    float rudderTrim;
     double firstSpoilerAngle;
     double secondSpoilerAngle;
 };
@@ -55,13 +59,20 @@ struct AirplaneAerodynamicTables {
     double zeroAlphaMoment;
     double angleOfAttackRateMoment;
     double horizontalTailIncidenceMoment;
+    double pitchCoefficientSlot70;
     double flapPitchMoment;
     double spoilerPitchMoment;
     double slipstreamElevatorMoment;
     double slipstreamPitchRateMoment;
-    char unknowna4[8];
     double elevatorTrimCoupling;
-    char unknownb4[0x47c];
+    char unknownb4[0x28];
+    double spoilerRoll;
+    float aileronTrimRoll;
+    char unknowne8[0x28];
+    double slipstreamRudderYaw;
+    double slipstreamRollRateYaw;
+    float rudderTrimYaw;
+    char unknown124[0x40c];
     short machElevatorMoment[17];
     short machAngleOfAttackRateMoment[17];
     short machPitchRateMoment[17];
@@ -78,6 +89,31 @@ struct AirplaneAerodynamicTables {
     AerodynamicCurveStorage<47> angleMoment;
 };
 
+struct AirplaneCoefficientModel;
+
+// Minimum ABI of the original coefficient table at 0x20bc2618.
+// The unreconstructed members retain their original virtual calls.
+struct AirplaneCoefficientDispatch {
+    const void* slots00To80[33];
+    double (__thiscall* sideslipRoll)(const AirplaneCoefficientModel*);
+    double (__thiscall* rudderRoll)(const AirplaneCoefficientModel*);
+    double (__thiscall* aileronRoll)(const AirplaneCoefficientModel*, int surface);
+    double (__thiscall* rollRate)(const AirplaneCoefficientModel*);
+    double (__thiscall* yawRateRoll)(const AirplaneCoefficientModel*);
+    double (__thiscall* spoilerRoll)(const AirplaneCoefficientModel*);
+    double (__thiscall* aileronTrimRoll)(const AirplaneCoefficientModel*);
+    double (__thiscall* additionalRoll)(const AirplaneCoefficientModel*);
+    double (__thiscall* rollRateYaw)(const AirplaneCoefficientModel*);
+    double (__thiscall* yawRate)(const AirplaneCoefficientModel*);
+    double (__thiscall* rudderYaw)(const AirplaneCoefficientModel*);
+    double (__thiscall* sideslipYaw)(const AirplaneCoefficientModel*);
+    double (__thiscall* aileronYaw)(const AirplaneCoefficientModel*);
+    double (__thiscall* slipstreamRudderYaw)(const AirplaneCoefficientModel*);
+    double (__thiscall* slipstreamRollRateYaw)(const AirplaneCoefficientModel*);
+    double (__thiscall* rudderTrimYaw)(const AirplaneCoefficientModel*);
+    double (__thiscall* additionalYaw)(const AirplaneCoefficientModel*);
+};
+
 struct AirplaneCoefficientModel {
     double CalculateBaselineMoment() const;
     double CalculateElevatorCoefficient() const;
@@ -85,12 +121,18 @@ struct AirplaneCoefficientModel {
     double CalculateAngleOfAttackRateCoefficient() const;
     double CalculateHorizontalTailIncidenceCoefficient() const;
     double CalculateElevatorTrimCoefficient() const;
+    double GetPitchCoefficientSlot70() const;
     double GetFlapPitchCoefficient() const;
     double GetSpoilerPitchCoefficient() const;
     double GetSlipstreamElevatorCoefficient() const;
     double GetSlipstreamPitchRateCoefficient() const;
+    double GetSpoilerRollCoefficient() const;
+    double GetAileronTrimRollCoefficient() const;
+    double GetSlipstreamRudderYawCoefficient() const;
+    double GetSlipstreamRollRateYawCoefficient() const;
+    double GetRudderTrimYawCoefficient() const;
 
-    const void* dispatch;
+    const AirplaneCoefficientDispatch* dispatch;
     unsigned machIndex;
     double machFraction;
     AirplaneDynamics* airplane;
@@ -118,6 +160,18 @@ struct ZeroAlphaMomentTuning {
 class SupplementalAerodynamics {
 public:
     virtual double PitchMoment() const = 0;
+    virtual double RollMoment() const = 0;
+};
+
+// Minimum ABI for the configuration table at 0x20bc213c.
+struct AirplaneHighAngleDispatch {
+    const void* slots00To0c[4];
+    float (__thiscall* referenceAngle)(const AirplaneHighAngleModel*);
+};
+
+class AirplaneHighAngleModel {
+public:
+    const AirplaneHighAngleDispatch* dispatch;
 };
 #pragma pack(pop)
 
@@ -140,6 +194,14 @@ extern double highAlphaReferenceXShift;
 extern double highAlphaReferenceZShift;
 // Published by the slipstream update at sim1.dll 0x20c00840.
 extern double slipstreamPitchCoefficient;
+extern double slipstreamYawCoefficient;
+// Roll inputs published before the moment callback at sim1.dll 0x20c45510.
+extern double slipstreamRollCoefficient;
+extern double wingLiftMultiplierSum;
+extern double secondOuterWingLift;
+extern double secondInnerWingLift;
+extern double firstInnerWingLift;
+extern double firstOuterWingLift;
 
 class AirplaneMomentModel {
 public:
@@ -157,6 +219,15 @@ public:
     double CalculatePitchMoment(const AirplaneDynamics& airplane, const Vector3& force) const;
     double CalculateSlipstreamTailPitchMoment(const AirplaneGeometry& geometry, const IntegrationHistory& state) const;
     double CalculateSimplePitchMoment(double pitch, double elevatorMoment, double pitchRateMoment) const;
+    double CalculateRollMoment(AirplaneDynamics& airplane, const Vector3& force) const;
+    double CalculatePropellerRollTorque(const AirplaneDynamics& airplane) const;
+    double CalculateSimpleRollMoment(double firstAileron, double secondAileron,
+        double spoilers, double yawRate) const;
+    double CalculateYawMoment(AirplaneDynamics& airplane, const Vector3& force) const;
+    double CalculatePropellerYawGyro(const AirplaneDynamics& airplane) const;
+    double CalculatePropellerPFactorYaw(const AirplaneDynamics& airplane) const;
+    double CalculateExternalTankYaw(AirplaneDynamics& airplane) const;
+    double CalculateSimpleYawMoment(double rudder, double yawRate, double rollRate, double sideslip) const;
 
     char unknown00[4];
     const AirplaneDynamics* controlOwner;
@@ -539,10 +610,11 @@ double AirplaneMomentModel::CalculateElevatorTrimMoment(const AirplaneDynamics& 
     return moment;
 }
 
-typedef char CheckFlapPitchCoefficient[offsetof(AirplaneAerodynamicTables, flapPitchMoment) == 0x84 ? 1 : -1];
-typedef char CheckSpoilerPitchCoefficient[offsetof(AirplaneAerodynamicTables, spoilerPitchMoment) == 0x8c ? 1 : -1];
-typedef char CheckSlipstreamElevatorCoefficient[offsetof(AirplaneAerodynamicTables, slipstreamElevatorMoment) == 0x94 ? 1 : -1];
-typedef char CheckSlipstreamPitchRateCoefficient[offsetof(AirplaneAerodynamicTables, slipstreamPitchRateMoment) == 0x9c ? 1 : -1];
+typedef char CheckPitchCoefficientSlot70[offsetof(AirplaneAerodynamicTables, pitchCoefficientSlot70) == 0x84 ? 1 : -1];
+typedef char CheckFlapPitchCoefficient[offsetof(AirplaneAerodynamicTables, flapPitchMoment) == 0x8c ? 1 : -1];
+typedef char CheckSpoilerPitchCoefficient[offsetof(AirplaneAerodynamicTables, spoilerPitchMoment) == 0x94 ? 1 : -1];
+typedef char CheckSlipstreamElevatorCoefficient[offsetof(AirplaneAerodynamicTables, slipstreamElevatorMoment) == 0x9c ? 1 : -1];
+typedef char CheckSlipstreamPitchRateCoefficient[offsetof(AirplaneAerodynamicTables, slipstreamPitchRateMoment) == 0xa4 ? 1 : -1];
 typedef char CheckSpoilerAngles[offsetof(AirplaneControlSurfaces, firstSpoilerAngle) == 0x10c &&
     offsetof(AirplaneControlSurfaces, secondSpoilerAngle) == 0x114 ? 1 : -1];
 typedef char CheckFlapDeflection[offsetof(IntegrationHistory, flapDeflectionFactor) == 0x6e4 ? 1 : -1];
@@ -552,7 +624,16 @@ typedef char CheckSupplementalAerodynamics[offsetof(FlightDynamics, supplemental
 typedef char CheckSimpleAerodynamics[offsetof(PropulsionMomentControl, simpleAerodynamics) == 4 ? 1 : -1];
 typedef char CheckPitchRadians[offsetof(FlightDynamics, pitchRadians) == 0xc0 ? 1 : -1];
 
-// Original: sim1.dll 0x20c50270, concrete coefficient-model slot +0x74.
+// Original: sim1.dll 0x20c50270, concrete coefficient-model slot +0x70.
+__declspec(noinline) double AirplaneCoefficientModel::GetPitchCoefficientSlot70() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->pitchCoefficientSlot70;
+}
+
+// Original: sim1.dll 0x20c50290, concrete coefficient-model slot +0x74.
 __declspec(noinline) double AirplaneCoefficientModel::GetFlapPitchCoefficient() const
 {
     if (tables == 0) {
@@ -561,7 +642,7 @@ __declspec(noinline) double AirplaneCoefficientModel::GetFlapPitchCoefficient() 
     return tables->flapPitchMoment;
 }
 
-// Original: sim1.dll 0x20c50290, concrete coefficient-model slot +0x78.
+// Original: sim1.dll 0x20c502b0, concrete coefficient-model slot +0x78.
 __declspec(noinline) double AirplaneCoefficientModel::GetSpoilerPitchCoefficient() const
 {
     if (tables == 0) {
@@ -570,7 +651,7 @@ __declspec(noinline) double AirplaneCoefficientModel::GetSpoilerPitchCoefficient
     return tables->spoilerPitchMoment;
 }
 
-// Original: sim1.dll 0x20c502b0, concrete coefficient-model slot +0x7c.
+// Original: sim1.dll 0x20c502d0, concrete coefficient-model slot +0x7c.
 __declspec(noinline) double AirplaneCoefficientModel::GetSlipstreamElevatorCoefficient() const
 {
     if (tables == 0) {
@@ -579,13 +660,31 @@ __declspec(noinline) double AirplaneCoefficientModel::GetSlipstreamElevatorCoeff
     return tables->slipstreamElevatorMoment;
 }
 
-// Original: sim1.dll 0x20c502d0, concrete coefficient-model slot +0x80.
+// Original: sim1.dll 0x20c502f0, concrete coefficient-model slot +0x80.
 __declspec(noinline) double AirplaneCoefficientModel::GetSlipstreamPitchRateCoefficient() const
 {
     if (tables == 0) {
         return 0.0;
     }
     return tables->slipstreamPitchRateMoment;
+}
+
+// Original: sim1.dll 0x20c50870, concrete coefficient-model slot +0x98.
+__declspec(noinline) double AirplaneCoefficientModel::GetSpoilerRollCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->spoilerRoll;
+}
+
+// Original: sim1.dll 0x20c50890, concrete coefficient-model slot +0x9c.
+__declspec(noinline) double AirplaneCoefficientModel::GetAileronTrimRollCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->aileronTrimRoll;
 }
 
 // Original: sim1.dll 0x20c013a0, slipstream contribution at 0x20c016ad–0x20c0172a.
@@ -651,6 +750,323 @@ double AirplaneMomentModel::CalculatePitchMoment(const AirplaneDynamics& airplan
     }
     return angle + baseline + elevator + pitchRate + alphaRate + incidence + trim + slipstream + flaps + spoilers +
         gyro + forceTransfer + supplemental + slipstreamTail;
+}
+
+typedef char CheckRollCoefficientSlots[offsetof(AirplaneCoefficientDispatch, sideslipRoll) == 0x84 &&
+    offsetof(AirplaneCoefficientDispatch, additionalRoll) == 0xa0 ? 1 : -1];
+typedef char CheckRollCoefficientFields[offsetof(AirplaneAerodynamicTables, spoilerRoll) == 0xdc &&
+    offsetof(AirplaneAerodynamicTables, aileronTrimRoll) == 0xe4 ? 1 : -1];
+typedef char CheckRollControlFields[offsetof(AirplaneControlSurfaces, firstAileron) == 0xd4 &&
+    offsetof(AirplaneControlSurfaces, rudder) == 0xe4 && offsetof(AirplaneControlSurfaces, aileronTrim) == 0x104 ? 1 : -1];
+typedef char CheckRollStateFields[offsetof(IntegrationHistory, rollMomentScale) == 0x1ec &&
+    offsetof(IntegrationHistory, firstWingAttenuationInput) == 0x62c &&
+    offsetof(IntegrationHistory, rollRateMomentScale) == 0x750 ? 1 : -1];
+typedef char CheckRollTorqueFields[offsetof(AirplaneConfiguration, settings.torqueOnRoll) == 0x11a8 &&
+    offsetof(EngineForceRecord, propellerTorque) == 0x44 && sizeof(EngineForceRecord) == 0xec &&
+    offsetof(PropellerForceRecord, signedRotationFactor) == 0x44 ? 1 : -1];
+typedef char CheckRollReferenceFields[offsetof(AirplaneConfiguration, highAngleModel) == 0x19fc &&
+    offsetof(AirplaneHighAngleDispatch, referenceAngle) == 0x10 ? 1 : -1];
+
+// Original: sim1.dll 0x20c01890, propeller reaction torque at 0x20c01c55–0x20c01f43.
+// Extracted calculation using the original four-engine and four-propeller record layout.
+__declspec(noinline) double AirplaneMomentModel::CalculatePropellerRollTorque(const AirplaneDynamics& airplane) const
+{
+    const IntegrationHistory& state = *airplane.history;
+    const PropulsionConfiguration& topology = *state.propulsionConfiguration;
+    const PropulsionConfiguration& settings = airplane.airframeConfiguration->settings;
+    const PropulsionMomentControl& control = *airplane.propulsionMomentControl;
+    const unsigned propellerCount = topology.propellerCount;
+    if (propellerCount == 0 || control.suppressPropellerGyro != 0) {
+        return 0.0;
+    }
+    const double gain = (1.0 - state.airRelativeVelocity.x / (settings.rollTorqueReferenceSpeed * 1.5)) *
+        control.propellerTorqueGain * settings.torqueOnRoll;
+    if (!(gain > 0.0)) {
+        return 0.0;
+    }
+
+    unsigned propellersOnEngine[4] = {0};
+    double propellerTorque[4];
+    for (unsigned index = 0; index < propellerCount; ++index) {
+        const unsigned engine = topology.engineForPropeller[index];
+        ++propellersOnEngine[engine];
+        const double torque = state.engineForces[engine].propellerTorque * gain;
+        propellerTorque[index] = state.propellerForces[index].signedRotationFactor < 0.0 ? -torque : torque;
+    }
+
+    double total = 0.0;
+    for (unsigned index = 0; index < propellerCount; ++index) {
+        total += propellerTorque[index] / propellersOnEngine[topology.engineForPropeller[index]];
+    }
+    return total;
+}
+
+// Original: sim1.dll 0x20c01890, SimpleAero arithmetic at 0x20c01fde–0x20c02002.
+// Extracted from the return path of the normal roll callback.
+__declspec(noinline) double AirplaneMomentModel::CalculateSimpleRollMoment(double firstAileron, double secondAileron,
+    double spoilers, double yawRate) const
+{
+    return firstAileron * 0.75 + secondAileron * 0.75 + spoilers + yawRate * 1.3;
+}
+
+// Original: sim1.dll 0x20c01890, roll component of the normal airplane aerodynamic model.
+double AirplaneMomentModel::CalculateRollMoment(AirplaneDynamics& airplane, const Vector3& force) const
+{
+    if (coefficients == 0) {
+        return 0.0;
+    }
+    const IntegrationHistory& state = *airplane.history;
+    const AirplaneConfiguration& configuration = *airplane.airframeConfiguration;
+    const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
+    const FlightPositionDispatch& controls = *controlOwner->positionDispatch;
+    volatile double slipstream = state.wingPressureForce * slipstreamRollCoefficient;
+    volatile double sideslip = coefficient.sideslipRoll(coefficients) * state.sideslipRadians * state.rollMomentScale;
+    const double rudderAngle = controls.controlSurfaces(controlOwner)->rudder;
+    volatile double rudder = coefficient.rudderRoll(coefficients) * rudderAngle * state.rollMomentScale;
+    const double firstSpoiler = controls.controlSurfaces(controlOwner)->firstSpoilerAngle;
+    const double secondSpoiler = controls.controlSurfaces(controlOwner)->secondSpoilerAngle;
+    volatile double spoilers = (firstSpoiler - secondSpoiler) * coefficient.spoilerRoll(coefficients) * state.rollMomentScale;
+    const float trimSetting = controls.controlSurfaces(controlOwner)->aileronTrim;
+    volatile double trim = coefficient.aileronTrimRoll(coefficients) * configuration.settings.aileronTrimEffectiveness *
+        trimSetting * state.rollMomentScale;
+
+    volatile double firstAileron;
+    volatile double secondAileron;
+    if (airplane.positionDispatch->publishesPosition(&airplane) != 0) {
+        const double secondAngle = controls.controlSurfaces(controlOwner)->secondAileron;
+        secondAileron = coefficient.aileronRoll(coefficients, 3) * secondAngle * state.rollMomentScale;
+        const double firstAngle = controls.controlSurfaces(controlOwner)->firstAileron;
+        firstAileron = coefficient.aileronRoll(coefficients, 2) * firstAngle * state.rollMomentScale;
+    } else {
+        const AirplaneControlSurfaces& surfaces = *controls.controlSurfaces(controlOwner);
+        volatile double meanAileron = (surfaces.secondAileron + surfaces.firstAileron) * 0.5;
+        firstAileron = secondAileron = coefficient.aileronRoll(coefficients, 1) * meanAileron * state.rollMomentScale;
+    }
+
+    volatile double rollRate = coefficient.rollRate(coefficients) * state.transformedAngularVelocity.z * state.rollRateMomentScale;
+    if (airplane.positionDispatch->publishesPosition(&airplane) != 0) {
+        const AerodynamicCurveStorage<6> highAngleScale = {{6}, {
+            {0.0, 1.0}, {0.8, 1.06}, {1.0, 1.07}, {1.4, 1.08}, {1.8, 1.02}, {3.71, 0.45}
+        }};
+        const AirplaneHighAngleModel* angleModel = configuration.highAngleModel;
+        const float referenceAngle = angleModel->dispatch->referenceAngle(angleModel);
+        rollRate *= SampleAerodynamicCurve(&highAngleScale.curve, state.attitudeAngle / referenceAngle);
+    }
+    volatile double yawRate = coefficient.yawRateRoll(coefficients) * state.transformedAngularVelocity.y * state.rollRateMomentScale;
+    volatile double additional = coefficient.additionalRoll(coefficients) * state.rollMomentScale;
+    volatile double supplemental = airplane.supplementalAerodynamics->RollMoment() * state.rollMomentScale;
+
+    if (state.firstWingAttenuationInput > 0.0 || state.secondWingAttenuationInput > 0.0) {
+        const AerodynamicCurveStorage<5> attenuation = {{5}, {
+            {0.0, 1.0}, {0.21, 0.15}, {0.4, 0.08}, {0.6, 0.05}, {1.0, 0.03}
+        }};
+        volatile double firstScale = SampleAerodynamicCurve(&attenuation.curve, state.firstWingAttenuationInput);
+        const double secondScale = SampleAerodynamicCurve(&attenuation.curve, state.secondWingAttenuationInput);
+        firstAileron *= firstScale;
+        secondAileron *= secondScale;
+        trim *= (firstScale + secondScale) * 0.5;
+    }
+    const double propellerTorque = CalculatePropellerRollTorque(airplane);
+
+    double outerWing = 0.0;
+    double innerWing = 0.0;
+    if (wingLiftMultiplierSum < 4.0) {
+        const double span = configuration.geometry->wingSpan;
+        volatile double outerDifference = (secondOuterWingLift - firstOuterWingLift) * 0.5 * span;
+        volatile double innerDifference = (secondInnerWingLift - firstInnerWingLift) * 0.25 * span;
+        outerWing = outerDifference;
+        innerWing = innerDifference;
+        if (airplane.positionDispatch->publishesPosition(&airplane) == 0) {
+            outerWing *= 0.5;
+            innerWing *= 0.5;
+        }
+    }
+
+    if (airplane.propulsionMomentControl->simpleAerodynamics != 0) {
+        return CalculateSimpleRollMoment(firstAileron, secondAileron, spoilers, yawRate);
+    }
+    const double forceTransfer = CalculateForceMomentZ(airplane.massProperties->centerOfGravity, force);
+    const double aerodynamic = firstAileron + secondAileron + trim + spoilers + yawRate + rollRate + rudder + sideslip + slipstream;
+    return ((aerodynamic + propellerTorque + additional + supplemental) + forceTransfer) + outerWing + innerWing;
+}
+
+typedef char CheckYawCoefficientSlots[offsetof(AirplaneCoefficientDispatch, rollRateYaw) == 0xa4 &&
+    offsetof(AirplaneCoefficientDispatch, additionalYaw) == 0xc4 ? 1 : -1];
+typedef char CheckYawCoefficientFields[offsetof(AirplaneAerodynamicTables, slipstreamRudderYaw) == 0x110 &&
+    offsetof(AirplaneAerodynamicTables, slipstreamRollRateYaw) == 0x118 &&
+    offsetof(AirplaneAerodynamicTables, rudderTrimYaw) == 0x120 ? 1 : -1];
+typedef char CheckYawInputs[offsetof(AirplaneControlSurfaces, rudderTrim) == 0x108 &&
+    offsetof(AirplaneConfiguration, settings.rudderTrimEffectiveness) == 0x1174 &&
+    offsetof(AirplaneConfiguration, settings.propellerDiameter) == 0x210 &&
+    offsetof(AirplaneConfiguration, settings.pFactorOnYaw) == 0x11a4 &&
+    offsetof(AirplaneConfiguration, settings.gyroPrecessionOnYaw) == 0x11ac &&
+    offsetof(PropulsionMomentControl, pFactorGain) == 8 &&
+    offsetof(IntegrationHistory, slipstreamYawRateMomentScale) == 0x770 ? 1 : -1];
+typedef char CheckExternalTankState[offsetof(IntegrationHistory, firstExternalTank) == 0x3ec &&
+    offsetof(IntegrationHistory, secondExternalTank) == 0x40c && offsetof(ExternalFuelTankState, flags) == 0xc &&
+    offsetof(ExternalFuelTank, lateralPosition) == 4 && offsetof(ExternalFuelTank, capacity) == 0x10 ? 1 : -1];
+
+// Original: sim1.dll 0x20c50dc0, concrete coefficient-model slot +0xb8.
+__declspec(noinline) double AirplaneCoefficientModel::GetSlipstreamRudderYawCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->slipstreamRudderYaw;
+}
+
+// Original: sim1.dll 0x20c50de0, concrete coefficient-model slot +0xbc.
+__declspec(noinline) double AirplaneCoefficientModel::GetSlipstreamRollRateYawCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->slipstreamRollRateYaw;
+}
+
+// Original: sim1.dll 0x20c50e00, concrete coefficient-model slot +0xc0.
+__declspec(noinline) double AirplaneCoefficientModel::GetRudderTrimYawCoefficient() const
+{
+    if (tables == 0) {
+        return 0.0;
+    }
+    return tables->rudderTrimYaw;
+}
+
+// Original: sim1.dll 0x20c020a0, yaw gyroscopic block at 0x20c02265–0x20c023ce.
+__declspec(noinline) double AirplaneMomentModel::CalculatePropellerYawGyro(const AirplaneDynamics& airplane) const
+{
+    const IntegrationHistory& state = *airplane.history;
+    const unsigned count = state.propulsionConfiguration->propellerCount;
+    const PropulsionMomentControl& control = *airplane.propulsionMomentControl;
+    if (count == 0 || control.suppressPropellerGyro != 0 || !(control.propellerGyroGain > 0.0f)) {
+        return 0.0;
+    }
+
+    const PropulsionConfiguration& settings = airplane.airframeConfiguration->settings;
+    const double rpmToRadiansPerSecond = 0.1047197551;
+    double moment = 0.0;
+    for (unsigned index = 0; index < count; ++index) {
+        const double angularMomentum = state.propellerForces[index].signedRpm * rpmToRadiansPerSecond *
+            settings.propellerMomentOfInertia;
+        moment += -(angularMomentum * airplane.angularVelocity.x) * settings.gyroPrecessionOnYaw * control.propellerGyroGain;
+    }
+    return moment;
+}
+
+// Original: sim1.dll 0x20c020a0, asymmetric propeller thrust at 0x20c023cf–0x20c025dc.
+__declspec(noinline) double AirplaneMomentModel::CalculatePropellerPFactorYaw(const AirplaneDynamics& airplane) const
+{
+    const IntegrationHistory& state = *airplane.history;
+    const unsigned count = state.propulsionConfiguration->propellerCount;
+    const PropulsionMomentControl& control = *airplane.propulsionMomentControl;
+    if (count == 0 || control.suppressPropellerGyro != 0 || !(control.pFactorGain > 0.0f) || !(state.attitudeAngle > 0.0)) {
+        return 0.0;
+    }
+
+    const AirplaneConfiguration& configuration = *airplane.airframeConfiguration;
+    const AirplaneHighAngleModel* angleModel = configuration.highAngleModel;
+    const double threeDegrees = 0.05235987755982989;
+    const double limit = angleModel->dispatch->referenceAngle(angleModel) - threeDegrees;
+    const double boundedBelow = -limit < state.attitudeAngle ? state.attitudeAngle : -limit;
+    const double boundedAlpha = boundedBelow < limit ? boundedBelow : limit;
+    const double arm = configuration.settings.propellerDiameter * 0.1875 * (boundedAlpha / limit) *
+        configuration.settings.pFactorOnYaw * control.pFactorGain;
+    double moment = 0.0;
+    for (unsigned index = 0; index < count; ++index) {
+        const PropellerForceRecord& propeller = state.propellerForces[index];
+        const double thrustMoment = -(propeller.thrust * arm);
+        moment += propeller.signedRotationFactor < 0.0 ? -thrustMoment : thrustMoment;
+    }
+
+    const double forwardVelocity = state.airRelativeVelocity.x;
+    if (forwardVelocity < 20.0) {
+        return 0.0;
+    }
+    if (forwardVelocity < 60.0) {
+        moment *= (forwardVelocity - 20.0) / 40.0;
+    }
+    return moment;
+}
+
+// Original: sim1.dll 0x20c020a0, external tank contribution at 0x20c02680–0x20c026f3.
+__declspec(noinline) double AirplaneMomentModel::CalculateExternalTankYaw(AirplaneDynamics& airplane) const
+{
+    if (airplane.positionDispatch->publishesPosition(&airplane) == 0) {
+        return 0.0;
+    }
+    const IntegrationHistory& state = *airplane.history;
+    const ExternalFuelTankState& first = state.firstExternalTank;
+    const ExternalFuelTankState& second = state.secondExternalTank;
+    const double dragCoefficient = 0.047;
+    double moment = 0.0;
+    if (first.configuration->capacity != 0.0f && (first.flags & 2) == 0) {
+        moment += state.dynamicPressure * dragCoefficient * first.configuration->lateralPosition;
+    }
+    if (second.configuration->capacity != 0.0f && (second.flags & 2) == 0) {
+        moment += state.dynamicPressure * dragCoefficient * second.configuration->lateralPosition;
+    }
+    return moment;
+}
+
+// Original: sim1.dll 0x20c020a0, SimpleAero return arithmetic at 0x20c02702–0x20c02717.
+__declspec(noinline) double AirplaneMomentModel::CalculateSimpleYawMoment(double rudder, double yawRate,
+    double rollRate, double sideslip) const
+{
+    return rudder * 0.75 + yawRate + rollRate + sideslip;
+}
+
+// Original: sim1.dll 0x20c020a0, yaw component of the normal airplane aerodynamic model.
+double AirplaneMomentModel::CalculateYawMoment(AirplaneDynamics& airplane, const Vector3& force) const
+{
+    if (coefficients == 0) {
+        return 0.0;
+    }
+    const IntegrationHistory& state = *airplane.history;
+    const AirplaneConfiguration& configuration = *airplane.airframeConfiguration;
+    const AirplaneGeometry& geometry = *configuration.geometry;
+    const AirplaneCoefficientDispatch& coefficient = *coefficients->dispatch;
+    const FlightPositionDispatch& controls = *controlOwner->positionDispatch;
+
+    volatile double slipstream = state.wingPressureForce * slipstreamYawCoefficient;
+    volatile double additional = coefficient.additionalYaw(coefficients) * state.rollMomentScale;
+    volatile double yawRate = coefficient.yawRate(coefficients) * state.transformedAngularVelocity.y * state.rollRateMomentScale;
+    if (airplane.positionDispatch->publishesPosition(&airplane) != 0) {
+        // The original roll and yaw rate paths read the same six pairs at 0x20c71d10.
+        const AerodynamicCurveStorage<6> highAngleScale = {{6}, {
+            {0.0, 1.0}, {0.8, 1.06}, {1.0, 1.07}, {1.4, 1.08}, {1.8, 1.02}, {3.71, 0.45}
+        }};
+        const AirplaneHighAngleModel* angleModel = configuration.highAngleModel;
+        const float referenceAngle = angleModel->dispatch->referenceAngle(angleModel);
+        yawRate *= SampleAerodynamicCurve(&highAngleScale.curve, state.attitudeAngle / referenceAngle);
+    }
+
+    const double rudderDeflection = controls.controlSurfaces(controlOwner)->rudder;
+    volatile double rudder = coefficient.rudderYaw(coefficients) * rudderDeflection * state.rollMomentScale;
+    const float trimSetting = controls.controlSurfaces(controlOwner)->rudderTrim;
+    volatile double trim = coefficient.rudderTrimYaw(coefficients) * configuration.settings.rudderTrimEffectiveness *
+        trimSetting * state.rollMomentScale;
+    volatile double rollRate = coefficient.rollRateYaw(coefficients) * state.transformedAngularVelocity.z * state.rollRateMomentScale;
+    volatile double sideslip = coefficient.sideslipYaw(coefficients) * state.sideslipRadians * state.rollMomentScale;
+    const AirplaneControlSurfaces& surfaces = *controls.controlSurfaces(controlOwner);
+    volatile double meanAileron = (surfaces.secondAileron + surfaces.firstAileron) * 0.5;
+    volatile double ailerons = coefficient.aileronYaw(coefficients) * meanAileron * state.rollMomentScale;
+
+    volatile double gyro = CalculatePropellerYawGyro(airplane);
+    volatile double pFactor = CalculatePropellerPFactorYaw(airplane);
+    const double slipstreamRudderCoefficient = coefficient.slipstreamRudderYaw(coefficients);
+    volatile double slipstreamRudder = (slipstreamRudderCoefficient * rudderDeflection) *
+        (geometry.wingSpan * 12.0 * geometry.wingArea) * state.slipstreamDynamicPressure;
+    const double slipstreamRate = coefficient.slipstreamRollRateYaw(coefficients) *
+        state.transformedAngularVelocity.z * state.slipstreamYawRateMomentScale;
+    volatile double slipstreamTail = slipstreamRate * state.rateCosine * state.rateCosine + slipstreamRudder;
+    volatile double forceTransfer = CalculateForceMomentY(airplane, force);
+    const double externalTanks = CalculateExternalTankYaw(airplane);
+    if (airplane.propulsionMomentControl->simpleAerodynamics != 0) {
+        return CalculateSimpleYawMoment(rudder, yawRate, rollRate, sideslip);
+    }
+    return rudder + yawRate + trim + rollRate + sideslip + ailerons + additional + slipstream +
+        gyro + pFactor + forceTransfer + externalTanks + slipstreamTail;
 }
 
 }

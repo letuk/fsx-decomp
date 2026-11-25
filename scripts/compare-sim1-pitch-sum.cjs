@@ -33,14 +33,16 @@ function checkCall(body, relocation, target) {
 }
 
 const getters = [
-    ['20c50270', 'GetFlapPitchCoefficient'],
-    ['20c50290', 'GetSpoilerPitchCoefficient'],
-    ['20c502b0', 'GetSlipstreamElevatorCoefficient'],
-    ['20c502d0', 'GetSlipstreamPitchRateCoefficient']
+    ['20c50270', 'GetPitchCoefficientSlot70'],
+    ['20c50290', 'GetFlapPitchCoefficient'],
+    ['20c502b0', 'GetSpoilerPitchCoefficient'],
+    ['20c502d0', 'GetSlipstreamElevatorCoefficient'],
+    ['20c502f0', 'GetSlipstreamPitchRateCoefficient']
 ].map(([entry, name], index) => {
     const original = originalListing(program, entry, image);
     const rebuilt = read(name + '@AirplaneCoefficientModel@sim1@@');
-    const slot = 0x20bc2688 + index * 4;
+    const slotOffset = 0x70 + index * 4;
+    const slot = 0x20bc2618 + slotOffset;
     assert.deepEqual(image.highLowFixups(slot, 4), [0]);
     assert.equal(image.initialDword(slot), original.va);
     assert.deepEqual(image.highLowFixups(original.va, original.bytes.length), []);
@@ -48,15 +50,18 @@ const getters = [
     return {
         original, rebuilt,
         record: { ...compareNativeRanges(original, rebuilt, original.va, original.va + original.bytes.length, [], [], []),
-            slot: hex(slot), symbol: 'AirplaneCoefficientModel::' + name }
+            slot: hex(slot), slotOffset: hex(slotOffset), symbol: 'AirplaneCoefficientModel::' + name }
     };
 });
 assert.equal(tail.section.relocations.length, 2);
-for (const [index, item] of getters.slice(2).entries()) {
+for (const [index, item] of getters.slice(3).entries()) {
     checkCall(tail, tail.section.relocations[index], item.rebuilt);
 }
 assert.equal(image.codeAt(0x20c016ca, 7).toString('hex'), '8b507c8bceffd2');
 assert.equal(image.codeAt(0x20c016ea, 6).toString('hex'), '8b9080000000');
+assert.equal(image.codeAt(0x20c014d7, 3).toString('hex'), '8b5074');
+assert.equal(image.codeAt(0x20c01527, 3).toString('hex'), '8b4278');
+assert.equal(image.codeAt(0x20c4f356, 6).toString('hex'), 'c7061826bc20');
 const tailRefs = tail.section.relocations.map(({ offset, symbol }) => ({ offset, symbol: symbol.name }));
 
 const literals = new Map([

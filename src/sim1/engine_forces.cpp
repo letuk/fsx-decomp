@@ -12,24 +12,10 @@ struct ThrustOrientation {
 
 #pragma pack(push, 4)
 
-struct TurbineEngineState;
-
 // Reconstructed mount record in the configuration array at +0x199c.
 struct EngineMount {
     Vector3 position;
     ThrustOrientation orientation;
-};
-
-// Reconstructed prefixes and verified record strides of the propulsion arrays.
-struct EngineForceRecord {
-    void UpdateTurbineSpeedOutput(TurbineEngineState* turbine) const;
-
-    const EngineMount* mount;
-    char unknown04[0x30];
-    double thrust;
-    char unknown3c[0x20];
-    double speedFraction;
-    char unknown64[0x88];
 };
 
 // Reconstructed turbine state with the verified per-engine stride.

@@ -1,5 +1,26 @@
 # FSX shared knowledge
 
+2026-11-25 — Reconstructed normal airplane yaw composition in
+`sim1.dll:0x20c020a0`, including propeller gyroscopic reaction,
+P-factor, external tanks and both return paths. Native COFF
+comparison gives 69 exact and 79 normalized bytes. The full yaw
+body differs. Ghidra revision `1795569073366:d6cfccaa:495` was
+saved and read back clean. All three normal-model moment sums
+now have C++ reconstructions. The alternate airplane model,
+linked yaw matching, and simulator verification remain open.
+[Normal airplane yaw moment](sim1.dll/sim1-yaw-moment.md).
+
+2026-11-25 — Reconstructed the normal airplane roll composition in
+`sim1.dll:0x20c01890`, including wing asymmetry, propeller reaction
+torque, force transfer and the `SimpleAero` return. Native COFF
+comparison gives 82 exact and 94 normalized bytes. The full roll
+body differs. This analysis corrected four pitch callback bindings
+to their actual slots and verified five 17-byte pitch accessors.
+Ghidra revision `1795568104133:d6cfccaa:350` was saved and read back
+clean. Linked and simulator roll verification and the alternate
+model remain open. The yaw composition was reconstructed next.
+[Normal airplane roll moment](sim1.dll/sim1-roll-moment.md).
+
 2026-11-25 — Completed the C++ reconstruction of the normal
 airplane pitch moment in `sim1.dll:0x20c013a0`, including the
 original summation order and the `SimpleAero` path. Four
@@ -8,7 +29,8 @@ The new comparisons total 120 exact and 49 normalized bytes.
 The complete pitch body still differs and runtime verification
 remains open. The normal-model roll and yaw bodies retain
 their scoped force-transfer reconstructions. Ghidra revision
-`1795566771278:d6cfccaa:205` was saved and read back clean.
+`1795566771278:d6cfccaa:205` was saved and read back clean. The
+pitch slot bindings in this build were superseded by the roll work above.
 [Complete pitch moment calculation](sim1.dll/sim1-aerodynamic-moment.md#complete-pitch-moment-calculation).
 
 2026-11-25 — Reconstructed the `sim1.dll` elevator trim

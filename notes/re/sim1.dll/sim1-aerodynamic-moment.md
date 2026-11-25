@@ -123,7 +123,7 @@ inputs. The original Ghidra names and signatures were preserved.
 The remaining aerodynamic coefficient terms and simulator behavior
 are still open.
 
-- [C++ force transfer calculation](../../../src/sim1/aerodynamic_moment.cpp#L192)
+- [C++ force transfer calculation](../../../src/sim1/aerodynamic_moment.cpp#L263)
 - [Native COFF comparison](../../../artifacts/sim1.dll/moment-arm-comparison.json)
 - [Ghidra and reference dispatch evidence](../../../artifacts/sim1.dll/moment-arm-ghidra.json)
 - [Selected build and receipt](../../../vm-share/modules/sim1/runs/sim1-moment-arm-20261124-002)
@@ -177,7 +177,7 @@ complete listings for the lookup and the scoped caller comparison.
 The prior exact gyro and force-transfer scopes reproduced in the
 selected build. Simulator verification remains open.
 
-- [C++ curve and moment contribution](../../../src/sim1/aerodynamic_moment.cpp#L223)
+- [C++ curve and moment contribution](../../../src/sim1/aerodynamic_moment.cpp#L294)
 - [Native COFF comparison](../../../artifacts/sim1.dll/angle-curve-comparison.json)
 - [Ghidra and AIR record evidence](../../../artifacts/sim1.dll/angle-curve-ghidra.json)
 - [Selected build and receipt](../../../vm-share/modules/sim1/runs/sim1-angle-curve-20261124-003)
@@ -251,7 +251,7 @@ force-accumulation and acceleration scopes. The runtime and linked
 comparisons for the new baseline remain open. Ghidra tags and
 saved revision `1795548514295:962445d7:174` were read back clean.
 
-- [C++ zero-alpha moment coefficient](../../../src/sim1/aerodynamic_moment.cpp#L284)
+- [C++ zero-alpha moment coefficient](../../../src/sim1/aerodynamic_moment.cpp#L355)
 - [Original baseline listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c4ff30.asm)
 - [Original caller listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c013a0.asm)
 - [Native COFF comparison](../../../artifacts/sim1.dll/baseline-moment-comparison.json)
@@ -307,7 +307,7 @@ reproduced in the selected build. The linked force accumulation
 and acceleration comparison also retained its established results.
 Simulator verification remains open.
 
-- [C++ elevator coefficient and moment](../../../src/sim1/aerodynamic_moment.cpp#L329)
+- [C++ elevator coefficient and moment](../../../src/sim1/aerodynamic_moment.cpp#L400)
 - [Original coefficient listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c4fce0.asm)
 - [Native COFF comparison](../../../artifacts/sim1.dll/elevator-moment-comparison.json)
 - [Ghidra and AIR evidence](../../../artifacts/sim1.dll/elevator-moment-ghidra.json)
@@ -362,7 +362,7 @@ comparisons reproduced. The separate native integration run
 retained the three transform bodies and the exact 144-byte
 history-copy range. Simulator verification remains open.
 
-- [C++ pitch-rate coefficient and moment](../../../src/sim1/aerodynamic_moment.cpp#L374)
+- [C++ pitch-rate coefficient and moment](../../../src/sim1/aerodynamic_moment.cpp#L445)
 - [Original coefficient listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c4fe00.asm)
 - [Native COFF comparison](../../../artifacts/sim1.dll/pitch-rate-comparison.json)
 - [Ghidra and rate producer evidence](../../../artifacts/sim1.dll/pitch-rate-ghidra.json)
@@ -419,7 +419,7 @@ sideslip calculation. The extracted caller is 63 bytes against
 and ESI for runtime fields. The previous aerodynamic and native
 integration checks reproduced. Simulator verification remains open.
 
-- [C++ angle-of-attack rate coefficient and producer](../../../src/sim1/aerodynamic_moment.cpp#L419)
+- [C++ angle-of-attack rate coefficient and producer](../../../src/sim1/aerodynamic_moment.cpp#L490)
 - [Original coefficient listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c50020.asm)
 - [Original two-rate listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20bfb840.asm)
 - [Native COFF comparison](../../../artifacts/sim1.dll/alpha-rate-comparison.json)
@@ -470,7 +470,7 @@ local for the alpha-adjusted coefficient. Earlier aerodynamic
 comparisons and the linked forces regression reproduced. Simulator
 verification remains open.
 
-- [C++ horizontal-tail incidence calculation](../../../src/sim1/aerodynamic_moment.cpp#L474)
+- [C++ horizontal-tail incidence calculation](../../../src/sim1/aerodynamic_moment.cpp#L545)
 - [Original coefficient listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c500c0.asm)
 - [Native COFF comparison](../../../artifacts/sim1.dll/tail-incidence-comparison.json)
 - [Ghidra and geometry evidence](../../../artifacts/sim1.dll/tail-incidence-ghidra.json)
@@ -523,7 +523,7 @@ bytes. Its rebuild calls the verified concrete coefficient target
 directly. The established aerodynamic and native integration
 comparisons reproduced. Simulator verification remains open.
 
-- [C++ trim coefficient and moment](../../../src/sim1/aerodynamic_moment.cpp#L514)
+- [C++ trim coefficient and moment](../../../src/sim1/aerodynamic_moment.cpp#L585)
 - [Original coefficient listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c501a0.asm)
 - [Native COFF comparison](../../../artifacts/sim1.dll/elevator-trim-comparison.json)
 - [Ghidra and provider evidence](../../../artifacts/sim1.dll/elevator-trim-ghidra.json)
@@ -542,7 +542,8 @@ dispatch interfaces.
 
 | Original address | Finding | Status |
 | --- | --- | --- |
-| `0x20c50270`, `0x20c50290`, `0x20c502b0`, `0x20c502d0` | Four concrete slots `+0x74`, `+0x78`, `+0x7c` and `+0x80` resolve to 17-byte accessors. Each uses the coefficient view in ECX, returns a double field in ST0 and takes no stack arguments. It returns zero without coefficient data. The target offsets are `+0x84`, `+0x8c`, `+0x94` and `+0x9c` in that order. | live verified |
+| `0x20c4f356`, `0x20bc2618`, `0x20c50270`–`0x20c502f0` | The constructor installs the table at `0x20bc2618`. Its slots `+0x70`, `+0x74`, `+0x78`, `+0x7c` and `+0x80` point to `0x20c50270`, `0x20c50290`, `0x20c502b0`, `0x20c502d0` and `0x20c502f0`. Their binary64 data fields are `+0x84`, `+0x8c`, `+0x94`, `+0x9c` and `+0xa4`. All return zero without a coefficient table. The caller uses the four slots starting at `+0x74`. | live verified |
+| `0x20bc2688` | The earlier scope paired `0x20c50270` with `+0x74` and shifted all four pitch caller targets by one slot. That interpretation and the direct calls in the earlier pitch build are superseded by the constructor-relative offsets and corrected build. Its four exact getter matches remain byte evidence for their original addresses. | superseded |
 | `0x20c00840`, `0x20c014e6`–`0x20c0150d`, `0x20c1c5d0` | The slipstream update publishes the coefficient at `0x20c7b958`, multiplied here by the main pressure and geometry scale. The flap term multiplies slot `+0x74` by the flap deployment factor at runtime `+0x6e4` and by that scale. The deployment writer derives the factor from the active surface records. | live verified |
 | `0x20c061e0`, `0x20c40da0`, `0x20c01519`–`0x20c01550` | The two spoiler angles at control block `+0x10c` and `+0x114` are averaged, then multiplied by the slot `+0x78` coefficient and the main scale. | live verified |
 | `0x20c45760`, `0x20c005df`, `0x20c016ad`–`0x20c01727` | The first tail term multiplies elevator deflection minus fixed tail incidence by slot `+0x7c`, wing area, chord and the slipstream pressure increment at runtime `+0x1fc`. That increment uses `0.5 * density * (2 * airspeed * slipstreamSpeed + slipstreamSpeed²)`. The second uses slot `+0x80`, the signed pitch-rate field and runtime scale `+0x768`, derived from airflow plus slipstream speed. Their sum is multiplied twice by the cosine of raw alpha from the angle update at `0x20c2e13d`. | live verified |
@@ -556,12 +557,13 @@ interface and uses minimum layouts for the runtime, geometry and
 coefficient data. Suggested Ghidra names for `FUN_20c013a0` are
 `param_2` → `airplane` and `param_3` → `aerodynamicForce`, based on the
 two stack arguments and their verified field and vector reads.
-The four new 17-byte Ghidra definitions retain their generated
-names. Their signatures, extents and the saved tags were read
-back clean at revision `1795566771278:d6cfccaa:205`.
+The 17-byte Ghidra definitions retain their generated names.
+The original four definitions were read back clean at revision
+`1795566771278:d6cfccaa:205`. The fifth was saved with the roll
+scope and read back clean at revision `1795568104133:d6cfccaa:350`.
 
-The selected precise VC8 RTM build matches all **68 bytes** of
-the four accessors exactly. The conditional null-return form
+The corrected precise VC8 RTM build matches all **85 bytes** of
+the five accessors exactly. The conditional null-return form
 recovers the original branch layout. The earlier ternary form
 produces a different branch layout. The new instruction ranges
 add **52 exact bytes** and **49 normalized bytes**. They cover the
@@ -576,16 +578,18 @@ coefficient targets. Those differences remain visible in the
 full listings. The established aerodynamic, state integration and
 linked propulsion checks reproduced. The pitch scope is ready for a reconstruction
 commit. Linked pitch and simulator verification remain open.
-The roll and yaw bodies at `0x20c01890` and `0x20c020a0`
-still have their recorded force-transfer scopes. Their full
-coefficient sums and the alternate airplane model remain open.
+The normal roll sum at `0x20c01890` is documented in
+[Sim1 airplane roll moment](sim1-roll-moment.md). The normal yaw
+sum is documented in [Sim1 airplane yaw moment](sim1-yaw-moment.md).
+The alternate airplane model remains open.
 
-- [C++ pitch calculation](../../../src/sim1/aerodynamic_moment.cpp#L624)
+- [C++ pitch calculation](../../../src/sim1/aerodynamic_moment.cpp#L723)
 - [Original pitch listing](../../../artifacts/sim1.dll/sim1-inventory/functions/20c013a0.asm)
-- [Native COFF comparison](../../../artifacts/sim1.dll/pitch-sum-comparison.json)
+- [Corrected native COFF comparison](../../../artifacts/sim1.dll/pitch-sum-corrected-comparison.json)
+- [Superseded caller mapping and original byte evidence](../../../artifacts/sim1.dll/pitch-sum-comparison.json)
 - [Ghidra and input evidence](../../../artifacts/sim1.dll/pitch-sum-ghidra.json)
-- [Selected build and receipt](../../../vm-share/modules/sim1/runs/sim1-pitch-sum-20261125-003)
-- [Selected build disassembly](../../../vm-share/modules/sim1/runs/sim1-pitch-sum-20261125-003/worker-output/disassembly.txt)
+- [Selected build and receipt](../../../vm-share/modules/sim1/runs/sim1-roll-sum-20261125-002)
+- [Selected build disassembly](../../../vm-share/modules/sim1/runs/sim1-roll-sum-20261125-002/worker-output/disassembly.txt)
 - [Ternary getter trial](../../../vm-share/modules/sim1/runs/sim1-pitch-sum-20261125-001)
 - [Linked propulsion regression](../../../vm-share/modules/sim1/runs/sim1-pitch-sum-propulsion-20261125-001)
 - [Native state integration regression](../../../vm-share/modules/sim1/runs/sim1-pitch-sum-integration-20261125-001/state-integration-comparison.json)

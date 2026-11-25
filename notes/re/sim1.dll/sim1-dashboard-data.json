@@ -751,46 +751,54 @@
   },
   {
     "entry": "20bc2688",
-    "name": "Flap, spoiler and slipstream pitch coefficient slots",
+    "name": "Pitch coefficient slots +0x70 through +0x80",
     "kind": "VTable",
-    "bytes": 16,
+    "bytes": 20,
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
-    "originalHex": "7002c5209002c520b002c520d002c520",
-    "description": "Four slots of the coefficient model at 20bc2618. Each target is an independently checked 17-byte accessor.",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "originalHex": "7002c5209002c520b002c520d002c520f002c520",
+    "description": "Five accessors from coefficient table 20bc2618. The pitch callback uses the four entries starting at +0x74.",
     "functions": [
       "20c013a0",
       "20c50270",
       "20c50290",
       "20c502b0",
-      "20c502d0"
+      "20c502d0",
+      "20c502f0"
     ],
     "slots": [
       {
+        "offset": "0x70",
+        "name": "Pitch coefficient at slot +0x70",
+        "target": "20c50270",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
         "offset": "0x74",
         "name": "Flap pitch coefficient",
-        "target": "20c50270",
+        "target": "20c50290",
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
       },
       {
         "offset": "0x78",
         "name": "Spoiler pitch coefficient",
-        "target": "20c50290",
+        "target": "20c502b0",
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
       },
       {
         "offset": "0x7c",
         "name": "Slipstream elevator coefficient",
-        "target": "20c502b0",
+        "target": "20c502d0",
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
       },
       {
         "offset": "0x80",
         "name": "Slipstream pitch-rate coefficient",
-        "target": "20c502d0",
+        "target": "20c502f0",
         "signature": "x87 scalar __thiscall(CoefficientView*)",
         "status": "live verified"
       }
@@ -798,21 +806,29 @@
   },
   {
     "entry": "20bbefd8",
-    "name": "Default supplemental pitch slot",
+    "name": "Default supplemental pitch and roll slots",
     "kind": "VTable",
-    "bytes": 4,
+    "bytes": 8,
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
-    "originalHex": "d0d7c020",
-    "description": "The default target returns zero in ST0.",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "originalHex": "d0d7c020d0d7c020",
+    "description": "Both scalar slots return zero.",
     "functions": [
       "20c013a0",
+      "20c01890",
       "20c0d7d0"
     ],
     "slots": [
       {
         "offset": "0x00",
-        "name": "Default supplemental pitch slot",
+        "name": "Default supplemental pitch",
+        "target": "20c0d7d0",
+        "signature": "x87 scalar __thiscall(SupplementalAerodynamics*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x04",
+        "name": "Default supplemental roll",
         "target": "20c0d7d0",
         "signature": "x87 scalar __thiscall(SupplementalAerodynamics*)",
         "status": "live verified"
@@ -821,22 +837,31 @@
   },
   {
     "entry": "20bbefe8",
-    "name": "Alternate supplemental pitch slot",
+    "name": "Configured supplemental pitch and roll slots",
     "kind": "VTable",
-    "bytes": 4,
+    "bytes": 8,
     "status": "live verified",
-    "evidence": "artifacts/sim1.dll/pitch-sum-ghidra.json",
-    "originalHex": "f0dac220",
-    "description": "The target scales the provider state at +0x2c with its curve and a 0.002 factor.",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "originalHex": "f0dac22040dbc220",
+    "description": "The pitch and roll slots multiply their respective provider states by separate curves and gains.",
     "functions": [
       "20c013a0",
-      "20c2daf0"
+      "20c01890",
+      "20c2daf0",
+      "20c2db40"
     ],
     "slots": [
       {
         "offset": "0x00",
-        "name": "Alternate supplemental pitch slot",
+        "name": "Configured supplemental pitch",
         "target": "20c2daf0",
+        "signature": "x87 scalar __thiscall(SupplementalAerodynamics*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x04",
+        "name": "Configured supplemental roll",
+        "target": "20c2db40",
         "signature": "x87 scalar __thiscall(SupplementalAerodynamics*)",
         "status": "live verified"
       }
@@ -894,5 +919,317 @@
     "functions": [
       "20c013a0"
     ]
+  },
+  {
+    "entry": "20bc269c",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "name": "Normal airplane roll coefficient slots",
+    "bytes": 32,
+    "kind": "VTable",
+    "originalHex": "9007c520e006c5201003c5203006c520b004c5207008c5209008c520b008c520",
+    "description": "Offsets +0x84 through +0xa0 of the coefficient table installed at 20bc2618.",
+    "functions": [
+      "20c01890",
+      "20c50790",
+      "20c506e0",
+      "20c50310",
+      "20c50630",
+      "20c504b0",
+      "20c50870",
+      "20c50890",
+      "20c508b0"
+    ],
+    "slots": [
+      {
+        "offset": "0x84",
+        "name": "Sideslip",
+        "target": "20c50790",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x88",
+        "name": "Rudder",
+        "target": "20c506e0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x8c",
+        "name": "Ailerons",
+        "target": "20c50310",
+        "signature": "x87 scalar __thiscall(CoefficientView*, int)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x90",
+        "name": "Roll rate",
+        "target": "20c50630",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x94",
+        "name": "Yaw rate",
+        "target": "20c504b0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x98",
+        "name": "Spoilers",
+        "target": "20c50870",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x9c",
+        "name": "Aileron trim",
+        "target": "20c50890",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xa0",
+        "name": "Additional roll",
+        "target": "20c508b0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20bc213c",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/yaw-sum-ghidra.json",
+    "name": "Airframe high-angle reference interface",
+    "bytes": 36,
+    "kind": "VTable",
+    "originalHex": "c0d8c0209012c520a054c420b054c420c054c420d054c420e054c420f054c4200055c420",
+    "description": "Minimum prefix through +0x20. The yaw callback uses the angle reference and the vertical moment reference.",
+    "functions": [
+      "20c01890",
+      "20c00530",
+      "20c454c0",
+      "20c020a0",
+      "20c45500"
+    ],
+    "slots": [
+      {
+        "offset": "0x10",
+        "name": "High-angle reference",
+        "target": "20c454c0",
+        "signature": "float __thiscall(AirplaneHighAngleModel*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0x20",
+        "name": "Yaw moment vertical reference",
+        "target": "20c45500",
+        "signature": "float __thiscall(AirplaneHighAngleModel*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20c71d10",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "name": "Roll and yaw high-angle rate scale curve",
+    "bytes": 100,
+    "kind": "Aerodynamic curve",
+    "originalHex": "060000000000000000000000000000000000f03f9a9999999999e93ff6285c8fc2f5f03f000000000000f03f1f85eb51b81ef13f666666666666f63f48e17a14ae47f13fcdccccccccccfc3f52b81e85eb51f03fae47e17a14ae0d40cdccccccccccdc3f",
+    "functions": [
+      "20c01890",
+      "20c020a0",
+      "20bcbf60"
+    ],
+    "description": "Six binary64 sample pairs. Both moment callbacks evaluate the curve at raw alpha divided by the configuration reference angle."
+  },
+  {
+    "entry": "20c7b950",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "name": "Published slipstream roll coefficient",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00840",
+      "20c01890"
+    ],
+    "description": "Multiplied by dynamic pressure times wing area."
+  },
+  {
+    "entry": "20c7b980",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "name": "Wing lift multiplier sum",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00780",
+      "20c01890"
+    ],
+    "description": "The asymmetric wing-load calculation is enabled when the sum is below four."
+  },
+  {
+    "entry": "20c7b9a8",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "name": "Second outer wing lift",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00a00",
+      "20c01890"
+    ],
+    "description": "Roll uses the second value minus the first, scaled by half the span."
+  },
+  {
+    "entry": "20c7b9b0",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "name": "Second inner wing lift",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00a00",
+      "20c01890"
+    ],
+    "description": "Roll uses the second value minus the first, scaled by a quarter of the span."
+  },
+  {
+    "entry": "20c7b9b8",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "name": "First inner wing lift",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00a00",
+      "20c01890"
+    ],
+    "description": "Subtracted from the second inner wing value."
+  },
+  {
+    "entry": "20c7b9c0",
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/roll-sum-ghidra.json",
+    "name": "First outer wing lift",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00a00",
+      "20c01890"
+    ],
+    "description": "Subtracted from the second outer wing value."
+  },
+  {
+    "entry": "20bc26bc",
+    "name": "Normal airplane yaw coefficient slots",
+    "kind": "VTable",
+    "bytes": 36,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/yaw-sum-ghidra.json",
+    "originalHex": "400ac520900cc5201009c520800bc520100dc520c00dc520e00dc520000ec520200ec520",
+    "functions": [
+      "20c020a0",
+      "20c50a40",
+      "20c50c90",
+      "20c50910",
+      "20c50b80",
+      "20c50d10",
+      "20c50dc0",
+      "20c50de0",
+      "20c50e00",
+      "20c50e20"
+    ],
+    "description": "Offsets +0xa4 through +0xc4 of the coefficient table installed at 20bc2618.",
+    "slots": [
+      {
+        "offset": "0xa4",
+        "name": "Roll-rate cross coupling",
+        "target": "20c50a40",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xa8",
+        "name": "Yaw rate",
+        "target": "20c50c90",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xac",
+        "name": "Rudder",
+        "target": "20c50910",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xb0",
+        "name": "Sideslip",
+        "target": "20c50b80",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xb4",
+        "name": "Ailerons",
+        "target": "20c50d10",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xb8",
+        "name": "Slipstream rudder",
+        "target": "20c50dc0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xbc",
+        "name": "Slipstream rate cross coupling",
+        "target": "20c50de0",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xc0",
+        "name": "Rudder trim",
+        "target": "20c50e00",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      },
+      {
+        "offset": "0xc4",
+        "name": "Additional yaw",
+        "target": "20c50e20",
+        "signature": "x87 scalar __thiscall(CoefficientView*)",
+        "status": "live verified"
+      }
+    ]
+  },
+  {
+    "entry": "20c7b948",
+    "name": "Published slipstream yaw coefficient",
+    "kind": "Double runtime storage",
+    "bytes": 8,
+    "status": "live verified",
+    "evidence": "artifacts/sim1.dll/yaw-sum-ghidra.json",
+    "originalHex": "0000000000000000",
+    "functions": [
+      "20c00840",
+      "20c020a0"
+    ],
+    "description": "Starts at zero. The yaw callback multiplies the published coefficient by dynamic pressure times wing area."
   }
 ]

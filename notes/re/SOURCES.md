@@ -1,10 +1,30 @@
 # Sources and verification limits
 
+The normal airplane yaw reconstruction in `sim1.dll` uses the
+live `0x20c020a0` listing, coefficient slot loads and targets,
+the external tank bindings, and the pinned PE and native VC8
+COFF. Three complete getters and fifteen instruction ranges
+match exactly or after validating addresses. The return ledger
+checks the original order of the thirteen contributions.
+Linked yaw and simulator verification remain open.
+[Normal airplane yaw moment](sim1.dll/sim1-yaw-moment.md).
+
+The normal airplane roll reconstruction in `sim1.dll` uses the
+live `0x20c01890` listing, the coefficient constructor and slot
+targets, runtime global writers and the pinned PE and native VC8
+COFF comparison. The original term order was checked through the
+x87 return sequence. The match covers two complete roll accessors
+and seventeen disjoint regions. Full-body and linked-image matching
+and simulator behavior remain open. The same live constructor
+also supersedes the previous pitch slot assignments and the
+corrected build retains the original comparison evidence.
+[Normal airplane roll moment](sim1.dll/sim1-roll-moment.md).
+
 The normal airplane pitch moment in `sim1.dll` uses the live
 coefficient and supplemental dispatch tables, term producers,
 and the pinned PE and native VC8 COFF. The original return
 sequence was checked against the stack slots where the terms
-are stored. Four complete accessor bodies and eleven additional
+are stored. Five complete accessor bodies and eleven additional
 ranges match exactly or after individually verifying references.
 Full-body byte matching, linked pitch comparison and simulator
 verification remain open.

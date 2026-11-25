@@ -48,7 +48,7 @@ of the propeller gyroscopic contribution, force-vector terms,
 angle-dependent coefficient curve, zero-alpha coefficient, elevator
 moment, pitch-rate, angle-of-attack rate, horizontal-tail
 incidence and elevator trim contributions, plus the complete normal
-airplane pitch callback and its remaining terms. Replay with
+airplane pitch, roll and yaw callbacks and their remaining terms. Replay with
 `node scripts/compare-sim1-aerodynamic-moment.cjs <run-directory>`,
 `node scripts/compare-sim1-moment-arm.cjs <run-directory>`,
 `node scripts/compare-sim1-angle-curve.cjs <run-directory>`,
@@ -57,9 +57,13 @@ airplane pitch callback and its remaining terms. Replay with
 `node scripts/compare-sim1-pitch-rate.cjs <run-directory>`,
 `node scripts/compare-sim1-alpha-rate.cjs <run-directory>`,
 `node scripts/compare-sim1-tail-incidence.cjs <run-directory>`,
-`node scripts/compare-sim1-elevator-trim.cjs <run-directory>` and
-`node scripts/compare-sim1-pitch-sum.cjs <run-directory>`.
+`node scripts/compare-sim1-elevator-trim.cjs <run-directory>`,
+`node scripts/compare-sim1-pitch-sum.cjs <run-directory>`,
+`node scripts/compare-sim1-roll-sum.cjs <run-directory>` and
+`node scripts/compare-sim1-yaw-sum.cjs <run-directory>`.
 [Airplane aerodynamic moment](../../notes/re/sim1.dll/sim1-aerodynamic-moment.md).
+[Normal airplane roll moment](../../notes/re/sim1.dll/sim1-roll-moment.md).
+[Normal airplane yaw moment](../../notes/re/sim1.dll/sim1-yaw-moment.md).
 
 For the `fe.dll` magnetic-variation functions, run
 `./scripts/matching/start-fe-magnetic-variation.ps1 -RunId fe-<unique-id>`.

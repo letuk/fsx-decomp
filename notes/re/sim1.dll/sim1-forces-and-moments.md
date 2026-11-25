@@ -63,6 +63,10 @@ with revision `1795543912564:962445d7:153` read back clean.
 [Model entry evidence](../../../artifacts/sim1.dll/flight-model-entrypoints-ghidra.json).
 [Complete pitch moment calculation](sim1-aerodynamic-moment.md#complete-pitch-moment-calculation)
 records both return paths and the comparison scopes for `0x20c013a0`.
+[Normal airplane roll moment](sim1-roll-moment.md) records the
+component 2 composition and both return paths for `0x20c01890`.
+[Normal airplane yaw moment](sim1-yaw-moment.md) records the
+component 1 composition and both return paths for `0x20c020a0`.
 
 ## Mass and inertia inputs
 

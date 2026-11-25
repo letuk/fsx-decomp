@@ -21,7 +21,8 @@ struct AerodynamicCurve {
 class FlightDynamics;
 struct GroundReference;
 struct ForceContributors;
-struct EngineForceRecord;
+struct EngineMount;
+struct TurbineEngineState;
 struct PitchMomentModifier;
 struct ZeroAlphaMomentTuning;
 struct AirplaneControlSurfaces;
@@ -34,13 +35,30 @@ struct PropellerForceRecord {
     double signedRpm;
     char unknown08[0x0c];
     double thrust;
-    char unknown1c[0x30];
+    char unknown1c[0x28];
+    double signedRotationFactor;
     const Vector3* mountOffset;
     char unknown50[4];
 };
 
+struct EngineForceRecord {
+    void UpdateTurbineSpeedOutput(TurbineEngineState* turbine) const;
+
+    const EngineMount* mount;
+    char unknown04[0x30];
+    double thrust;
+    char unknown3c[8];
+    double propellerTorque;
+    char unknown4c[0x10];
+    double speedFraction;
+    char unknown64[0x88];
+};
+
 struct PropulsionConfiguration {
-    char unknown00[0x214];
+    char unknown00[0xc8];
+    double rollTorqueReferenceSpeed;
+    char unknownd0[0x13c];
+    double propellerDiameter;
     double propellerMomentOfInertia;
     char unknown21c[0x238];
     unsigned engineCount;
@@ -52,9 +70,13 @@ struct PropulsionConfiguration {
     double elevatorEffectiveness;
     char unknown1150[0x10];
     double elevatorTrimEffectiveness;
-    char unknown1168[0x10];
+    double aileronTrimEffectiveness;
+    double rudderTrimEffectiveness;
     double pitchStability;
-    char unknown1180[0x2c];
+    char unknown1180[0x20];
+    float pFactorOnYaw;
+    float torqueOnRoll;
+    float gyroPrecessionOnYaw;
     float gyroPrecessionOnPitch;
     char unknown11b0[0x294];
     int suppressFirstMoment;
@@ -63,7 +85,8 @@ struct PropulsionConfiguration {
 struct PropulsionMomentControl {
     const FlightDynamics* owner;
     int simpleAerodynamics;
-    char unknown08[8];
+    float pFactorGain;
+    float propellerTorqueGain;
     float propellerGyroGain;
     char unknown14[0x0c];
     int suppressPropellerGyro;
@@ -104,6 +127,21 @@ private:
     float cosineHeading;
 };
 
+// Minimum layouts of the external fuel tank configuration and runtime records.
+struct ExternalFuelTank {
+    char unknown00[4];
+    float lateralPosition;
+    char unknown08[8];
+    float capacity;
+};
+
+struct ExternalFuelTankState {
+    const ExternalFuelTank* configuration;
+    char unknown04[8];
+    unsigned flags;
+    char unknown10[0x10];
+};
+
 // Reconstructed minimum layout of the state reached through FlightDynamics+0x270.
 struct IntegrationHistory {
     void __fastcall UpdateAngleOfAttackRate(const FlightDynamics& airplane);
@@ -125,30 +163,40 @@ struct IntegrationHistory {
     double attitudeAngle;
     double rawAerodynamicAngleDegrees;
     double aerodynamicAngleDegrees;
-    char unknown1a4[8];
+    double sideslipRadians;
     double rateCosine;
     double rateSine;
     char unknown1bc[0x10];
     double angleOfAttackRate;
     char unknown1d4[8];
     double dynamicPressure;
-    char unknown1e4[0x10];
+    double wingPressureForce;
+    double rollMomentScale;
     double aerodynamicMomentScale;
     double slipstreamDynamicPressure;
     char unknown204[0x0c];
     int propulsionMomentBlendMode;
     char unknown214[0x3c];
     const PitchMomentModifier* pitchMomentModifier;
-    char unknown254[0x1e4];
+    char unknown254[0x198];
+    ExternalFuelTankState firstExternalTank;
+    ExternalFuelTankState secondExternalTank;
+    char unknown42c[0xc];
     PropellerForceRecord* propellerForces;
     EngineForceRecord* engineForces;
     char unknown440[0xb8];
     double inertiaScale;
-    char unknown500[0x1e4];
+    char unknown500[0x12c];
+    double firstWingAttenuationInput;
+    double secondWingAttenuationInput;
+    char unknown63c[0xa8];
     double flapDeflectionFactor;
-    char unknown6ec[0x74];
+    char unknown6ec[0x64];
+    double rollRateMomentScale;
+    char unknown758[8];
     double pitchRateMomentScale;
     double slipstreamPitchRateMomentScale;
+    double slipstreamYawRateMomentScale;
 };
 
 struct ModelPoint {
@@ -261,6 +309,8 @@ struct AirplaneConfiguration {
     const AirplaneGeometry* geometry;
     char unknown1984[0x40];
     const ZeroAlphaMomentTuning* zeroAlphaMomentTuning;
+    char unknown19c8[0x34];
+    const class AirplaneHighAngleModel* highAngleModel;
 };
 
 class AirplaneDynamics : public FlightDynamics {

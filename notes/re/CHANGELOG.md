@@ -1,5 +1,20 @@
 # Analysis change log
 
+2026-11-25 — Reconstructed the normal yaw callback in
+`sim1.dll:0x20c020a0`, including the external tanks, asymmetric
+propeller thrust, gyroscopic reaction and SimpleAero return.
+Retained native comparisons and both dashboard listings, and
+saved the Ghidra accessor definitions and function tags.
+[Normal airplane yaw moment](sim1.dll/sim1-yaw-moment.md).
+
+2026-11-25 — Reconstructed the normal roll moment and SimpleAero
+return from `sim1.dll:0x20c01890`. Added the torque and wing load
+contributions, compared the native VC8 build, and saved the
+Ghidra definitions and tags. Corrected the four pitch accessor
+bindings using the live constructor and updated both sets of
+listings in the dashboard.
+[Normal airplane roll moment](sim1.dll/sim1-roll-moment.md).
+
 2026-11-25 — Assembled the full normal-airplane pitch moment in
 the `sim1.dll` reconstruction, including flap, spoiler, slipstream,
 supplemental and `SimpleAero` terms. Corrected the original gyro
